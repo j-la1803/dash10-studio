@@ -46,6 +46,55 @@ type Args = {
 export default async function Page({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = 'home' } = await paramsPromise
+
+
+  if (slug === 'home') {
+  return (
+    <main 
+      className="dash-grid"
+      style={{
+        minHeight: '100vh',
+        backgroundColor: '#050505',
+        color: '#f5f5f5',
+        display: 'flex',
+        alignItems: 'center',
+        padding: '6vw',
+      }}
+    >
+      <div>
+        <div
+          style={{
+            fontSize: '14px',
+            letterSpacing: '0.35em',
+            marginBottom: '40px',
+          }}
+        >
+          DASH 10 STUDIO
+        </div>
+
+        <h1
+          style={{
+            fontSize: 'clamp(64px, 10vw, 160px)',
+            lineHeight: '0.85',
+            margin: 0,
+            textTransform: 'uppercase',
+            fontWeight: 800,
+          }}
+        >
+          Digital
+          <br />
+          Platforms
+          <br />
+          Built to
+          <br />
+          Perform.
+        </h1>
+      </div>
+    </main>
+  )
+}
+
+
   // Decode to support slugs with special characters
   const decodedSlug = decodeURIComponent(slug)
   const url = '/' + decodedSlug

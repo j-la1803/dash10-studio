@@ -222,3 +222,71 @@ html[data-theme='dark'],
 html[data-theme='light'] {
   opacity: initial;
 }
+
+.dash-grid {
+  background-image:
+    linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.2) 1px,
+      transparent 1px
+    );
+  background-size: 12.5% 100%;
+}
+
+.dash-grid {
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.2) 1px,
+    transparent 1px
+  );
+  background-size: 12.5% 100%;
+
+  animation: dashGridDrift 60s linear infinite;
+}
+
+@keyframes dashGridDrift {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 12.5vw 0;
+  }
+}
+
+.dash-grid {
+  position: relative;
+  overflow: hidden;
+}
+
+.dash-grid::before {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      ellipse at 30% 60%,
+      rgba(255, 255, 255, 0.3),
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 75% 35%,
+      rgba(255, 255, 255, 0.4),
+      transparent 40%
+    );
+
+  filter: blur(60px);
+  animation: dashCloudDrift 35s ease-in-out infinite alternate;
+}
+
+@keyframes dashCloudDrift {
+  from {
+    transform: translate3d(-4%, 0, 0);
+  }
+
+  to {
+    transform: translate3d(4%, -3%, 0);
+  }
+}
