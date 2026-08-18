@@ -13,6 +13,11 @@ import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
+import { VideoHero } from '@/components/VideoHero'
+import { FeatureGrid } from '@/components/FeatureGrid'
+import { Accordion } from '@/components/Accordion'
+import { SplitContent } from '@/components/SplitContent'
+
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
   const pages = await payload.find({
@@ -46,54 +51,72 @@ type Args = {
 export default async function Page({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = 'home' } = await paramsPromise
-
-
+    
   if (slug === 'home') {
-  return (
-    <main 
-      className="dash-grid"
-      style={{
-        minHeight: '100vh',
-        backgroundColor: '#050505',
-        color: '#f5f5f5',
-        display: 'flex',
-        alignItems: 'center',
-        padding: '6vw',
-      }}
-    >
-      <div>
-        <div
-          style={{
-            fontSize: '14px',
-            letterSpacing: '0.35em',
-            marginBottom: '40px',
-          }}
-        >
-          DASH 10 STUDIO
-        </div>
+      return (
 
-        <h1
-          style={{
-            fontSize: 'clamp(64px, 10vw, 160px)',
-            lineHeight: '0.85',
-            margin: 0,
-            textTransform: 'uppercase',
-            fontWeight: 800,
-          }}
-        >
-          Digital
-          <br />
-          Platforms
-          <br />
-          Built to
-          <br />
-          Perform.
-        </h1>
-      </div>
-    </main>
-  )
-}
+       <>
 
+        <VideoHero
+          eyebrow="LOREM IPSUM"
+          lines={['Lorem', 'Ipsum', 'Dolor Sit', 'Amet.']}
+          video="/videos/dance-hero-web.mp4"
+        />
+
+        <FeatureGrid
+      eyebrow="LOREM IPSUM"
+      heading="Dolor sit amet consectetur."
+      features={[
+        {
+          title: 'Lorem Ipsum',
+          text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        },
+        {
+          title: 'Dolor Sit',
+          text: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        },
+        {
+          title: 'Consectetur',
+          text: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco.',
+        },
+      ]}
+    />
+
+    <Accordion
+  eyebrow="LOREM IPSUM"
+  heading="Consectetur adipiscing elit."
+  items={[
+    {
+      title: 'Lorem ipsum dolor sit amet',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.',
+    },
+    {
+      title: 'Consectetur adipiscing elit',
+      text: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    },
+    {
+      title: 'Ut enim ad minim veniam',
+      text: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+    },
+  ]}
+/>
+<SplitContent
+  eyebrow="LOREM IPSUM"
+  heading="Dolor sit amet consectetur."
+  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  image="https://picsum.photos/800/500"
+/>
+<SplitContent
+  eyebrow="LOREM IPSUM"
+  heading="Consectetur adipiscing elit."
+  text="Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+  image="https://picsum.photos/800/500"
+  reverse
+/>
+  </>
+  
+      )
+    }
 
   // Decode to support slugs with special characters
   const decodedSlug = decodeURIComponent(slug)
