@@ -51,72 +51,70 @@ type Args = {
 export default async function Page({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = 'home' } = await paramsPromise
-    
+
   if (slug === 'home') {
-      return (
-
-       <>
-
+    return (
+      <>
         <VideoHero
           eyebrow="LOREM IPSUM"
           lines={['Lorem', 'Ipsum', 'Dolor Sit', 'Amet.']}
-          video="/videos/dance-hero-web.mp4"
+          video="/videos/dash-10-video-bg-slowed.mp4"
+          playbackRate={0.5}
         />
 
         <FeatureGrid
-      eyebrow="LOREM IPSUM"
-      heading="Dolor sit amet consectetur."
-      features={[
-        {
-          title: 'Lorem Ipsum',
-          text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        },
-        {
-          title: 'Dolor Sit',
-          text: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        },
-        {
-          title: 'Consectetur',
-          text: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco.',
-        },
-      ]}
-    />
+          eyebrow="LOREM IPSUM"
+          heading="Dolor sit amet consectetur."
+          features={[
+            {
+              title: 'Lorem Ipsum',
+              text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+            },
+            {
+              title: 'Dolor Sit',
+              text: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            },
+            {
+              title: 'Consectetur',
+              text: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco.',
+            },
+          ]}
+        />
 
-    <Accordion
-  eyebrow="LOREM IPSUM"
-  heading="Consectetur adipiscing elit."
-  items={[
-    {
-      title: 'Lorem ipsum dolor sit amet',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.',
-    },
-    {
-      title: 'Consectetur adipiscing elit',
-      text: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    },
-    {
-      title: 'Ut enim ad minim veniam',
-      text: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
-    },
-  ]}
-/>
-<SplitContent
-  eyebrow="LOREM IPSUM"
-  heading="Dolor sit amet consectetur."
-  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-  image="https://picsum.photos/800/500"
-/>
-<SplitContent
-  eyebrow="LOREM IPSUM"
-  heading="Consectetur adipiscing elit."
-  text="Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-  image="https://picsum.photos/800/500"
-  reverse
-/>
-  </>
-  
-      )
-    }
+        <Accordion
+          eyebrow="LOREM IPSUM"
+          heading="Consectetur adipiscing elit."
+          items={[
+            {
+              title: 'Lorem ipsum dolor sit amet',
+              text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.',
+            },
+            {
+              title: 'Consectetur adipiscing elit',
+              text: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            },
+            {
+              title: 'Ut enim ad minim veniam',
+              text: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+            },
+          ]}
+        />
+        <SplitContent
+          eyebrow="LOREM IPSUM"
+          heading="Dolor sit amet consectetur."
+          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          image="https://picsum.photos/800/500"
+        />
+        <SplitContent
+          eyebrow="LOREM IPSUM"
+          heading="Consectetur adipiscing elit."
+          text="Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+          image="https://picsum.photos/800/500"
+          reverse
+        />
+      </>
+    )
+  }
 
   // Decode to support slugs with special characters
   const decodedSlug = decodeURIComponent(slug)
