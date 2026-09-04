@@ -9,7 +9,7 @@ type VideoHeroProps = {
   playbackRate?: number
 }
 
-export const VideoHero = ({ eyebrow, lines, video, playbackRate = 0.5 }: VideoHeroProps) => {
+export const VideoHero = ({ eyebrow, lines, video, playbackRate = 0.7 }: VideoHeroProps) => {
   const videoRef = useRef<HTMLVideoElement>(null)
   useEffect(() => {
     if (videoRef.current) {

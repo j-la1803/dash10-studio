@@ -222,272 +222,317 @@ html[data-theme='dark'],
 html[data-theme='light'] {
   opacity: initial;
 }
-.dash-hero {
-  position: relative;
-  min-height: 100vh;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  background: #050505;
-  color: #f5f5f5;
+/* ==========================================================
+   DASH 10
+   Production Design System
+   ========================================================== */
+
+:root {
+  --dash-black: #080b0d;
+  --dash-black-deep: #050505;
+  --dash-charcoal: #141416;
+  --dash-slate: #333333;
+  --dash-steel: #4a4a4d;
+  --dash-white: #f5f5f5;
+
+  /* Playful accent — target ~10% max usage */
+  --dash-orange: #f47c20;
+
+  --dash-line: rgba(255, 255, 255, 0.14);
+  --dash-line-subtle: rgba(255, 255, 255, 0.07);
+
+  --dash-page-padding: clamp(1.5rem, 5vw, 6rem);
+  --dash-content-width: 1600px;
 }
 
-/* VIDEO */
+/* ==========================================================
+   HOMEPAGE
+   ========================================================== */
+
+.dash-home {
+  position: relative;
+  overflow: clip;
+  background: var(--dash-black);
+  color: var(--dash-white);
+}
+
+/* ==========================================================
+   HERO
+   ========================================================== */
+
+.dash-hero {
+  position: relative;
+
+  min-height: 100vh;
+  min-height: 100svh;
+
+  display: flex;
+  align-items: center;
+
+  overflow: hidden;
+
+  background: var(--dash-black-deep);
+  color: var(--dash-white);
+}
+
+/* Video */
 
 .dash-hero-video {
   position: absolute;
   inset: 0;
+
   width: 100%;
   height: 100%;
+
   object-fit: cover;
+
   z-index: 0;
 }
 
-/* DARK CINEMATIC TREATMENT */
+/* Cinematic treatment */
 
 .dash-hero-overlay {
   position: absolute;
   inset: 0;
+
+  z-index: 1;
+
   background:
     linear-gradient(
       90deg,
-      rgba(5, 5, 5, 0.6) 0%,
-      rgba(5, 5, 5, 0.35) 45%,
-      rgba(5, 5, 5, 0.2) 100%
-    );
-  z-index: 1;
+      rgba(5, 5, 5, 0.68) 0%,
+      rgba(5, 5, 5, 0.38) 45%,
+      rgba(5, 5, 5, 0.15) 100%
+    ),
+    linear-gradient(180deg, rgba(5, 5, 5, 0.08) 55%, rgba(8, 11, 13, 0.92) 100%);
 }
 
-/* DASH 10 GRID */
+/* Minimal construction guides */
 
 .dash-grid-lines {
   position: absolute;
   inset: 0;
+
   z-index: 2;
+
   pointer-events: none;
-  background-image:
-    linear-gradient(
-      rgba(255, 255, 255, 0.08) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.08) 1px,
-      transparent 1px
-    );
-  background-size:
-    100% 25%,
-    25% 100%;
+
+  background: linear-gradient(
+    90deg,
+    transparent 24.9%,
+    var(--dash-line-subtle) 25%,
+    transparent 25.1%,
+    transparent 74.9%,
+    var(--dash-line-subtle) 75%,
+    transparent 75.1%
+  );
 }
 
-/* CONTENT */
+/* Hero content */
 
 .dash-hero-content {
   position: relative;
+
   z-index: 3;
-  width: 100%;
-  padding: 6vw;
+
+  width: min(calc(100% - (var(--dash-page-padding) * 2)), var(--dash-content-width));
+
+  margin-inline: auto;
 }
 
 .dash-eyebrow {
-  margin-bottom: 20px;
-  font-size: 14px;
+  margin: 0 0 1.5rem;
+
+  font-size: clamp(0.7rem, 0.8vw, 0.875rem);
+  font-weight: 500;
+
   letter-spacing: 0.35em;
   text-transform: uppercase;
 }
 
 .dash-hero-heading {
+  max-width: 12ch;
+
   margin: 0;
-  font-size: clamp(64px, 10vw, 160px);
-  line-height: 0.85;
+
+  font-size: clamp(4rem, 10vw, 10rem);
+  line-height: 0.84;
+
   font-weight: 800;
-  letter-spacing: -0.04em;
+
+  letter-spacing: -0.055em;
   text-transform: uppercase;
+
+  text-wrap: balance;
 }
 
-.feature-grid {
-  background: #f3f0e8;
-  color: #050505;
-  padding: 8vw 6vw;
+/* ==========================================================
+   HERO → BLACK STAGE
+   ========================================================== */
+
+.dash-hero-fade {
+  position: relative;
+
+  height: clamp(8rem, 18vw, 18rem);
+
+  margin-top: clamp(-12rem, -14vw, -6rem);
+
+  z-index: 4;
+
+  pointer-events: none;
+
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(8, 11, 13, 0.62) 35%,
+    var(--dash-black) 78%,
+    var(--dash-black) 100%
+  );
 }
 
-.feature-grid-header {
-  max-width: 1000px;
-  margin-bottom: 80px;
+/* ==========================================================
+   CONTINUOUS BLACK STAGE
+   ========================================================== */
+
+.dash-stage {
+  position: relative;
+
+  min-height: 100vh;
+
+  background: var(--dash-black);
 }
 
-.feature-grid-eyebrow {
-  font-size: 13px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  margin-bottom: 24px;
+.dash-stage-inner {
+  position: relative;
+
+  width: min(calc(100% - (var(--dash-page-padding) * 2)), var(--dash-content-width));
+
+  margin-inline: auto;
 }
 
-.feature-grid-heading {
-  margin: 0;
-  font-size: clamp(48px, 7vw, 110px);
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-  text-transform: uppercase;
+/* ==========================================================
+   FUTURE PRODUCTION SCENES
+   ========================================================== */
+
+.dash-scene {
+  position: relative;
+
+  min-height: 125vh;
 }
 
-.feature-grid-items {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border-top: 1px solid rgba(0, 0, 0, 0.25);
-  border-left: 1px solid rgba(0, 0, 0, 0.25);
-}
+.dash-scene-sticky {
+  position: sticky;
+  top: 0;
 
-.feature-grid-item {
-  min-height: 260px;
-  padding: 32px;
-  border-right: 1px solid rgba(0, 0, 0, 0.25);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
-}
-
-.feature-grid-item h3 {
-  margin-top: 0;
-  font-size: 24px;
-  text-transform: uppercase;
-}
-
-.feature-grid-item p {
-  max-width: 320px;
-  line-height: 1.6;
-  opacity: 0.7;
-}
-
-@media (max-width: 768px) {
-  .feature-grid-items {
-    grid-template-columns: 1fr;
-  }
-}
-
-.accordion-section {
-  background: #050505;
-  color: #f5f5f5;
-  padding: 8vw 6vw;
-}
-
-.accordion-header {
-  max-width: 1000px;
-  margin-bottom: 64px;
-}
-
-.accordion-eyebrow {
-  margin-bottom: 20px;
-  font-size: 13px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-}
-
-.accordion-heading {
-  margin: 0;
-  font-size: clamp(48px, 7vw, 110px);
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-  text-transform: uppercase;
-}
-
-.accordion-list {
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.accordion-item {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.accordion-trigger {
-  width: 100%;
-  padding: 28px 0;
+  min-height: 100vh;
 
   display: flex;
   align-items: center;
-  justify-content: space-between;
-
-  background: none;
-  border: 0;
-  color: inherit;
-
-  font: inherit;
-  font-size: 20px;
-  text-align: left;
-  text-transform: uppercase;
-
-  cursor: pointer;
 }
 
-.accordion-content {
-  max-width: 700px;
-  padding-bottom: 32px;
-}
+/* ==========================================================
+   CAD / TECHNICAL UTILITIES
+   ========================================================== */
 
-.accordion-content p {
-  margin: 0;
-  line-height: 1.7;
-  opacity: 0.7;
-}
-
-.split-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 300px;
-  background: #f3f0e8;
-  color: #050505;
-}
-
-.split-content-reverse .split-content-media {
-  order: 2;
-}
-
-.split-content-reverse .split-content-copy {
-  order: 1;
-}
-
-.split-content-media img {
+.dash-rule {
   width: 100%;
+  height: 1px;
+
+  background: var(--dash-line);
+}
+
+.dash-crosshair {
+  position: relative;
+
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.dash-crosshair::before,
+.dash-crosshair::after {
+  content: '';
+
+  position: absolute;
+
+  background: var(--dash-line);
+}
+
+.dash-crosshair::before {
+  left: 50%;
+  top: 0;
+
+  width: 1px;
   height: 100%;
-  object-fit: cover;
-  display: block;
+
+  transform: translateX(-50%);
 }
 
-.split-content-copy {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 8vw 6vw;
+.dash-crosshair::after {
+  left: 0;
+  top: 50%;
+
+  width: 100%;
+  height: 1px;
+
+  transform: translateY(-50%);
 }
 
-.split-content-eyebrow {
-  margin-bottom: 24px;
-  font-size: 13px;
+.dash-accent {
+  color: var(--dash-orange);
+}
+
+.dash-muted {
+  color: rgba(245, 245, 245, 0.62);
+}
+
+.dash-kicker {
+  font-size: 0.75rem;
+  font-weight: 500;
+
   letter-spacing: 0.3em;
   text-transform: uppercase;
 }
 
-.split-content-heading {
-  margin: 0 0 32px;
-  font-size: clamp(48px, 6vw, 96px);
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-  text-transform: uppercase;
+/* ==========================================================
+   REDUCED MOTION
+   ========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .dash-scene-sticky {
+    position: relative;
+  }
+
+  .dash-hero-video {
+    animation: none;
+  }
 }
 
-.split-content-text {
-  max-width: 520px;
-  margin: 0;
-  line-height: 1.7;
-  opacity: 0.7;
-}
+/* ==========================================================
+   MOBILE
+   ========================================================== */
 
 @media (max-width: 768px) {
-  .split-content {
-    grid-template-columns: 1fr;
+  :root {
+    --dash-page-padding: 1.25rem;
   }
 
-  .split-content-reverse .split-content-media,
-  .split-content-reverse .split-content-copy {
-    order: initial;
+  .dash-hero-heading {
+    font-size: clamp(3.6rem, 17vw, 6.5rem);
+  }
+
+  .dash-hero-fade {
+    margin-top: -7rem;
+  }
+
+  .dash-scene {
+    min-height: auto;
+  }
+
+  .dash-scene-sticky {
+    position: relative;
+
+    min-height: auto;
+
+    padding-block: 7rem;
   }
 }
-/* Deployment check - Aug 18 2026 */

@@ -14,12 +14,10 @@ import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
 import { VideoHero } from '@/components/VideoHero'
-import { FeatureGrid } from '@/components/FeatureGrid'
-import { Accordion } from '@/components/Accordion'
-import { SplitContent } from '@/components/SplitContent'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
+
   const pages = await payload.find({
     collection: 'pages',
     draft: false,
@@ -31,15 +29,11 @@ export async function generateStaticParams() {
     },
   })
 
-  const params = pages.docs
-    ?.filter((doc) => {
-      return doc.slug !== 'home'
-    })
-    .map(({ slug }) => {
-      return { slug }
-    })
-
-  return params
+  return pages.docs
+    ?.filter((doc) => doc.slug !== 'home')
+    .map(({ slug }) => ({
+      slug,
+    }))
 }
 
 type Args = {
@@ -54,81 +48,38 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   if (slug === 'home') {
     return (
-      <>
+      <main className="dash-home">
         <VideoHero
-          eyebrow="LOREM IPSUM"
+          eyebrow="DASH 10 STUDIO"
           lines={['Lorem', 'Ipsum', 'Dolor Sit', 'Amet.']}
           video="/videos/dash-10-video-bg-slowed.mp4"
-          playbackRate={0.5}
+          playbackRate={0.7}
         />
 
-        <FeatureGrid
-          eyebrow="LOREM IPSUM"
-          heading="Dolor sit amet consectetur."
-          features={[
-            {
-              title: 'Lorem Ipsum',
-              text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-            },
-            {
-              title: 'Dolor Sit',
-              text: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-            },
-            {
-              title: 'Consectetur',
-              text: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco.',
-            },
-          ]}
-        />
+        <div className="dash-hero-fade" aria-hidden="true" />
 
-        <Accordion
-          eyebrow="LOREM IPSUM"
-          heading="Consectetur adipiscing elit."
-          items={[
-            {
-              title: 'Lorem ipsum dolor sit amet',
-              text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.',
-            },
-            {
-              title: 'Consectetur adipiscing elit',
-              text: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-            },
-            {
-              title: 'Ut enim ad minim veniam',
-              text: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
-            },
-          ]}
-        />
-        <SplitContent
-          eyebrow="LOREM IPSUM"
-          heading="Dolor sit amet consectetur."
-          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-          image="https://picsum.photos/800/500"
-        />
-        <SplitContent
-          eyebrow="LOREM IPSUM"
-          heading="Consectetur adipiscing elit."
-          text="Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-          image="https://picsum.photos/800/500"
-          reverse
-        />
-      </>
+        <section className="dash-stage">
+          <div className="dash-stage-inner">
+            {/*
+              Production homepage scenes will go here.
+
+              01 — Built for the real world
+              02 — Agency-quality development without agency bloat
+              03 — Systems / integrations
+              04 — Build / fix / connect
+            */}
+          </div>
+        </section>
+      </main>
     )
   }
 
-  // Decode to support slugs with special characters
   const decodedSlug = decodeURIComponent(slug)
   const url = '/' + decodedSlug
-  let page: RequiredDataFromCollectionSlug<'pages'> | null
 
-  page = await queryPageBySlug({
+  const page: RequiredDataFromCollectionSlug<'pages'> | null = await queryPageBySlug({
     slug: decodedSlug,
   })
-
-  // Remove this code once your website is seeded
-  if (!page && slug === 'home') {
-    page = homeStatic
-  }
 
   if (!page) {
     return <PayloadRedirects url={url} />
@@ -139,7 +90,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   return (
     <article className="pt-16 pb-24">
       <PageClient />
-      {/* Allows redirects for valid pages too */}
+
       <PayloadRedirects disableNotFound url={url} />
 
       {draft && <LivePreviewListener />}
@@ -152,8 +103,9 @@ export default async function Page({ params: paramsPromise }: Args) {
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { slug = 'home' } = await paramsPromise
-  // Decode to support slugs with special characters
+
   const decodedSlug = decodeURIComponent(slug)
+
   const page = await queryPageBySlug({
     slug: decodedSlug,
   })
@@ -164,7 +116,9 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
 const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
   const { isEnabled: draft } = await draftMode()
 
-  const payload = await getPayload({ config: configPromise })
+  const payload = await getPayload({
+    config: configPromise,
+  })
 
   const result = await payload.find({
     collection: 'pages',
