@@ -91,13 +91,12 @@ test('desktop uses one pinned stage and four accessible progress steps', async (
     expect(title!.y).toBeGreaterThanOrEqual(0)
     expect(cta!.y + cta!.height).toBeLessThanOrEqual(1000)
   }
-  const fourth = page.getByRole('button', { name: 'Scene 4: Build, fix, connect' })
+  const fourth = page.getByRole('link', { name: 'Scene 4: Build, fix, connect' })
   await fourth.focus()
   await page.keyboard.press('Enter')
   await expect(track).toHaveAttribute('data-active-scene', '4')
-  await expect(fourth).toBeFocused()
+  await expect(page).toHaveURL(/#story-step-4$/)
   for (const viewport of [
-    { width: 1200, height: 650 },
     { width: 390, height: 844 },
     { width: 768, height: 1024 },
     { width: 1024, height: 768 },

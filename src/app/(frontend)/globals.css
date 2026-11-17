@@ -1683,6 +1683,7 @@ body {
   position: relative;
   height: 100svh;
   min-height: 0;
+  padding-block: clamp(1rem, 6svh, 5rem);
 }
 .studio-scenes[data-pinned='true'] .scene-index {
   display: none;
@@ -1714,7 +1715,7 @@ body {
   padding: 0;
   margin: 0;
 }
-.scene-progress button {
+.scene-progress a {
   display: block;
   padding: 0.8rem 0.5rem;
   color: #777;
@@ -1722,7 +1723,7 @@ body {
   letter-spacing: 0.12em;
   cursor: pointer;
 }
-.scene-progress button[aria-current='step'] {
+.scene-progress a[aria-current='step'] {
   color: #fff;
 }
 .footer-monogram {
@@ -1750,4 +1751,12 @@ body {
   .scene-progress-track > span {
     transition: none !important;
   }
+}
+
+.story-step-anchor {
+  position: absolute;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
 }

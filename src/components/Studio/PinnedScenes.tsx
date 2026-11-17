@@ -17,20 +17,33 @@ export function PinnedScenes({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const media = window.matchMedia(
-      '(min-width: 1100px) and (min-height: 750px) and (prefers-reduced-motion: no-preference)',
+      '(min-width: 1100px) and (prefers-reduced-motion: no-preference)',
     )
     let frame = 0
     const update = () => {
       frame = 0
       const element = track.current
       if (!element) return
-      const enabled = media.matches
+      // Use the actual content fit, not a screen-height cutoff that excludes laptop windows.
+      const panels = Array.from(element.querySelectorAll<HTMLElement>('.scene-sticky'))
+      const contentHeight = Math.max(
+        0,
+        ...panels.flatMap((panel) =>
+          Array.from(
+            panel.querySelectorAll<HTMLElement>('.scene-copy,.studio-window,.systems-visual'),
+          ).map((content) => content.getBoundingClientRect().height),
+        ),
+      )
+      const viewport = element.querySelector<HTMLElement>('.story-stage')!
+      const padding = Math.min(80, Math.max(16, window.innerHeight * 0.06))
+      const enabled = media.matches && contentHeight + padding * 2 <= window.innerHeight
       setPinned(enabled)
       if (!enabled) return
       const bounds = element.getBoundingClientRect()
-      // A 500vh track minus the 100vh stage leaves four equal native-scroll segments.
-      const segment = Math.max(1, (bounds.height - window.innerHeight) / 4)
-      const next = Math.min(3, Math.max(0, Math.floor(-bounds.top / segment)))
+      // Sticky begins inside the track border and ends when its content box is exhausted.
+      const range = Math.max(1, element.clientHeight - viewport.getBoundingClientRect().height)
+      const distance = -bounds.top - element.clientTop
+      const next = Math.min(3, Math.max(0, Math.floor(distance / (range / 4))))
       if (next !== activeRef.current) {
         const outgoing = element.querySelector(`[data-panel="${activeRef.current}"]`)
         const moveFocus = outgoing?.contains(document.activeElement)
@@ -49,7 +62,12 @@ export function PinnedScenes({ children }: { children: ReactNode }) {
       if (!frame) frame = requestAnimationFrame(update)
     }
     const observer = new ResizeObserver(schedule)
-    if (track.current) observer.observe(track.current)
+    if (track.current) {
+      observer.observe(track.current)
+      track.current
+        .querySelectorAll('.scene-copy,.studio-window,.systems-visual')
+        .forEach((content) => observer.observe(content))
+    }
     schedule()
     media.addEventListener('change', schedule)
     window.addEventListener('scroll', schedule, { passive: true })
@@ -63,13 +81,6 @@ export function PinnedScenes({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  function goToScene(index: number) {
-    if (!track.current) return
-    const bounds = track.current.getBoundingClientRect()
-    const segment = (bounds.height - window.innerHeight) / 4
-    window.scrollTo({ top: scrollY + bounds.top + segment * index + 1, behavior: 'smooth' })
-  }
-
   return (
     <div
       id="what-we-do"
@@ -78,6 +89,16 @@ export function PinnedScenes({ children }: { children: ReactNode }) {
       data-pinned={pinned}
       data-active-scene={active + 1}
     >
+      {pinned &&
+        sceneNames.map((name, index) => (
+          <span
+            key={name}
+            id={`story-step-${index + 1}`}
+            className="story-step-anchor"
+            aria-hidden="true"
+            style={{ top: `calc(${index} * (100% - 100svh) / 4 + 2px)` }}
+          />
+        ))}
       <div className="story-stage">
         {pinned && (
           <nav className="scene-progress" aria-label="Story scenes">
@@ -95,14 +116,13 @@ export function PinnedScenes({ children }: { children: ReactNode }) {
             <ol>
               {sceneNames.map((name, index) => (
                 <li key={name}>
-                  <button
-                    type="button"
+                  <a
+                    href={`#story-step-${index + 1}`}
                     aria-label={`Scene ${index + 1}: ${name}`}
                     aria-current={index === active ? 'step' : undefined}
-                    onClick={() => goToScene(index)}
                   >
                     0{index + 1}
-                  </button>
+                  </a>
                 </li>
               ))}
             </ol>
