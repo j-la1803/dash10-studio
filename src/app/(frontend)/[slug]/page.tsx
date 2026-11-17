@@ -5,15 +5,13 @@ import configPromise from '@payload-config'
 import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
-import { homeStatic } from '@/endpoints/seed/home-static'
+import { StudioHome } from '@/components/Studio/Home'
 
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
-
-import { VideoHero } from '@/components/VideoHero'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -46,33 +44,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = 'home' } = await paramsPromise
 
-  if (slug === 'home') {
-    return (
-      <main className="dash-home">
-        <VideoHero
-          eyebrow="DASH 10 STUDIO"
-          lines={['Lorem', 'Ipsum', 'Dolor Sit', 'Amet.']}
-          video="/videos/dash-10-video-bg-slowed.mp4"
-          playbackRate={0.7}
-        />
-
-        <div className="dash-hero-fade" aria-hidden="true" />
-
-        <section className="dash-stage">
-          <div className="dash-stage-inner">
-            {/*
-              Production homepage scenes will go here.
-
-              01 — Built for the real world
-              02 — Agency-quality development without agency bloat
-              03 — Systems / integrations
-              04 — Build / fix / connect
-            */}
-          </div>
-        </section>
-      </main>
-    )
-  }
+  if (slug === 'home') return <StudioHome />
 
   const decodedSlug = decodeURIComponent(slug)
   const url = '/' + decodedSlug
@@ -88,7 +60,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   const { hero, layout } = page
 
   return (
-    <article className="pt-16 pb-24">
+    <article id="main-content" className="pt-16 pb-24">
       <PageClient />
 
       <PayloadRedirects disableNotFound url={url} />
@@ -103,6 +75,13 @@ export default async function Page({ params: paramsPromise }: Args) {
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { slug = 'home' } = await paramsPromise
+
+  if (slug === 'home')
+    return {
+      title: 'Dash 10 Studio — The right technology. Built the right way.',
+      description:
+        'Custom websites, e-commerce platforms, and connected systems engineered to move your business forward.',
+    }
 
   const decodedSlug = decodeURIComponent(slug)
 

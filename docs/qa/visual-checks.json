@@ -1,0 +1,47 @@
+{
+  "base": "http://localhost:3100",
+  "capturedAt": "2026-11-17T20:27:48.464Z",
+  "browserErrors": [],
+  "viewports": {
+    "desktop": {
+      "missingImages": [],
+      "overflow": false,
+      "font": "Inter, Arial, sans-serif",
+      "paragraphLineHeight": "29.376px",
+      "scenePosition": "sticky",
+      "video": "/videos/dash-10-video-bg-slowed.mp4",
+      "grayscale": "grayscale(1)",
+      "platformColumns": "207.828px 207.828px 207.828px 207.844px 207.828px 207.828px",
+      "platformBorders": [
+        "1px",
+        "1px",
+        "1px",
+        "1px",
+        "1px",
+        "1px"
+      ],
+      "footerOpacity": "0.035",
+      "logo": "/brand/logo/dash10-wordmark-white.svg"
+    },
+    "mobile": {
+      "missingImages": [],
+      "overflow": false,
+      "font": "Inter, Arial, sans-serif",
+      "paragraphLineHeight": "25.84px",
+      "scenePosition": "static",
+      "video": "/videos/dash-10-video-bg-slowed.mp4",
+      "grayscale": "grayscale(1)",
+      "platformColumns": "174.5px 174.5px",
+      "platformBorders": [
+        "1px",
+        "1px",
+        "1px",
+        "1px",
+        "1px",
+        "1px"
+      ],
+      "footerOpacity": "0.025",
+      "logo": "/brand/logo/dash10-wordmark-white.svg"
+    }
+  }
+}

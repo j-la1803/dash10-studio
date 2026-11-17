@@ -28,11 +28,11 @@ export default async function Page() {
   })
 
   return (
-    <div className="pt-24 pb-24">
+    <main id="main-content" className="studio-page">
       <PageClient />
       <div className="container mb-16">
         <div className="prose dark:prose-invert max-w-none">
-          <h1>Posts</h1>
+          <p className="studio-label">THE JOURNAL</p><h1>IDEAS. INSIGHTS. PRACTICAL THINKING.</h1>
         </div>
       </div>
 
@@ -45,19 +45,19 @@ export default async function Page() {
         />
       </div>
 
-      <CollectionArchive posts={posts.docs} />
+      {posts.totalDocs === 0 ? <p>New perspectives on websites, commerce, and connected systems. Articles coming soon.</p> : <CollectionArchive posts={posts.docs} />}
 
       <div className="container">
         {posts.totalPages > 1 && posts.page && (
           <Pagination page={posts.page} totalPages={posts.totalPages} />
         )}
       </div>
-    </div>
+    </main>
   )
 }
 
 export function generateMetadata(): Metadata {
   return {
-    title: `Payload Website Template Posts`,
+    title: `Blog | Dash 10 Studio`,
   }
 }

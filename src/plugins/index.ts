@@ -3,7 +3,7 @@ import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { searchPlugin } from '@payloadcms/plugin-search'
-import { Plugin } from 'payload'
+import { APIError, Plugin } from 'payload'
 import { revalidateRedirects } from '@/hooks/revalidateRedirects'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -14,7 +14,7 @@ import { Page, Post } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
 
 const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
-  return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template'
+  return doc?.title ? `${doc.title} | Dash 10 Studio` : 'Dash 10 Studio'
 }
 
 const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
@@ -57,6 +57,27 @@ export const plugins: Plugin[] = [
   formBuilderPlugin({
     fields: {
       payment: false,
+    },
+    formSubmissionOverrides: {
+      access: {
+        read: ({ req }) => Boolean(req.user),
+        delete: ({ req }) => Boolean(req.user),
+      },
+      hooks: {
+        beforeValidate: [
+          async ({ data, req, operation }) => {
+            if (operation !== 'create' || req.user || req.context.studioInquiry) return data
+            const id = typeof data?.form === 'object' ? data.form.id : data?.form
+            if (id) {
+              const form = await req.payload.findByID({ collection: 'forms', id, depth: 0, req })
+              if (form.title === 'Dash 10 Studio project inquiries') {
+                throw new APIError('Submit project inquiries through the contact page.', 403)
+              }
+            }
+            return data
+          },
+        ],
+      },
     },
     formOverrides: {
       fields: ({ defaultFields }) => {

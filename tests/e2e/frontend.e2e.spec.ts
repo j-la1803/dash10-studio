@@ -1,17 +1,228 @@
-import { test, expect, Page } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 
-test.describe('Frontend', () => {
-  let page: Page
+test('homepage has the approved content and working service links', async ({ page }) => {
+  await page.goto(process.env.QA_BASE_URL || 'http://localhost:3000')
+  await expect(page).toHaveTitle(/Dash 10 Studio/)
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+    'THE RIGHT TECHNOLOGY. BUILT THE RIGHT WAY.',
+  )
+  await expect(page.locator('.platform-grid > div')).toHaveCount(6)
+  await expect(page.locator('.studio-scene')).toHaveCount(4)
+  await page.getByRole('link', { name: 'EXPLORE SERVICES' }).click()
+  await expect(page).toHaveURL(/\/services$/)
+  await expect(page.getByRole('heading', { name: 'Systems & integrations' })).toBeVisible()
+})
 
-  test.beforeAll(async ({ browser }, testInfo) => {
-    const context = await browser.newContext()
-    page = await context.newPage()
+test('mobile navigation opens, closes with Escape, and reaches the process page', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto(process.env.QA_BASE_URL || 'http://localhost:3000')
+  const menu = page.locator('.menu-toggle')
+  await menu.click()
+  await expect(menu).toHaveAttribute('aria-expanded', 'true')
+  await page
+    .getByRole('navigation', { name: 'Main navigation' })
+    .getByRole('link', { name: 'Services' })
+    .focus()
+  await page.keyboard.press('Escape')
+  await expect(menu).toBeFocused()
+  await menu.click()
+  await page
+    .getByRole('navigation', { name: 'Main navigation' })
+    .getByRole('link', { name: 'Process' })
+    .click()
+  await expect(page).toHaveURL(/\/process$/)
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+})
+
+test('reduced motion pauses the mountain video and disables sticky scenes', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto(process.env.QA_BASE_URL || 'http://localhost:3000')
+  await expect(page.locator('video')).toBeHidden()
+  await expect(page.locator('.scene-sticky').first()).toHaveCSS('position', 'relative')
+})
+
+test('all header, footer, and scene links reach their destinations', async ({ page }) => {
+  const base = process.env.QA_BASE_URL || 'http://localhost:3000'
+  await page.goto(base)
+  const hrefs = await page
+    .locator('.studio-header nav a, .studio-footer a, .studio-scene a')
+    .evaluateAll((links) => [...new Set(links.map((a) => a.getAttribute('href')!))])
+  for (const href of hrefs) {
+    if (href.startsWith('mailto:')) {
+      expect(href).toBe('mailto:justin@dash10.studio')
+      continue
+    }
+    const response = await page.request.get(`${base}${href}`)
+    await page.goto(`${base}${href}`)
+    expect(response?.status(), href).toBe(200)
+    await expect(page.locator('#main-content')).toHaveCount(1)
+    if (href.includes('#')) await expect(page.locator(`#${href.split('#')[1]}`)).toBeInViewport()
+  }
+})
+
+test('desktop uses one pinned stage and four accessible progress steps', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 })
+  await page.goto(process.env.QA_BASE_URL || 'http://localhost:3000')
+  const track = page.locator('.studio-scenes')
+  await expect(track).toHaveAttribute('data-pinned', 'true')
+  const stage = page.locator('.story-stage')
+  await expect(stage).toHaveCSS('position', 'sticky')
+  for (const index of [0, 1, 2, 3, 2, 1, 0]) {
+    await track.evaluate((el, step) => {
+      const bounds = el.getBoundingClientRect()
+      scrollTo(0, scrollY + bounds.top + ((bounds.height - innerHeight) / 4) * (step + 0.25))
+    }, index)
+    await expect(track).toHaveAttribute('data-active-scene', String(index + 1))
+    await expect(page.getByRole('progressbar', { name: 'Story progress' })).toHaveAttribute(
+      'aria-valuenow',
+      String((index + 1) * 25),
+    )
+    await expect(page.locator('.story-panel[data-active="true"]')).toHaveCount(1)
+    await expect(page.locator('.story-panel[inert]')).toHaveCount(3)
+    await expect(page.locator('.studio-scene:visible')).toHaveCount(1)
+    const bounds = await stage.boundingBox()
+    expect(Math.abs(bounds!.y)).toBeLessThan(2)
+    expect(bounds!.height).toBeLessThanOrEqual(1001)
+    const active = page.locator('.story-panel[data-active="true"]')
+    const title = await active.locator('h2').boundingBox()
+    const cta = await active.locator('a').boundingBox()
+    expect(title!.y).toBeGreaterThanOrEqual(0)
+    expect(cta!.y + cta!.height).toBeLessThanOrEqual(1000)
+  }
+  const fourth = page.getByRole('button', { name: 'Scene 4: Build, fix, connect' })
+  await fourth.focus()
+  await page.keyboard.press('Enter')
+  await expect(track).toHaveAttribute('data-active-scene', '4')
+  await expect(fourth).toBeFocused()
+  for (const viewport of [
+    { width: 1200, height: 650 },
+    { width: 390, height: 844 },
+    { width: 768, height: 1024 },
+    { width: 1024, height: 768 },
+  ]) {
+    await page.setViewportSize(viewport)
+    await expect(track).toHaveAttribute('data-pinned', 'false')
+    await expect(page.locator('.studio-scene:visible')).toHaveCount(4)
+    await expect(page.locator('.story-panel[inert]')).toHaveCount(0)
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+  }
+})
+
+test('desktop reduced motion exposes all scenes without pinning', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 })
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto(process.env.QA_BASE_URL || 'http://localhost:3000')
+  await expect(page.locator('.studio-scenes')).toHaveAttribute('data-pinned', 'false')
+  await expect(page.locator('.studio-scene:visible')).toHaveCount(4)
+  await expect(page.getByRole('progressbar')).toHaveCount(0)
+})
+
+test('header and footer use the approved wordmark and the D10 has no frame', async ({ page }) => {
+  await page.goto(process.env.QA_BASE_URL || 'http://localhost:3000')
+  await expect(page.locator('.studio-header img')).toHaveAttribute(
+    'src',
+    '/brand/logo/dash10-wordmark-white.svg',
+  )
+  await expect(page.locator('.footer-studio img')).toHaveAttribute(
+    'src',
+    '/brand/logo/dash10-wordmark-white.svg',
+  )
+  const src = await page.locator('.footer-monogram').getAttribute('src')
+  const svg = await (await page.request.get(new URL(src!, page.url()).href)).text()
+  expect(svg).not.toContain('<rect')
+  expect(svg).toContain('D10 monogram')
+})
+
+test('contact validates, stores an inquiry, prevents bypass and protects private submissions', async ({
+  page,
+}) => {
+  const base = process.env.QA_BASE_URL || 'http://localhost:3000'
+  const marker = process.env.QA_INQUIRY_MARKER || `qa-${Date.now()}`
+  await page.goto(`${base}/contact`)
+  await expect(
+    page.locator('main').getByRole('link', { name: 'justin@dash10.studio' }),
+  ).toHaveAttribute('href', /mailto:justin@dash10.studio/)
+  await page.getByLabel('Your name', { exact: true }).fill('Dash 10 QA')
+  await page.getByLabel('Email address', { exact: true }).fill(`${marker}@example.com`)
+  await page.getByLabel('Tell us about your project').fill('short')
+  await page.locator('form').evaluate((form) => {
+    form.setAttribute('novalidate', '')
   })
-
-  test('can load homepage', async ({ page }) => {
-    await page.goto('http://localhost:3000')
-    await expect(page).toHaveTitle(/Payload Website Template/)
-    const heading = page.locator('h1').first()
-    await expect(heading).toHaveText('Payload Website Template')
+  await page.getByRole('button', { name: 'SEND PROJECT INQUIRY' }).click()
+  await expect(page.locator('.inquiry-panel').getByRole('alert')).toContainText('20 and 5,000')
+  await page.getByLabel('Your name', { exact: true }).fill('Dash 10 QA')
+  await page.getByLabel('Email address', { exact: true }).fill(`${marker}@example.com`)
+  await page
+    .getByLabel('Tell us about your project')
+    .fill(`QA verification only. Please ignore this test inquiry. Reference: ${marker}`)
+  await page.getByRole('button', { name: 'SEND PROJECT INQUIRY' }).click()
+  await expect(page.locator('.inquiry-panel').getByRole('status')).toContainText(
+    'Your inquiry has been saved',
+    {
+      timeout: 20000,
+    },
+  )
+  const privateResponse = await page.request.get(`${base}/api/form-submissions`)
+  expect(privateResponse.status()).toBe(403)
+  const forms = await (
+    await page.request.get(
+      `${base}/api/forms?where[title][equals]=Dash%2010%20Studio%20project%20inquiries&depth=0`,
+    )
+  ).json()
+  expect(forms.docs).toHaveLength(1)
+  const bypass = await page.request.post(`${base}/api/form-submissions`, {
+    data: {
+      form: forms.docs[0].id,
+      submissionData: [{ field: 'email', value: 'bypass@example.com' }],
+    },
   })
+  expect(bypass.status()).toBe(403)
+  await page.reload()
+  await page.getByLabel('Your name', { exact: true }).fill('Dash 10 QA')
+  await page.getByLabel('Email address', { exact: true }).fill(`${marker}@example.com`)
+  await page
+    .getByLabel('Tell us about your project')
+    .fill(`QA duplicate check for ${marker}. No new inquiry should be saved.`)
+  await page.getByRole('button', { name: 'SEND PROJECT INQUIRY' }).click()
+  await expect(page.locator('.inquiry-panel').getByRole('alert')).toContainText('wait a minute')
+})
+
+test('contact shows a useful error when the server cannot be reached', async ({ page }) => {
+  await page.goto(`${process.env.QA_BASE_URL || 'http://localhost:3000'}/contact`)
+  await page.getByLabel('Your name', { exact: true }).fill('Dash 10 QA')
+  await page.getByLabel('Email address', { exact: true }).fill('offline@example.com')
+  await page
+    .getByLabel('Tell us about your project')
+    .fill('QA network failure test; this should never reach the server.')
+  await page.route('**/contact', (route) =>
+    route.request().method() === 'POST' ? route.abort('failed') : route.continue(),
+  )
+  await page.getByRole('button', { name: 'SEND PROJECT INQUIRY' }).click()
+  await expect(page.locator('.inquiry-panel').getByRole('alert')).toContainText(
+    'couldn’t save your inquiry',
+  )
+})
+
+test('mountain video plays normally and capability answers work with a keyboard', async ({
+  page,
+}) => {
+  await page.goto(process.env.QA_BASE_URL || 'http://localhost:3000')
+  const video = page.locator('video')
+  await expect
+    .poll(() => video.evaluate((v) => (v as HTMLVideoElement).readyState))
+    .toBeGreaterThanOrEqual(2)
+  const initialTime = await video.evaluate((v) => (v as HTMLVideoElement).currentTime)
+  await expect
+    .poll(() => video.evaluate((v) => (v as HTMLVideoElement).currentTime))
+    .toBeGreaterThan(initialTime + 0.2)
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await expect.poll(() => video.evaluate((v) => (v as HTMLVideoElement).paused)).toBe(true)
+  const summary = page.locator('.capabilities-list summary').first()
+  await summary.focus()
+  await page.keyboard.press('Enter')
+  await expect(page.locator('.capabilities-list details').first()).toHaveAttribute('open', '')
+  await page.keyboard.press('Enter')
+  await expect(page.locator('.capabilities-list details').first()).not.toHaveAttribute('open', '')
 })

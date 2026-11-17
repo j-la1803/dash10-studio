@@ -1,0 +1,120 @@
+# Dash 10 Studio — final QA and launch preparation
+
+Status: **production deployment approved by the user on November 17, 2026**. Visual refinements and the content follow-ups below may continue after launch. Updated November 17, 2026 (America/Chicago).
+
+## Configuration
+
+- Inquiry address: `justin@dash10.studio`. Added only the missing `CONTACT_EMAIL` entry to the ignored local `.env`; existing database credentials, secrets, and working localhost URL were preserved.
+- Production origin: `https://dash10studio.com`. `.env.production.example` records the deployment values without secrets. The candidate was built with these values explicitly supplied in the command environment. Generated sitemap URLs use HTTPS and the approved domain.
+- The local `.env` intentionally remains `NEXT_PUBLIC_SERVER_URL=http://localhost:3000`. Do not copy that value to production or reuse a locally built artifact that used localhost.
+- Favicon links now use the supplied monochrome brand artwork. Payload template metadata was removed from the affected public pages and metadata generators. Existing CMS content was not rewritten.
+
+## Approved design review
+
+Reference: `docs/design/homepage-approved.png` supplied by the user. Reviewed section by section with the rendered candidate at 1440×1000 and 390×844. Additional responsive checks cover 768×1024, 1024×768, and 1200×650.
+
+| Section | Review and changes |
+| --- | --- |
+| Header | Approved Dash 10 wordmark-only SVG (`dash10-wordmark-white.svg`), with no Studio line or tagline, preserved geometry and clear space; home header overlays the mountain. Services, Process, About, Blog, and Let's Talk remain the navigation. Mobile toggle, Escape, focus return, and route changes checked. |
+| Hero | Restored the reference's four-line headline and narrower left column, original mountain video, monochrome overlay, drafting gauge, and fade to black. Inter SemiBold headings; supporting text line-height 1.7. Video playback and reduced-motion pause checked. |
+| Platform bar | Six equal desktop cells, authentic platform symbol SVGs with readable labels, 1px borders; two columns on phones. Technology labels do not claim partnerships. Symbol-plus-label treatment remains a visual variation from the reference's full wordmark lockups. |
+| Scene 01 | Browser composition, reference heading breaks, left drafting rail/index and right UI label. Paragraph line-height 1.75 and clear CTA spacing. |
+| Scene 02 | Code editor illustration, reference heading breaks, code label and drafting details. |
+| Scene 03 | Connected platform diagram with visible paths to database, commerce, payments, analytics, shipping, and inventory. |
+| Scene 04 | Terminal illustration and reference heading breaks; Start a Project reaches Contact. |
+| Sticky behavior | One shared 100svh CSS-sticky stage sits inside a 500svh track on desktop (at least 1100px wide and 750px tall). Four equal native-scroll segments select one overlaid scene at a time, with restrained opacity/position transitions and no wheel/touch interception. The left progress indicator uses (active scene + 1) / 4: 25%, 50%, 75%, 100%. Keyboard-selectable scene controls, inert inactive panels, and focus preservation support accessibility. Short screens/tablets/phones, reduced motion, and no-JS rendering expose all four sections in normal document flow. |
+| Capabilities | Added the five reference questions using keyboard-accessible native disclosures. |
+| Studio values | Added the reference's Milwaukee, veteran-owned, and focused-work cards with the supplied white icons. The mockup's warm icon color was kept monochrome as required by the brand instructions. |
+| Footer | Replaced the initial large CTA layout with the reference's logo, service/company/contact columns and faded official white D10 monogram. All included routes and service anchors work. Header/footer branding now uses the wordmark only. The decorative footer uses `dash10-monogram-white-unboxed.svg`, derived by removing only the frame rectangle and trimming empty viewBox space; the original glyph paths and source SVG are preserved. The background remains low-opacity with a soft mask. |
+
+Original video files have no Git diff. The header/footer wordmark SVG bytes match the original supplied brand archive. The original boxed monogram is preserved alongside its explicitly approved unboxed derivative. The optional accent in `public/brand/brand.json` remains unchanged and is not applied to website presentation.
+
+## Inquiry delivery/storage — verified, not a visual-only form
+
+The Contact page now submits a real inquiry through a Next.js server action to Payload's existing PostgreSQL `form-submissions` collection. No new collection, table, schema migration, or destructive seed was introduced.
+
+- Required name, normalized email, and 20–5,000-character message are validated on the server. There is a honeypot, a persistent per-email 60-second duplicate cooldown, a pending state, and explicit failure feedback. Controlled inputs preserve the visitor's draft after errors.
+- Next.js server-action origin protections remain enabled. Anonymous collection reads/deletes are denied. The protected inquiry form cannot be submitted directly through the public Payload REST/GraphQL create operation; the validated server action supplies its server-only context. Other existing CMS forms retain their submission behavior.
+- The visitor sees success only after insertion and a database read-back. Text is stored in structured plain-text fields and displayed through the authenticated Payload admin.
+- A browser submitted a synthetic inquiry, then a separate Payload process read the exact stored name/email/message from PostgreSQL. The duplicate check saved no second inquiry. The synthetic record was removed after verification; unrelated data was preserved. See `docs/qa/inquiry-verification.json`.
+- **Email notifications are not configured or claimed.** The site's inquiry form has no configured emails; the app has no email adapter. No test email was sent. The working fallback is the approved mailto address.
+- Operationally, Justin must monitor **Payload admin → Form Submissions**, filtered to **Dash 10 Studio project inquiries**, or approve and configure an email adapter/notification workflow before relying on inbox alerts. Inquiries are not emailed automatically to the contact address.
+- The setup command is idempotent: `pnpm prepare:contact`. It creates only the missing dedicated form document, preserving existing form configuration. It was run successfully against the configured database.
+
+## Verification and artifacts
+
+- Production build, including TypeScript and sitemap generation: passed with production domain/email overrides.
+- Repository ESLint: zero errors; three pre-existing warnings remain (unused `req` in `populateAuthors`, existing raw image in `SplitContent`, unused `testInfo` in the admin test). No warnings in the new Studio components.
+- The five initial lint errors were in unchanged template code: redundant header state, two nested ref accesses in Card, and two intentional post-SSR preference hydration effects. Header/Card received small fixes; the two hydration effects retain documented local lint exceptions. No global rule was disabled.
+- Earlier complete production-mode browser suite: **8 passed** (Google Chrome), including inquiry delivery/storage checks. The November 17 design pass: **8 passed**, covering the relevant visual/navigation/scroll checks without generating more inquiry records; `docs/qa/design-update-tests.json` records that run. `docs/qa/browser-tests.json` retains the earlier complete run. The complete coverage includes homepage content, mobile navigation, all included header/footer/scene destinations and anchors, desktop sticky positioning/readability, short viewport fallback, overflow, reduced motion, inquiry validation/save/duplicate handling/private access/API bypass prevention, network failure feedback, video playback, and FAQ keyboard behavior.
+- Screenshots: `docs/qa/homepage-desktop.png`, `docs/qa/homepage-mobile.png`, `docs/qa/scene-01-desktop.png` through `scene-04-desktop.png`, `docs/qa/contact-desktop.png`, `docs/qa/contact-mobile.png`, `docs/qa/blog-desktop.png`, and `docs/qa/footer-desktop.png` / `footer-mobile.png`.
+- `docs/qa/visual-checks.json` records computed fonts, line-height, platform borders/columns, footer opacity, video source, overflow, missing image checks, and browser errors (none recorded).
+- The desktop full-page screenshot retains the live pinned layout. `docs/qa/homepage-desktop-overview.png` is a separately labeled unfolded overview of all four scenes for visual comparison; only screenshot CSS unpins the stage for that artifact. Individual scene viewport screenshots retain the actual pinned behavior and left progress values. Mobile screenshots show the real flow layout. The original video is paused at a reproducible frame only during capture; normal browsing plays it.
+
+## Remaining decisions/blockers
+
+1. Final human visual approval of the supplied reference comparison, including the full wordmark versus symbol/label platform treatment and the live sticky scroll spacing.
+2. The existing published blog post titled **test** at `/posts/t` remains live and appears in the sitemap. Approve its replacement or unpublish it in Payload before launch. No user CMS content was deleted or unpublished.
+3. Privacy/Terms copy and social-profile URLs shown in the mockup were not provided. Those links are intentionally absent instead of pointing to placeholders. Supply approved content/destinations or explicitly approve omitting them for launch.
+4. Confirm the inquiry-monitoring workflow. Storage is verified; inbox notification delivery has not been configured or tested.
+5. The production host, domain routing/TLS, production database target/backups, secrets, and durable media storage must be confirmed on the deployment host. These were not changed or verified remotely. The database-backed smoke test must be repeated against that actual production environment before switching traffic.
+6. This repository has no committed schema migration baseline. Reusing the existing initialized database needs no schema migration for this change; a blank production database requires a reviewed/tested baseline migration before launch. Never run the destructive template seed or enable development schema push against production.
+7. The Git working tree is still uncommitted, including the initial build, final QA work, and user-supplied design files. Review the complete diff and record an approved release commit before deployment.
+
+## Exact deployment sequence — after explicit approval only
+
+This is a Node/Next.js service deployment, not a static export. Commands below are instructions, not a deployment performed by Codex. The current scaffold `docker-compose.yml` targets MongoDB/Node 18 and is not a valid deployment recipe for this PostgreSQL app.
+
+1. Choose the production host/service. Provision a supported Node runtime (for example Node 22) and pnpm 11; use the same pinned lockfile. Configure persistent PostgreSQL and persistent `public/media` storage (or a separately implemented/tested object-storage adapter). Back up the database and media and record the rollback release.
+2. In the host's secure environment settings, set `NODE_ENV=production`, `NEXT_PUBLIC_SERVER_URL=https://dash10studio.com`, `CONTACT_EMAIL=justin@dash10.studio`, `DATABASE_URL`, `PAYLOAD_SECRET`, `PREVIEW_SECRET`, and `CRON_SECRET`. Keep secrets out of Git and command history. Preserve existing working values where already correct. Do not install `.env.production.example` as a live file with blank secrets.
+3. Check out the approved release commit in a new release directory. Install the locked dependencies:
+
+   ```sh
+   pnpm install --frozen-lockfile
+   ```
+
+4. If using a new database, stop here until its baseline migration is reviewed, applied and verified on staging. For the existing initialized production database, this work adds no schema changes. Prepare the inquiry form content without seeding/resetting:
+
+   ```sh
+   pnpm prepare:contact
+   ```
+
+5. Build with the production environment already present; validate the built sitemap domain:
+
+   ```sh
+   pnpm lint
+   pnpm exec tsc --noEmit
+   pnpm build
+   rg 'https://dash10studio.com' public/sitemap*.xml
+   ```
+
+6. Start the built release behind the host's process manager/reverse proxy. Bind the service port expected by that host:
+
+   ```sh
+   PORT=3000 pnpm start
+   ```
+
+7. Before routing public traffic, run the browser checks against the local production service (installed Google Chrome is the default QA browser):
+
+   ```sh
+   pnpm exec playwright install chromium
+   QA_BASE_URL=http://localhost:3000 QA_INQUIRY_MARKER=launch-qa-release-check pnpm exec playwright test tests/e2e/frontend.e2e.spec.ts --config=playwright.qa.config.ts --reporter=line
+   NODE_ENV=production pnpm exec tsx scripts/verify-inquiry.ts launch-qa-release-check
+   QA_BASE_URL=http://localhost:3000 node scripts/capture-visual-qa.mjs
+   ```
+
+   The QA config uses Chrome by default; set `QA_BROWSER_CHANNEL=chromium` to use the installed Playwright Chromium instead. A new `launch-qa-...` marker can be chosen per run. The verification script reads/removes only that synthetic inquiry. Retain the generated evidence with the release.
+
+8. Review the resulting screenshots and database verification. Confirm the real admin can see new inquiries, all intended CMS content is published, and no test post remains. If notifications are added, test actual receipt separately; a stored inquiry is not proof of email delivery.
+9. Only after the user's final approval, set the host-provided DNS routing for `dash10studio.com`, enable TLS, and route traffic to the approved release. Exact DNS records depend on the chosen host and are not invented here. Decide whether `www` is supported and configure its canonical redirect consistently.
+10. Verify HTTPS home/contact/services/process/about/blog, mobile navigation, inquiry save/read in admin, media/video loading, robots/sitemaps, and any notifications on the real domain. Keep the prior release/database/media backup available for rollback; do not restore or migrate data automatically without assessing incoming inquiries.
+
+
+## Approved production release — November 17, 2026
+
+- Source: `main` in `github.com/j-la1803/dash10-studio`; remote was `6e97c580a10a67acc70059ccc5e2ca7c032e0d07` at preflight.
+- Existing hosting: Vercel project `jla1803/dash10-studio`, production deployments triggered by its GitHub integration on `main`.
+- Domain confirmation: `https://dash10studio.com` and `https://dash10-studio.vercel.app` returned byte-identical existing homepage HTML, served by Vercel. The last GitHub Production deployment succeeded on the existing project.
+- Deployment scope: commit the approved implementation, validate the release, push `main`, and observe the existing automatic deployment. No production variables, DNS, infrastructure, secrets, schema, or destructive migration changes are authorized.
+- Client invoice files and unrelated brand-kit generators remain local and are excluded from the public release commit. Only the approved design reference, QA artifacts, website assets, and implementation are included.
+- The visual approval and uncommitted-release items above are superseded by this deployment authorization. Test blog content, optional legal/social links, and email notifications remain follow-ups; inquiries use the verified private Payload storage flow.

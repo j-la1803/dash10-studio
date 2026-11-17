@@ -1,0 +1,10 @@
+{
+  "verifiedAt": "2026-11-17T03:44:16.664Z",
+  "marker": "launch-qa-20261116-release",
+  "storage": "Payload PostgreSQL form-submissions",
+  "savedId": 2,
+  "readBackMatches": true,
+  "duplicateSubmissionCount": 1,
+  "emailNotifications": false,
+  "syntheticFixtureRemoved": true
+}
