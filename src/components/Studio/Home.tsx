@@ -130,7 +130,7 @@ export function StudioHome() {
       <VideoHero
         eyebrow="DIGITAL DEVELOPMENT STUDIO"
         lines={['THE RIGHT', 'TECHNOLOGY.', 'BUILT THE', 'RIGHT WAY.']}
-        video="/videos/dash-10-video-bg-slowed.mp4"
+        video="/videos/dash10-mountain-loop.mp4"
         playbackRate={0.7}
       />
       <section className="platform-section" aria-labelledby="platform-title">
@@ -149,7 +149,6 @@ export function StudioHome() {
       <PinnedScenes>
         {scenes.map((scene, i) => (
           <section className="studio-scene" key={scene.kind} aria-labelledby={`scene-${i}`}>
-            <span className="scene-rule" data-reveal="rule" aria-hidden="true" />
             <div className="scene-sticky">
               <span className="scene-index" aria-hidden="true">
                 0{i + 1}

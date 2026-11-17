@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { Beer } from 'lucide-react'
 
 export function StudioFooter() {
-  const email = process.env.CONTACT_EMAIL || 'justin@dash10.studio'
   return (
     <footer className="studio-footer">
       <Image
@@ -48,9 +48,11 @@ export function StudioFooter() {
           <Link href="/contact">Contact</Link>
         </nav>
         <div className="footer-contact">
-          <p className="studio-label">CONTACT</p>
-          <a href={`mailto:${email}`}>{email}</a>
-          <p>Milwaukee, WI</p>
+          <p className="studio-label">BASED IN</p>
+          <p className="footer-location">
+            <Beer size={16} strokeWidth={1.5} aria-hidden="true" /> MILWAUKEE, WI
+          </p>
+          <p className="footer-coordinates">43.0389° N / 87.9065° W</p>
         </div>
       </div>
       <div className="footer-bottom">
