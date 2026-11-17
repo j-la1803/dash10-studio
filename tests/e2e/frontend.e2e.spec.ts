@@ -62,60 +62,15 @@ test('all header, footer, and scene links reach their destinations', async ({ pa
   }
 })
 
-test('desktop uses one pinned stage and four accessible progress steps', async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 1000 })
+test('desktop exposes four normal-flow sections and native progress links', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
   await page.goto(process.env.QA_BASE_URL || 'http://localhost:3000')
-  const track = page.locator('.studio-scenes')
-  await expect(track).toHaveAttribute('data-pinned', 'true')
-  const stage = page.locator('.story-stage')
-  await expect(stage).toHaveCSS('position', 'sticky')
-  for (const index of [0, 1, 2, 3, 2, 1, 0]) {
-    await track.evaluate((el, step) => {
-      const bounds = el.getBoundingClientRect()
-      scrollTo(0, scrollY + bounds.top + ((bounds.height - innerHeight) / 4) * (step + 0.25))
-    }, index)
-    await expect(track).toHaveAttribute('data-active-scene', String(index + 1))
-    await expect(page.getByRole('progressbar', { name: 'Story progress' })).toHaveAttribute(
-      'aria-valuenow',
-      String((index + 1) * 25),
-    )
-    await expect(page.locator('.story-panel[data-active="true"]')).toHaveCount(1)
-    await expect(page.locator('.story-panel[inert]')).toHaveCount(3)
-    await expect(page.locator('.studio-scene:visible')).toHaveCount(1)
-    const bounds = await stage.boundingBox()
-    expect(Math.abs(bounds!.y)).toBeLessThan(2)
-    expect(bounds!.height).toBeLessThanOrEqual(1001)
-    const active = page.locator('.story-panel[data-active="true"]')
-    const title = await active.locator('h2').boundingBox()
-    const cta = await active.locator('a').boundingBox()
-    expect(title!.y).toBeGreaterThanOrEqual(0)
-    expect(cta!.y + cta!.height).toBeLessThanOrEqual(1000)
-  }
-  const fourth = page.getByRole('link', { name: 'Scene 4: Build, fix, connect' })
-  await fourth.focus()
-  await page.keyboard.press('Enter')
-  await expect(track).toHaveAttribute('data-active-scene', '4')
-  await expect(page).toHaveURL(/#story-step-4$/)
-  for (const viewport of [
-    { width: 390, height: 844 },
-    { width: 768, height: 1024 },
-    { width: 1024, height: 768 },
-  ]) {
-    await page.setViewportSize(viewport)
-    await expect(track).toHaveAttribute('data-pinned', 'false')
-    await expect(page.locator('.studio-scene:visible')).toHaveCount(4)
-    await expect(page.locator('.story-panel[inert]')).toHaveCount(0)
-    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
-  }
-})
-
-test('desktop reduced motion exposes all scenes without pinning', async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 1000 })
-  await page.emulateMedia({ reducedMotion: 'reduce' })
-  await page.goto(process.env.QA_BASE_URL || 'http://localhost:3000')
-  await expect(page.locator('.studio-scenes')).toHaveAttribute('data-pinned', 'false')
+  await expect(page.locator('.studio-scenes')).toHaveAttribute('data-flow', 'true')
   await expect(page.locator('.studio-scene:visible')).toHaveCount(4)
-  await expect(page.getByRole('progressbar')).toHaveCount(0)
+  await expect(page.locator('.story-panel[inert]')).toHaveCount(0)
+  await page.getByRole('link', { name: 'Scene 4: Build, fix, connect' }).click()
+  await expect(page).toHaveURL(/#story-step-4$/)
+  await expect(page.locator('.studio-scenes')).toHaveAttribute('data-active-scene', '4')
 })
 
 test('header and footer use the approved wordmark and the D10 has no frame', async ({ page }) => {

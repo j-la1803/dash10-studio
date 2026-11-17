@@ -47,6 +47,7 @@ function Illustration({ kind }: { kind: string }) {
   if (kind === 'systems')
     return (
       <div
+        data-reveal="visual"
         className="systems-visual"
         role="img"
         aria-label="Your platform connected to e-commerce, databases, payments, analytics, shipping, and inventory"
@@ -72,6 +73,7 @@ function Illustration({ kind }: { kind: string }) {
 
   return (
     <div
+      data-reveal="visual"
       className={`studio-window ${kind}`}
       role="img"
       aria-label={`${kind === 'browser' ? 'Dash 10 website concept' : kind === 'code' ? 'Clean, structured application code' : 'Technical build and deployment workflow'}`}
@@ -147,6 +149,7 @@ export function StudioHome() {
       <PinnedScenes>
         {scenes.map((scene, i) => (
           <section className="studio-scene" key={scene.kind} aria-labelledby={`scene-${i}`}>
+            <span className="scene-rule" data-reveal="rule" aria-hidden="true" />
             <div className="scene-sticky">
               <span className="scene-index" aria-hidden="true">
                 0{i + 1}
@@ -159,7 +162,7 @@ export function StudioHome() {
                 <p className="studio-label">
                   0{i + 1} / {['PURPOSE', 'DEVELOPMENT', 'INTEGRATIONS', 'SOLUTIONS'][i]}
                 </p>
-                <h2 id={`scene-${i}`} tabIndex={-1}>
+                <h2 data-reveal="heading" id={`scene-${i}`} tabIndex={-1}>
                   {[
                     ['BUILT FOR', 'THE REAL', 'WORLD.'],
                     ['WEB', 'DEVELOPMENT', 'WITHOUT THE', 'AGENCY BLOAT.'],
@@ -171,8 +174,8 @@ export function StudioHome() {
                     </span>
                   ))}
                 </h2>
-                <p>{scene.copy}</p>
-                <Link className="studio-cta" href={scene.href}>
+                <p data-reveal="copy">{scene.copy}</p>
+                <Link data-reveal="cta" className="studio-cta" href={scene.href}>
                   {scene.cta}
                   <span aria-hidden="true">↗</span>
                 </Link>

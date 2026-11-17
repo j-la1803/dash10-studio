@@ -1618,7 +1618,7 @@ body {
   font-size: 1rem;
 }
 
-/* One pinned stage, four native-scroll segments. Without JS, all scenes remain readable. */
+/* Homepage storytelling: natural sections with a sticky navigation rail only. */
 .studio-header img {
   width: 160px;
   height: auto;
@@ -1630,13 +1630,29 @@ body {
   width: 180px;
   height: auto;
 }
-.studio-scenes[data-pinned='false'] .studio-scene {
-  min-height: auto;
-}
-.studio-scenes[data-pinned='false'] .scene-sticky {
+.studio-scenes[data-flow] {
   position: relative;
+  height: auto;
+}
+.studio-scenes[data-flow] .story-stage,
+.studio-scenes[data-flow] .story-panel {
+  position: static;
+  height: auto;
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+.studio-scenes[data-flow] .studio-scene {
   min-height: auto;
-  padding-block: 6rem;
+  border-top: 0;
+  scroll-margin-top: 2rem;
+}
+.studio-scenes[data-flow] .scene-sticky {
+  position: relative;
+  min-height: 0;
+  height: auto;
+  padding-block: clamp(5rem, 9vw, 8rem);
 }
 .studio-scenes .scene-copy,
 .studio-scenes .studio-window,
@@ -1644,59 +1660,20 @@ body {
   animation: none;
   translate: none;
 }
-.studio-scenes[data-pinned='true'] {
-  height: 500svh;
-  position: relative;
-  border-top: 1px solid #777;
-}
-.studio-scenes[data-pinned='true'] .story-stage {
-  position: sticky;
+.scene-progress-boundary {
+  position: absolute;
   top: 0;
-  height: 100svh;
-  display: grid;
-  align-items: center;
-}
-.studio-scenes[data-pinned='true'] .story-panel {
-  grid-area: 1 / 1;
-  min-width: 0;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transform: translateY(18px);
-  transition:
-    opacity 380ms ease,
-    transform 380ms ease,
-    visibility 0s 380ms;
-}
-.studio-scenes[data-pinned='true'] .story-panel[data-active='true'] {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transform: none;
-  transition-delay: 0s;
-}
-.studio-scenes[data-pinned='true'] .studio-scene {
-  min-height: 0;
-  border: 0;
-}
-.studio-scenes[data-pinned='true'] .scene-sticky {
-  position: relative;
-  height: 100svh;
-  min-height: 0;
-  padding-block: clamp(1rem, 6svh, 5rem);
-}
-.studio-scenes[data-pinned='true'] .scene-index {
-  display: none;
+  bottom: 0;
+  left: var(--dash-page-padding);
+  width: 3rem;
 }
 .scene-progress {
-  position: absolute;
-  z-index: 5;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  position: sticky;
+  top: calc(50svh - 83px);
   display: flex;
   align-items: stretch;
   gap: 0.6rem;
+  z-index: 5;
 }
 .scene-progress-track {
   width: 2px;
@@ -1708,7 +1685,6 @@ body {
   height: 100%;
   background: #eee;
   transform-origin: top;
-  transition: transform 380ms ease;
 }
 .scene-progress ol {
   list-style: none;
@@ -1721,16 +1697,130 @@ body {
   color: #777;
   font-size: 0.65rem;
   letter-spacing: 0.12em;
-  cursor: pointer;
+  transition:
+    color 250ms ease,
+    transform 250ms ease;
 }
 .scene-progress a[aria-current='step'] {
   color: #fff;
+  transform: translateX(2px);
+}
+.scene-rule {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: #777;
+  transform-origin: left;
+}
+.studio-scenes [data-reveal].is-revealing {
+  animation: editorial-reveal 600ms cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+}
+.studio-scenes [data-reveal='copy'].is-revealing {
+  animation-delay: 100ms;
+}
+.studio-scenes [data-reveal='cta'].is-revealing {
+  animation-delay: 180ms;
+}
+.studio-scenes [data-reveal='visual'].is-revealing {
+  animation-delay: 80ms;
+}
+.studio-scenes [data-reveal='rule'].is-revealing {
+  animation-name: architectural-rule;
+}
+@keyframes editorial-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes architectural-rule {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.studio-cta {
+  position: relative;
+  border-bottom-color: #555;
+}
+.studio-cta:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: #eee;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 300ms ease;
+}
+.studio-cta:hover:after,
+.studio-cta:focus-visible:after {
+  transform: scaleX(1);
+}
+.studio-cta:hover span {
+  transform: translate(3px, -3px);
+}
+.capabilities-list details {
+  overflow: clip;
+}
+.capabilities-list .faq-answer > p {
+  padding-block: 1.25rem;
+  color: #aaa;
+  font-size: 0.85rem;
+  line-height: 1.8;
+}
+@media (max-width: 1099px) {
+  .scene-progress-boundary {
+    display: none;
+  }
+}
+@media (max-width: 700px) {
+  .studio-scenes [data-reveal].is-revealing {
+    animation-duration: 500ms;
+  }
+  .studio-scenes [data-reveal='copy'].is-revealing {
+    animation-delay: 60ms;
+  }
+  .studio-scenes [data-reveal='cta'].is-revealing {
+    animation-delay: 100ms;
+  }
+  @keyframes editorial-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .studio-scenes [data-reveal].is-revealing {
+    animation: none !important;
+  }
+  .scene-progress a,
+  .studio-cta:after,
+  .studio-cta span {
+    transition: none !important;
+  }
 }
 .footer-monogram {
-  width: 78%;
+  width: 60%;
   height: auto;
   right: -5%;
-  bottom: -55%;
+  bottom: -35%;
   opacity: 0.035;
   mask-image: linear-gradient(to bottom, transparent 0%, #000 25%, #000 85%, transparent 100%);
 }
@@ -1740,8 +1830,8 @@ body {
     height: auto;
   }
   .footer-monogram {
-    width: 110%;
-    right: -15%;
+    width: 84%;
+    right: -5%;
     bottom: -1%;
     opacity: 0.025;
   }
@@ -1753,10 +1843,8 @@ body {
   }
 }
 
-.story-step-anchor {
-  position: absolute;
-  left: 0;
-  width: 1px;
-  height: 1px;
-  pointer-events: none;
+@media (min-width: 1100px) {
+  .studio-scenes[data-flow] .scene-index {
+    display: none;
+  }
 }

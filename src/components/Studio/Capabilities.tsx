@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { MotionDetails } from './MotionDetails'
 
 const questions = [
   [
@@ -36,13 +37,9 @@ export function Capabilities() {
         </div>
         <div className="capabilities-list">
           {questions.map(([question, answer]) => (
-            <details key={question}>
-              <summary>
-                {question}
-                <span aria-hidden="true">+</span>
-              </summary>
+            <MotionDetails key={question} question={question}>
               <p>{answer}</p>
-            </details>
+            </MotionDetails>
           ))}
         </div>
       </section>

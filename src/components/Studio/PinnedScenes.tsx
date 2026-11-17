@@ -9,73 +9,65 @@ const sceneNames = [
   'Build, fix, connect',
 ]
 
+// Only the navigation rail is sticky. Every section remains in document flow.
 export function PinnedScenes({ children }: { children: ReactNode }) {
   const track = useRef<HTMLDivElement>(null)
-  const [pinned, setPinned] = useState(false)
+  const progress = useRef<HTMLDivElement>(null)
+  const fill = useRef<HTMLSpanElement>(null)
   const [active, setActive] = useState(0)
-  const activeRef = useRef(0)
 
   useEffect(() => {
-    const media = window.matchMedia(
-      '(min-width: 1100px) and (prefers-reduced-motion: no-preference)',
-    )
+    const root = track.current
+    if (!root) return
+    const sections = Array.from(root.querySelectorAll<HTMLElement>('.studio-scene'))
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)')
     let frame = 0
     const update = () => {
       frame = 0
-      const element = track.current
-      if (!element) return
-      // Use the actual content fit, not a screen-height cutoff that excludes laptop windows.
-      const panels = Array.from(element.querySelectorAll<HTMLElement>('.scene-sticky'))
-      const contentHeight = Math.max(
-        0,
-        ...panels.flatMap((panel) =>
-          Array.from(
-            panel.querySelectorAll<HTMLElement>('.scene-copy,.studio-window,.systems-visual'),
-          ).map((content) => content.getBoundingClientRect().height),
-        ),
-      )
-      const viewport = element.querySelector<HTMLElement>('.story-stage')!
-      const padding = Math.min(80, Math.max(16, window.innerHeight * 0.06))
-      const enabled = media.matches && contentHeight + padding * 2 <= window.innerHeight
-      setPinned(enabled)
-      if (!enabled) return
-      const bounds = element.getBoundingClientRect()
-      // Sticky begins inside the track border and ends when its content box is exhausted.
-      const range = Math.max(1, element.clientHeight - viewport.getBoundingClientRect().height)
-      const distance = -bounds.top - element.clientTop
-      const next = Math.min(3, Math.max(0, Math.floor(distance / (range / 4))))
-      if (next !== activeRef.current) {
-        const outgoing = element.querySelector(`[data-panel="${activeRef.current}"]`)
-        const moveFocus = outgoing?.contains(document.activeElement)
-        activeRef.current = next
-        setActive(next)
-        // Keep keyboard focus usable if its panel is hidden by a manual scroll.
-        if (moveFocus)
-          requestAnimationFrame(() => {
-            element
-              .querySelector<HTMLElement>(`[data-panel="${next}"] h2`)
-              ?.focus({ preventScroll: true })
-          })
-      }
+      const bounds = root.getBoundingClientRect()
+      const center = window.innerHeight / 2
+      const fraction = Math.min(1, Math.max(0, (center - bounds.top) / bounds.height))
+      if (fill.current) fill.current.style.transform = `scaleY(${fraction})`
+      progress.current?.setAttribute('aria-valuenow', String(Math.round(fraction * 100)))
+      const next = sections.findIndex((section) => section.getBoundingClientRect().bottom > center)
+      setActive(next < 0 ? sections.length - 1 : next)
     }
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update)
     }
-    const observer = new ResizeObserver(schedule)
-    if (track.current) {
-      observer.observe(track.current)
-      track.current
-        .querySelectorAll('.scene-copy,.studio-window,.systems-visual')
-        .forEach((content) => observer.observe(content))
+    const resize = new ResizeObserver(schedule)
+    resize.observe(root)
+    sections.forEach((section) => resize.observe(section))
+    const reveals = Array.from(root.querySelectorAll<HTMLElement>('[data-reveal]'))
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue
+          const element = entry.target as HTMLElement
+          observer.unobserve(element)
+          element.dataset.revealed = 'true'
+          if (media.matches) continue
+          element.classList.add('is-revealing')
+          element.addEventListener('animationend', () => element.classList.remove('is-revealing'), {
+            once: true,
+          })
+        }
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
+    )
+    reveals.forEach((element) => observer.observe(element))
+    const reduce = () => {
+      if (media.matches) reveals.forEach((element) => element.classList.remove('is-revealing'))
     }
-    schedule()
-    media.addEventListener('change', schedule)
+    media.addEventListener('change', reduce)
     window.addEventListener('scroll', schedule, { passive: true })
     window.addEventListener('resize', schedule)
+    schedule()
     return () => {
       cancelAnimationFrame(frame)
+      resize.disconnect()
       observer.disconnect()
-      media.removeEventListener('change', schedule)
+      media.removeEventListener('change', reduce)
       window.removeEventListener('scroll', schedule)
       window.removeEventListener('resize', schedule)
     }
@@ -85,58 +77,41 @@ export function PinnedScenes({ children }: { children: ReactNode }) {
     <div
       id="what-we-do"
       className="studio-scenes"
+      data-flow="true"
       ref={track}
-      data-pinned={pinned}
       data-active-scene={active + 1}
     >
-      {pinned &&
-        sceneNames.map((name, index) => (
-          <span
-            key={name}
-            id={`story-step-${index + 1}`}
-            className="story-step-anchor"
-            aria-hidden="true"
-            style={{ top: `calc(${index} * (100% - 100svh) / 4 + 2px)` }}
-          />
-        ))}
-      <div className="story-stage">
-        {pinned && (
-          <nav className="scene-progress" aria-label="Story scenes">
-            <div
-              className="scene-progress-track"
-              role="progressbar"
-              aria-label="Story progress"
-              aria-valuemin={0}
-              aria-valuemax={100}
-              aria-valuenow={(active + 1) * 25}
-              aria-valuetext={`Scene ${active + 1} of 4`}
-            >
-              <span style={{ transform: `scaleY(${(active + 1) / 4})` }} />
-            </div>
-            <ol>
-              {sceneNames.map((name, index) => (
-                <li key={name}>
-                  <a
-                    href={`#story-step-${index + 1}`}
-                    aria-label={`Scene ${index + 1}: ${name}`}
-                    aria-current={index === active ? 'step' : undefined}
-                  >
-                    0{index + 1}
-                  </a>
-                </li>
-              ))}
-            </ol>
-          </nav>
-        )}
-        {Children.toArray(children).map((child, index) => (
+      <aside className="scene-progress-boundary">
+        <nav className="scene-progress" aria-label="Story scenes">
           <div
-            className="story-panel"
-            key={index}
-            data-panel={index}
-            data-active={index === active}
-            inert={pinned && index !== active}
-            aria-hidden={pinned && index !== active ? true : undefined}
+            ref={progress}
+            className="scene-progress-track"
+            role="progressbar"
+            aria-label="Story progress"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={0}
           >
+            <span ref={fill} style={{ transform: 'scaleY(0)' }} />
+          </div>
+          <ol>
+            {sceneNames.map((name, index) => (
+              <li key={name}>
+                <a
+                  href={`#story-step-${index + 1}`}
+                  aria-label={`Scene ${index + 1}: ${name}`}
+                  aria-current={index === active ? 'step' : undefined}
+                >
+                  0{index + 1}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      </aside>
+      <div className="story-stage">
+        {Children.toArray(children).map((child, index) => (
+          <div id={`story-step-${index + 1}`} className="story-panel" key={index}>
             {child}
           </div>
         ))}
