@@ -2130,3 +2130,22 @@ body {
     display: none;
   }
 }
+
+/* Tighten only the whitespace between stories; preserve outer and internal spacing. */
+.studio-scenes[data-flow] .story-panel + .story-panel .scene-sticky {
+  padding-top: clamp(4.125rem, 7.425vw, 6.6rem);
+}
+.studio-scenes[data-flow] .story-panel:not(:last-child) .scene-sticky {
+  padding-bottom: clamp(4.125rem, 7.425vw, 6.6rem);
+}
+.capabilities-description {
+  max-width: 36ch;
+  margin-block: 1.75rem 2rem;
+  color: #aaa;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+.capabilities-intro > .studio-cta {
+  font-size: 0.7rem;
+  margin-top: 0;
+}

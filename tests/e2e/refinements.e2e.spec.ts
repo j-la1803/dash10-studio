@@ -118,6 +118,16 @@ test('marquee moves, pauses for hover/focus, and becomes scrollable with reduced
   const track = page.locator('.platform-track')
   await expect(page.locator('.platform-grid[aria-hidden="true"] > div')).toHaveCount(8)
   const transform = () => track.evaluate((el) => getComputedStyle(el).transform)
+  const geometry = await page.locator('.platform-grid').evaluateAll((groups) =>
+    groups.map((group) => ({
+      width: group.getBoundingClientRect().width,
+      cell: group.firstElementChild!.getBoundingClientRect().width,
+      labels: group.textContent,
+    })),
+  )
+  expect(geometry[0].labels).toBe(geometry[1].labels)
+  expect(geometry[0].width).toBeCloseTo(geometry[1].width, 2)
+  expect(geometry[0].cell).toBeCloseTo(await page.evaluate(() => innerWidth / 5), 1)
   const first = await transform()
   await expect.poll(transform).not.toBe(first)
   await row.hover()
@@ -155,4 +165,23 @@ test('header underlines reveal on keyboard focus and FAQ uses a minus when expan
   ).toBe('matrix(1, 0, 0, 1, 0, 0)')
   await page.keyboard.press('Enter')
   await expect(page.locator('.capabilities-list details').first()).not.toHaveAttribute('open', '')
+})
+
+test('editorial FAQ introduction and CTA work; story gaps are reduced by 17.5 percent', async ({
+  page,
+}) => {
+  await page.goto(base)
+  await expect(page.locator('.capabilities-description')).toHaveText(
+    'From custom development to connected systems, we handle the technical work so you can focus on running your business.',
+  )
+  const padding = await page.locator('.scene-sticky').evaluateAll((els) =>
+    els.map((el) => ({
+      top: parseFloat(getComputedStyle(el).paddingTop),
+      bottom: parseFloat(getComputedStyle(el).paddingBottom),
+    })),
+  )
+  expect(padding[1].top / padding[0].top).toBeCloseTo(0.825, 2)
+  expect(padding[0].bottom / padding[3].bottom).toBeCloseTo(0.825, 2)
+  await page.getByRole('link', { name: 'HAVE A PROJECT IN MIND?' }).click()
+  await expect(page.getByRole('button', { name: 'SEND PROJECT INQUIRY' })).toBeVisible()
 })

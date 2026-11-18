@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { MotionDetails } from './MotionDetails'
 
 const questions = [
@@ -34,6 +35,13 @@ export function Capabilities() {
             <br />
             SIDE, HANDLED.
           </h2>
+          <p className="capabilities-description">
+            From custom development to connected systems, we handle the technical work so you can
+            focus on running your business.
+          </p>
+          <Link className="studio-cta" href="/contact">
+            HAVE A PROJECT IN MIND? <span aria-hidden="true">↗</span>
+          </Link>
         </div>
         <div className="capabilities-list">
           {questions.map(([question, answer]) => (
