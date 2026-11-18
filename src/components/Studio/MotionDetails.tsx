@@ -54,7 +54,7 @@ export function MotionDetails({ question, children }: { question: string; childr
         }}
       >
         {question}
-        <span aria-hidden="true">+</span>
+        <span className="faq-toggle" aria-hidden="true" />
       </summary>
       <div className="faq-answer">{children}</div>
     </details>

@@ -10,7 +10,7 @@ for (const viewport of [
     await page.setViewportSize(viewport)
     await page.goto(base)
     await page.evaluate(() => document.fonts.ready)
-    const grid = page.locator('.platform-grid')
+    const grid = page.locator('.platform-grid:not([aria-hidden])')
     await expect(grid.locator(':scope > div')).toHaveCount(8)
     await expect(grid).toContainText('Google Tag Manager')
     await expect(grid).toContainText('HubSpot')
@@ -22,7 +22,7 @@ for (const viewport of [
       }
       return {
         hero: bounds('.dash-hero-content'),
-        platform: bounds('.platform-grid'),
+        platform: bounds('.platform-marquee'),
         stories: bounds('.studio-scene'),
         capabilities: bounds('.studio-capabilities'),
         valuesStart: bounds('.studio-values > div:first-child'),

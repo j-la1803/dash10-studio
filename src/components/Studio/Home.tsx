@@ -132,22 +132,43 @@ export function StudioHome() {
       <VideoHero
         eyebrow="DIGITAL DEVELOPMENT STUDIO"
         lines={['THE RIGHT', 'TECHNOLOGY.', 'BUILT THE', 'RIGHT WAY.']}
-        video="/videos/dash10-mountain-loop.mp4"
-        playbackRate={0.7}
+        video="/videos/dash-10-video-bg.mp4"
+        playbackRate={0.8}
       />
       <section className="platform-section" aria-labelledby="platform-title">
         <p id="platform-title" className="studio-label">
           PLATFORMS WE BUILD WITH
         </p>
-        <div className="platform-grid">
-          {platforms.map(([name, icon]) => (
-            <div key={name}>
-              {icon && (
-                <Image unoptimized src={`/platforms/${icon}.svg`} alt="" width={30} height={30} />
-              )}
-              <span>{name}</span>
-            </div>
-          ))}
+        <div
+          className="platform-marquee"
+          tabIndex={0}
+          role="region"
+          aria-label="Technology platforms; pause on focus"
+        >
+          <div className="platform-track">
+            {[false, true].map((duplicate) => (
+              <div
+                className="platform-grid"
+                key={String(duplicate)}
+                aria-hidden={duplicate || undefined}
+              >
+                {platforms.map(([name, icon]) => (
+                  <div key={name}>
+                    {icon && (
+                      <Image
+                        unoptimized
+                        src={`/platforms/${icon}.svg`}
+                        alt=""
+                        width={48}
+                        height={48}
+                      />
+                    )}
+                    <span>{name}</span>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
       <PinnedScenes>

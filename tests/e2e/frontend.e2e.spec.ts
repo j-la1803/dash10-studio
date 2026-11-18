@@ -6,7 +6,7 @@ test('homepage has the approved content and working service links', async ({ pag
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(
     'THE RIGHT TECHNOLOGY. BUILT THE RIGHT WAY.',
   )
-  await expect(page.locator('.platform-grid > div')).toHaveCount(8)
+  await expect(page.locator('.platform-grid:not([aria-hidden]) > div')).toHaveCount(8)
   await expect(page.locator('.studio-scene')).toHaveCount(4)
   await page.getByRole('link', { name: 'EXPLORE SERVICES' }).click()
   await expect(page).toHaveURL(/\/services$/)

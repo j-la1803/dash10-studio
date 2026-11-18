@@ -74,66 +74,85 @@ for (const viewport of [
   })
 }
 
-test('baked mountain loop matches at both turns and plays through the loop boundary', async ({
-  page,
-}, info) => {
+test('original mountain plays once at 0.8 and holds its final frame', async ({ page }) => {
   await page.goto(base)
   const video = page.locator('video')
-  await expect(video.locator('source')).toHaveAttribute('src', '/videos/dash10-mountain-loop.mp4')
+  await expect(video.locator('source')).toHaveAttribute('src', '/videos/dash-10-video-bg.mp4')
   await expect
-    .poll(() => video.evaluate((v) => (v as HTMLVideoElement).readyState))
+    .poll(() => video.evaluate((node) => (node as HTMLVideoElement).readyState))
     .toBeGreaterThanOrEqual(2)
-  const metrics = await video.evaluate(async (node) => {
-    const v = node as HTMLVideoElement
-    v.pause()
-    const canvas = document.createElement('canvas')
-    canvas.width = 160
-    canvas.height = 86
-    const context = canvas.getContext('2d')!
-    async function frame(time: number) {
-      await new Promise<void>((resolve) => {
-        v.addEventListener('seeked', () => resolve(), { once: true })
-        v.currentTime = time
-      })
-      context.drawImage(v, 0, 0, 160, 86)
-      return Array.from(context.getImageData(0, 0, 160, 86).data)
-    }
-    const first = await frame(0.001),
-      last = await frame(v.duration - 0.04)
-    const beforeTurn = await frame(v.duration / 2 - 0.08),
-      afterTurn = await frame(v.duration / 2 + 0.08)
-    const forward = await frame(5),
-      reverse = await frame(v.duration - 5)
-    const difference = (a: number[], b: number[]) =>
-      a.reduce((sum, n, i) => sum + Math.abs(n - b[i]), 0) / a.length
-    return {
-      duration: v.duration,
-      width: v.videoWidth,
-      height: v.videoHeight,
-      seam: difference(first, last),
-      turn: difference(beforeTurn, afterTurn),
-      reverse: difference(forward, reverse),
-    }
-  })
-  await info.attach('decoded-loop-frame-comparison', {
-    body: JSON.stringify(metrics),
-    contentType: 'application/json',
-  })
-  expect(metrics.width).toBe(1438)
-  expect(metrics.height).toBe(768)
-  expect(metrics.duration).toBeGreaterThan(58)
-  expect(metrics.duration).toBeLessThan(59)
-  expect(metrics.seam).toBeLessThan(2)
-  expect(metrics.turn).toBeLessThan(2)
-  expect(metrics.reverse).toBeLessThan(2)
+  expect(
+    await video.evaluate((node) => {
+      const v = node as HTMLVideoElement
+      return {
+        loop: v.loop,
+        muted: v.muted,
+        inline: v.playsInline,
+        rate: v.playbackRate,
+        width: v.videoWidth,
+      }
+    }),
+  ).toEqual({ loop: false, muted: true, inline: true, rate: 0.8, width: 1438 })
   await video.evaluate(async (node) => {
     const v = node as HTMLVideoElement
     v.currentTime = v.duration - 0.2
     await v.play()
   })
+  await expect.poll(() => video.evaluate((node) => (node as HTMLVideoElement).ended)).toBe(true)
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.emulateMedia({ reducedMotion: 'no-preference' })
+  await page.waitForTimeout(500)
+  expect(
+    await video.evaluate((node) => {
+      const v = node as HTMLVideoElement
+      return v.paused && v.ended && Math.abs(v.duration - v.currentTime) < 0.01
+    }),
+  ).toBe(true)
+})
+
+test('marquee moves, pauses for hover/focus, and becomes scrollable with reduced motion', async ({
+  page,
+}) => {
+  await page.goto(base)
+  const row = page.locator('.platform-marquee')
+  const track = page.locator('.platform-track')
+  await expect(page.locator('.platform-grid[aria-hidden="true"] > div')).toHaveCount(8)
+  const transform = () => track.evaluate((el) => getComputedStyle(el).transform)
+  const first = await transform()
+  await expect.poll(transform).not.toBe(first)
+  await row.hover()
+  await expect(track).toHaveCSS('animation-play-state', 'paused')
+  await page.mouse.move(0, 0)
+  await row.focus()
+  await expect(track).toHaveCSS('animation-play-state', 'paused')
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await expect(track).toHaveCSS('animation-name', 'none')
+  await expect(row).toHaveCSS('overflow-x', 'auto')
+  await row.evaluate((el) => {
+    el.scrollLeft = 200
+  })
+  expect(await row.evaluate((el) => el.scrollLeft)).toBeGreaterThan(100)
+})
+
+test('header underlines reveal on keyboard focus and FAQ uses a minus when expanded', async ({
+  page,
+}) => {
+  await page.goto(base)
+  const link = page.locator('.studio-header nav a').first()
+  await link.focus()
   await expect
-    .poll(() => video.evaluate((v) => (v as HTMLVideoElement).currentTime))
-    .toBeLessThan(2)
-  expect(await video.evaluate((v) => (v as HTMLVideoElement).paused)).toBe(false)
-  expect(await video.evaluate((v) => (v as HTMLVideoElement).playbackRate)).toBe(0.7)
+    .poll(() => link.evaluate((el) => getComputedStyle(el, '::after').transform))
+    .toBe('matrix(1, 0, 0, 1, 0, 0)')
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  const summary = page.locator('.capabilities-list summary').first()
+  await summary.focus()
+  await page.keyboard.press('Enter')
+  await expect(page.locator('.capabilities-list details').first()).toHaveAttribute('open', '')
+  expect(
+    await summary
+      .locator('.faq-toggle')
+      .evaluate((el) => getComputedStyle(el, '::after').transform),
+  ).toBe('matrix(1, 0, 0, 1, 0, 0)')
+  await page.keyboard.press('Enter')
+  await expect(page.locator('.capabilities-list details').first()).not.toHaveAttribute('open', '')
 })

@@ -10,7 +10,7 @@ type VideoHeroProps = {
   playbackRate?: number
 }
 
-export const VideoHero = ({ eyebrow, lines, video, playbackRate = 0.7 }: VideoHeroProps) => {
+export const VideoHero = ({ eyebrow, lines, video, playbackRate = 0.8 }: VideoHeroProps) => {
   const videoRef = useRef<HTMLVideoElement>(null)
   useEffect(() => {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -18,11 +18,16 @@ export const VideoHero = ({ eyebrow, lines, video, playbackRate = 0.7 }: VideoHe
       if (!videoRef.current) return
       videoRef.current.playbackRate = playbackRate
       if (media.matches) videoRef.current.pause()
-      else void videoRef.current.play().catch(() => {})
+      else if (!videoRef.current.ended) void videoRef.current.play().catch(() => {})
     }
+    const element = videoRef.current
+    element?.addEventListener('loadedmetadata', update)
     update()
     media.addEventListener('change', update)
-    return () => media.removeEventListener('change', update)
+    return () => {
+      media.removeEventListener('change', update)
+      element?.removeEventListener('loadedmetadata', update)
+    }
   }, [playbackRate])
 
   return (
@@ -31,7 +36,6 @@ export const VideoHero = ({ eyebrow, lines, video, playbackRate = 0.7 }: VideoHe
         ref={videoRef}
         className="dash-hero-video"
         muted
-        loop
         playsInline
         preload="metadata"
         poster="/images/dash10-mountain.png"
