@@ -23,7 +23,7 @@ for (const viewport of [
         const m = new DOMMatrix(s.transform)
         return { opacity: Number(s.opacity), x: m.m41, y: m.m42, animation: s.animationName }
       })
-    const position = async (top: number) => {
+    const position = async (top: number, expectedOpacity?: number) => {
       await page.evaluate((y) => scrollTo(0, y), geometry.start - top)
       await page.evaluate(
         () =>
@@ -45,6 +45,12 @@ for (const viewport of [
           .first()
           .evaluate((el) => el.getBoundingClientRect().top),
       ).toBeCloseTo(top, 0)
+      // Offscreen transitions can be compositor-deferred in Chrome. Wait on the
+      // rendered value too, rather than inferring completion from animation state.
+      if (expectedOpacity !== undefined)
+        await expect
+          .poll(async () => (await read()).opacity, { intervals: [16, 32, 64], timeout: 1000 })
+          .toBeCloseTo(expectedOpacity, 2)
       return read()
     }
     const samples = []
@@ -104,10 +110,10 @@ for (const viewport of [
       .toBeCloseTo(initial.opacity, 2)
     // All content stays readable across the central reading area, then fades at exit.
     expect((await position(viewport.height * 0.3)).opacity).toBe(1)
-    const exit = await position(-geometry.height + viewport.height * 0.125)
+    const exit = await position(-geometry.height + viewport.height * 0.125, 0.5)
     expect(exit.opacity).toBeCloseTo(0.5, 1)
     expect((await position(-geometry.height)).opacity).toBeLessThan(0.02)
-    const returned = await position(-geometry.height + viewport.height * 0.125)
+    const returned = await position(-geometry.height + viewport.height * 0.125, 0.5)
     expect(returned.opacity).toBeCloseTo(exit.opacity, 2)
     expect(
       await page
