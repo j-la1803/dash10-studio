@@ -1,17 +1,28 @@
 'use client'
 
-import { useActionState, useState } from 'react'
+import { useActionState, useState, useRef } from 'react'
+import { measureSubmission } from '@/utilities/integrations/analytics'
 import { submitInquiry } from '@/app/(frontend)/contact/actions'
 import type { InquiryState } from '@/app/(frontend)/contact/validation'
 
 const initial: InquiryState = { status: 'idle', message: '' }
 export function ContactForm() {
+  const locked = useRef(false)
+  const receipt = useRef<string | null>(null)
   const [values, setValues] = useState({ name: '', email: '', message: '' })
   const [state, action, pending] = useActionState(
     async (previous: InquiryState, data: FormData): Promise<InquiryState> => {
+      if (locked.current) return previous
+      locked.current = true
       try {
-        return await submitInquiry(previous, data)
+        const result = await submitInquiry(previous, data)
+        if (result.status === 'success') {
+          receipt.current ||= crypto.randomUUID()
+          measureSubmission('payload', receipt.current)
+        } else locked.current = false
+        return result
       } catch {
+        locked.current = false
         return {
           status: 'error',
           message:

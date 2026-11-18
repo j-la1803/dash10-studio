@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import { HubSpotForm } from '@/components/Integrations/HubSpotForm'
+import { hubSpotConfig } from '@/utilities/integrations/config'
 import { ContactForm } from '@/components/Studio/ContactForm'
 export const metadata: Metadata = {
   title: 'Let’s Talk | Dash 10 Studio',
@@ -25,7 +27,7 @@ export default function ContactPage() {
       ) : (
         <p className="contact-pending">Project inquiries will open here soon.</p>
       )}
-      <ContactForm />
+      <HubSpotForm config={hubSpotConfig(process.env)} fallback={<ContactForm />} />
       <div className="detail-grid">
         <section>
           <h2>A useful starting point.</h2>

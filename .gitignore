@@ -23,3 +23,6 @@ node_modules/
 
 .pnpm-store/
 *.tsbuildinfo
+
+# Unpublished editorial source stays local; repository is public.
+/content/drafts/

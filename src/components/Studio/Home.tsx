@@ -38,9 +38,11 @@ const platforms = [
   ['WordPress', 'wordpress'],
   ['Next.js', 'nextdotjs'],
   ['BigCommerce', 'bigcommerce'],
-  ['Payload', 'payloadcms'],
+  ['Payload CMS', 'payloadcms'],
   ['Supabase', 'supabase'],
   ['Google Analytics', 'googleanalytics'],
+  ['Google Tag Manager', 'googletagmanager'],
+  ['HubSpot', null],
 ]
 
 function Illustration({ kind }: { kind: string }) {
@@ -140,7 +142,9 @@ export function StudioHome() {
         <div className="platform-grid">
           {platforms.map(([name, icon]) => (
             <div key={name}>
-              <Image unoptimized src={`/platforms/${icon}.svg`} alt="" width={30} height={30} />
+              {icon && (
+                <Image unoptimized src={`/platforms/${icon}.svg`} alt="" width={30} height={30} />
+              )}
               <span>{name}</span>
             </div>
           ))}

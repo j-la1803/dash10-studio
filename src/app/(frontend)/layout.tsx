@@ -1,11 +1,10 @@
 import type { Metadata } from 'next'
 
-import { cn } from '@/utilities/ui'
-import { GeistMono } from 'geist/font/mono'
-import { GeistSans } from 'geist/font/sans'
 import React from 'react'
 
 import { AdminBar } from '@/components/AdminBar'
+import { Analytics } from '@/components/Integrations/Analytics'
+import { gtmContainer } from '@/utilities/integrations/config'
 import { StudioFooter } from '@/components/Studio/Footer'
 import { StudioHeader } from '@/components/Studio/Header'
 import { Providers } from '@/providers'
@@ -20,12 +19,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { isEnabled } = await draftMode()
 
   return (
-    <html className={cn(GeistSans.variable, GeistMono.variable)} lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <InitTheme />
-        <link href="/brand/logo/png/favicon-32.png" rel="icon" sizes="32x32" />
-        <link href="/brand/logo/dash10-monogram-app-icon.svg" rel="icon" type="image/svg+xml" />
-        <link href="/brand/logo/png/apple-touch-icon.png" rel="apple-touch-icon" />
+        <link href="/favicon-32.png" rel="icon" sizes="32x32" type="image/png" />
+        <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+        <link href="/apple-touch-icon.png" rel="apple-touch-icon" />
       </head>
       <body>
         <Providers>
@@ -41,6 +40,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <StudioHeader />
           {children}
           <StudioFooter />
+          <Analytics containerId={gtmContainer(process.env)} />
         </Providers>
       </body>
     </html>
