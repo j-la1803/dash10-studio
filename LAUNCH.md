@@ -185,3 +185,19 @@ FAQ retains all five questions/answers and aligned architectural rule, with a sl
 Verification: production build and standalone TypeScript pass; lint has zero errors and the same three template warnings. Full non-submission Chrome regression suite and focused new interaction tests cover desktop/mobile layouts, normal scrolling, rail release/reversal, horizontal reveals, marquee motion/pause/reduced-motion scrolling, once-only video/final-frame hold, FAQ/keyboard, navigation, asset/privacy guards and overflow. Desktop/mobile screenshots are captured with reduced motion to keep all content visible.
 
 Release through the existing main → Vercel production integration only; no DNS, environment, infrastructure, schema or secret changes. Retest the focused browser suite against the live domain after deployment. Existing integration and draft-publication gates remain unchanged.
+
+## Header contrast and confirmed GTM installation
+
+Homepage header gets a non-interactive 150px black-to-transparent gradient (72% black at top); header geometry, wordmark and hero framing remain unchanged. All header navigation links stay white on hover/focus, and existing 300ms white underlines/reduced-motion behavior remain intact.
+
+Source audit: one existing React client consent-gated GTM loader, no direct GA4/gtag installation. Enable only the user-confirmed `GTM-MZ6ZN2NH` via a checked-in public default; environment config can select that same container or disable analytics. Other IDs fail closed. Preserve the existing consent UI and basic opt-in: no container/Google request before allow, analytics storage only, ads denied, decline/withdrawal respected. Existing safe-path initial/client navigation page_view de-duplication and CTA/inquiry hooks are unchanged. Script blocking does not interrupt site functions. No direct GA4 script, second container or noscript bypass added.
+
+External verification limitation: the public container response currently has version 1 with empty tags/predicates/rules and does not contain `G-MFJV44GKLV`. The user's configured GA4 tag appears to remain in the unpublished workspace. Publish the reviewed workspace in GTM after ensuring send_page_view/Enhanced Measurement history events are disabled and safe application page_view/custom-event triggers are configured as documented in `docs/INTEGRATIONS.md`. Verify real GA4 delivery with Tag Assistant/DebugView after publication. The website release installs GTM, not unpublished account configuration.
+
+Release checks: TypeScript, production build, integration unit tests and Chrome desktop/mobile header, consent, one-container, safe route-event counts/back-navigation, blocked-script fallback and existing homepage regression tests. Use main → existing Vercel project, preserve production environment/DNS/schema/secrets, then rerun browser verification against https://dash10studio.com.
+
+## Scene labels and final hero playback refinement
+
+Move UI / 001, CODE / 002, SYS / 003 and TERM / 004 out of the illustration/content stage and into their respective section roots. Position all at bottom/right 28px, with the existing technical monochrome typography. Remove the former adjacent crosshair; retain illustration dimensions/layout. Existing section padding reserves space beneath all illustration/copy content at desktop and mobile widths. Browser tests assert the section is each label's offset parent, edge inset is 28px, and no label intersects copy or illustration rectangles at 1440, 1280 and 390px.
+
+Hero playback is now 0.6× (superseding 0.8×) on the same unmodified original source. Preserve once-only playback, final-frame hold, muted inline autoplay, reduced-motion fallback and all crop/opacity/gradient styling. No reverse loop or encoding change. Deploy with the pending approved header/confirmed-GTM release through the existing workflow after combined verification; no production environment/infrastructure changes.

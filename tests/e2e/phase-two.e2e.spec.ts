@@ -58,13 +58,15 @@ for (const viewport of [
     )
   })
 }
-test('unconfigured services stay inactive and drafts stay private', async ({ page }) => {
+test('HubSpot stays inactive, analytics awaits consent and drafts stay private', async ({
+  page,
+}) => {
   const requests: string[] = []
   page.on('request', (r) => requests.push(r.url()))
   await page.goto(`${base}/contact`)
   await expect(page.getByRole('button', { name: 'SEND PROJECT INQUIRY' })).toBeVisible()
   await expect(page.locator('.hs-form-frame')).toHaveCount(0)
-  await expect(page.getByRole('region', { name: 'Analytics preferences' })).toHaveCount(0)
+  await expect(page.getByRole('region', { name: 'Analytics preferences' })).toBeVisible()
   expect(
     requests.some((url) => /googletagmanager|google-analytics|hsforms|hubspot/.test(url)),
   ).toBe(false)

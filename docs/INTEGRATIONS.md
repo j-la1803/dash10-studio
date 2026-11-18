@@ -2,7 +2,7 @@
 
 ## Current state
 
-The source audit found no existing GTM, direct GA4, HubSpot or consent scripts. The visual release adds no active tracking or HubSpot requests. The existing private Payload inquiry form remains the live fallback. All new identifiers in `.env.example` are blank. No production environment was changed.
+The source audit found no existing GTM, direct GA4, HubSpot or consent scripts. The approved GTM installation uses only `GTM-MZ6ZN2NH`, with the existing private Payload inquiry form remaining live. GTM requests require analytics opt-in. HubSpot remains inactive. No production environment was changed.
 
 ## HubSpot Free form
 
@@ -18,7 +18,7 @@ References: [HubSpot forms styling](https://developers.hubspot.com/docs/cms/star
 
 ## GTM and GA4
 
-Supply a real `GTM_CONTAINER_ID` and configure `ANALYTICS_ENABLED=true`, `ANALYTICS_VERIFIED=true` only in preview first. The live release leaves them unset. Install **one Google/GA4 tag inside GTM**, not a direct gtag script in Next.js. No GA4 measurement ID belongs in this application.
+The confirmed production default is `GTM-MZ6ZN2NH`; `.env.example` documents the same public identifier. `GTM_CONTAINER_ID` may explicitly select that confirmed ID; any other ID fails closed. `ANALYTICS_ENABLED=false` or `ANALYTICS_VERIFIED=false` disables installation. No Vercel environment changes are necessary. Install **one Google/GA4 tag inside GTM**, not a direct gtag script in Next.js. No GA4 measurement ID belongs in this application.
 
 Use basic opt-in consent: no GTM request, noscript tracking iframe, cookieless ping or event replay before consent. Default analytics and ad consent is denied. Allowing analytics grants only analytics storage; ad storage, ad user data and ad personalization remain denied. Decline leaves tags unloaded. Analytics preferences remain available for withdrawal, which denies consent, clears accessible first-party GA cookies and reloads to unload the container. Storage failure falls back to an in-memory choice. This is an analytics-only implementation; adding ads or other vendors requires a separate consent review.
 
@@ -28,7 +28,7 @@ Configure the container as follows before publishing:
 2. Set the Google tag/event defaults for `page_location`, `page_path`, and `page_referrer` from the corresponding safe data-layer variables. Never use raw Page URL, query strings, document titles, raw click URLs or form fields. The app sends route-only URLs without queries/fragments, maps article routes to `/posts/article`, and unknown routes to `/other` to avoid accidental personal data in paths. Counts remain one per pathname transition, including article-to-article navigation.
 3. Add custom event triggers and GA4 event tags for the fixed schemas below, with analytics consent checks. Do not add a separate automatic form-success listener.
 4. Use Tag Assistant and GA4 DebugView in preview: before consent, after allow/decline, initial load, Next.js client navigation, browser back/forward, CTA clicks, one successful inquiry, failed inquiry, repeated success notifications, and consent withdrawal. Confirm one page_view per route transition and one success event per accepted inquiry. Verify no names, emails, messages, query strings or arbitrary URLs appear in payloads.
-5. Only after preview verification and activation approval, configure the production environment and publish the reviewed GTM container. The deployment in this task does not create accounts, publish a container or change production IDs/secrets.
+5. Production installation is approved. The public GTM container response inspected on November 17 has resource version 1, with empty tags/triggers/rules and no GA4 measurement ID. The GA4 tag for `G-MFJV44GKLV` is reportedly configured in the workspace, but workspace changes must be reviewed against steps 1–4 and published in GTM before Analytics delivery can be verified. This application release does not publish the GTM workspace or create a direct GA4 installation. No production secrets or infrastructure changes are required.
 
 | Event | Parameters | Meaning |
 | --- | --- | --- |

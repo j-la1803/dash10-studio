@@ -2149,3 +2149,35 @@ body {
   font-size: 0.7rem;
   margin-top: 0;
 }
+
+/* Keep the approved header geometry; shade only the mountain behind it. */
+.studio-header[data-home='true']::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 150px;
+  background: linear-gradient(to bottom, rgb(0 0 0 / 72%), transparent);
+  pointer-events: none;
+  z-index: -1;
+}
+.studio-header nav a,
+.studio-header nav a:is(:hover, :focus-visible) {
+  color: #fff;
+}
+.studio-header nav a:not([href='/contact'])::after {
+  background: #fff;
+}
+
+/* Identification belongs to the whole scene, outside the illustration/copy stage. */
+.studio-scenes[data-flow] .studio-scene {
+  position: relative;
+}
+.studio-scenes[data-flow] .studio-scene > .scene-meta {
+  display: block;
+  position: absolute;
+  inset: auto 28px 28px auto;
+  translate: none;
+  font-family: var(--font-geist-mono), monospace;
+  line-height: 1.5;
+  white-space: nowrap;
+}

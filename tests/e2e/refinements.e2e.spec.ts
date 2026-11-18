@@ -74,7 +74,7 @@ for (const viewport of [
   })
 }
 
-test('original mountain plays once at 0.8 and holds its final frame', async ({ page }) => {
+test('original mountain plays once at 0.6 and holds its final frame', async ({ page }) => {
   await page.goto(base)
   const video = page.locator('video')
   await expect(video.locator('source')).toHaveAttribute('src', '/videos/dash-10-video-bg.mp4')
@@ -92,7 +92,7 @@ test('original mountain plays once at 0.8 and holds its final frame', async ({ p
         width: v.videoWidth,
       }
     }),
-  ).toEqual({ loop: false, muted: true, inline: true, rate: 0.8, width: 1438 })
+  ).toEqual({ loop: false, muted: true, inline: true, rate: 0.6, width: 1438 })
   await video.evaluate(async (node) => {
     const v = node as HTMLVideoElement
     v.currentTime = v.duration - 0.2
@@ -185,3 +185,47 @@ test('editorial FAQ introduction and CTA work; story gaps are reduced by 17.5 pe
   await page.getByRole('link', { name: 'HAVE A PROJECT IN MIND?' }).click()
   await expect(page.getByRole('button', { name: 'SEND PROJECT INQUIRY' })).toBeVisible()
 })
+
+for (const width of [1440, 1280, 390]) {
+  test(`scene identification stays outside content at ${width}`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 })
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await page.goto(base)
+    await page.evaluate(() => document.fonts.ready)
+    await expect(page.locator('.studio-scene > .scene-meta')).toHaveText([
+      'UI / 001',
+      'CODE / 002',
+      'SYS / 003',
+      'TERM / 004',
+    ])
+    const geometry = await page.locator('.studio-scene').evaluateAll((sections) =>
+      sections.map((section) => {
+        const label = section.querySelector<HTMLElement>(':scope > .scene-meta')!
+        const box = label.getBoundingClientRect()
+        const outer = section.getBoundingClientRect()
+        return {
+          reference: label.offsetParent === section,
+          right: outer.right - box.right,
+          bottom: outer.bottom - box.bottom,
+          overlaps: [...section.querySelectorAll('.scene-copy, [data-reveal="visual"]')].some(
+            (el) => {
+              const other = el.getBoundingClientRect()
+              return (
+                box.left < other.right &&
+                box.right > other.left &&
+                box.top < other.bottom &&
+                box.bottom > other.top
+              )
+            },
+          ),
+        }
+      }),
+    )
+    for (const scene of geometry) {
+      expect(scene.reference).toBe(true)
+      expect(scene.right).toBeCloseTo(28, 0)
+      expect(scene.bottom).toBeCloseTo(28, 0)
+      expect(scene.overlaps).toBe(false)
+    }
+  })
+}

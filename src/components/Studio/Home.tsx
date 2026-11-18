@@ -133,7 +133,7 @@ export function StudioHome() {
         eyebrow="DIGITAL DEVELOPMENT STUDIO"
         lines={['THE RIGHT', 'TECHNOLOGY.', 'BUILT THE', 'RIGHT WAY.']}
         video="/videos/dash-10-video-bg.mp4"
-        playbackRate={0.8}
+        playbackRate={0.6}
       />
       <section className="platform-section" aria-labelledby="platform-title">
         <p id="platform-title" className="studio-label">
@@ -178,10 +178,6 @@ export function StudioHome() {
               <span className="scene-index" aria-hidden="true">
                 0{i + 1}
               </span>
-              <div className="scene-meta" aria-hidden="true">
-                {['UI', 'CODE', 'SYS', 'TERM'][i]} / 00{i + 1}
-                <span>+</span>
-              </div>
               <div className="scene-copy">
                 <p className="studio-label">
                   0{i + 1} / {['PURPOSE', 'DEVELOPMENT', 'INTEGRATIONS', 'SOLUTIONS'][i]}
@@ -205,6 +201,9 @@ export function StudioHome() {
                 </Link>
               </div>
               <Illustration kind={scene.kind} />
+            </div>
+            <div className="scene-meta" aria-hidden="true">
+              {['UI', 'CODE', 'SYS', 'TERM'][i]} / 00{i + 1}
             </div>
           </section>
         ))}

@@ -49,7 +49,7 @@ const events = () =>
   )
 
 describe('integration release gates', () => {
-  it('fails closed without real configuration and explicit verification', () => {
+  it('uses only the confirmed GTM container, supports disabling, and keeps HubSpot gated', () => {
     expect(gtmContainer({ GTM_CONTAINER_ID: 'GTM-TEST123', ANALYTICS_ENABLED: 'true' })).toBeNull()
     expect(
       gtmContainer({
@@ -58,6 +58,10 @@ describe('integration release gates', () => {
         ANALYTICS_VERIFIED: 'true',
       }),
     ).toBeNull()
+    expect(gtmContainer({})).toBe('GTM-MZ6ZN2NH')
+    expect(gtmContainer({ GTM_CONTAINER_ID: 'GTM-MZ6ZN2NH' })).toBe('GTM-MZ6ZN2NH')
+    expect(gtmContainer({ ANALYTICS_ENABLED: 'false' })).toBeNull()
+    expect(gtmContainer({ GTM_CONTAINER_ID: 'GTM-P2S64XCX' })).toBeNull()
     expect(hubSpotConfig({ HUBSPOT_ENABLED: 'true', HUBSPOT_VERIFIED: 'true' })).toBeNull()
     const view = render(createElement(HubSpotForm, { config: null, fallback }))
     expect(view.getByText('Existing private inquiry form')).toBeTruthy()

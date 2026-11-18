@@ -15,10 +15,11 @@ export function hubSpotConfig(env: Record<string, string | undefined>): HubSpotC
     return null
   return { portalId, formId, region: region as HubSpotConfig['region'] }
 }
+// Confirmed production container. Environment settings can disable analytics, but
+// a stale or unrelated container ID must never install a second/wrong container.
+export const productionGtmContainer = 'GTM-MZ6ZN2NH'
 export function gtmContainer(env: Record<string, string | undefined>) {
-  return env.ANALYTICS_ENABLED === 'true' &&
-    env.ANALYTICS_VERIFIED === 'true' &&
-    /^GTM-[A-Z0-9]+$/.test(env.GTM_CONTAINER_ID || '')
-    ? env.GTM_CONTAINER_ID!
-    : null
+  if (env.ANALYTICS_ENABLED === 'false' || env.ANALYTICS_VERIFIED === 'false') return null
+  const container = env.GTM_CONTAINER_ID || productionGtmContainer
+  return container === productionGtmContainer ? container : null
 }

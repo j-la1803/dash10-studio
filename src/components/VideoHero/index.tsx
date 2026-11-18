@@ -10,7 +10,7 @@ type VideoHeroProps = {
   playbackRate?: number
 }
 
-export const VideoHero = ({ eyebrow, lines, video, playbackRate = 0.8 }: VideoHeroProps) => {
+export const VideoHero = ({ eyebrow, lines, video, playbackRate = 0.6 }: VideoHeroProps) => {
   const videoRef = useRef<HTMLVideoElement>(null)
   useEffect(() => {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)')
