@@ -25,7 +25,26 @@ for (const viewport of [
       })
     const position = async (top: number) => {
       await page.evaluate((y) => scrollTo(0, y), geometry.start - top)
-      await page.waitForTimeout(180)
+      await page.evaluate(
+        () =>
+          new Promise<void>((resolve) =>
+            requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+          ),
+      )
+      await expect
+        .poll(() =>
+          title.evaluate(
+            (el) =>
+              el.getAnimations().filter((animation) => animation.playState === 'running').length,
+          ),
+        )
+        .toBe(0)
+      expect(
+        await page
+          .locator('.studio-scene')
+          .first()
+          .evaluate((el) => el.getBoundingClientRect().top),
+      ).toBeCloseTo(top, 0)
       return read()
     }
     const samples = []
@@ -52,6 +71,7 @@ for (const viewport of [
     }
     // Reverse during an unfinished transition, without resetting opacity/transform.
     const initial = await position(viewport.height * 0.7)
+    const initialScroll = await page.evaluate(() => scrollY)
     await page.mouse.move(viewport.width * 0.8, viewport.height * 0.5)
     await page.mouse.wheel(0, 40)
     // Wheel delivery is asynchronous; sample after motion actually starts.
@@ -69,6 +89,16 @@ for (const viewport of [
     const reversing = await read()
     expect(Math.abs(reversing.opacity - middle.opacity)).toBeLessThan(0.15)
     expect(Math.abs(reversing.x - middle.x)).toBeLessThan(4)
+    // Do not let a queued reverse-wheel event race the following programmatic sample.
+    await expect.poll(() => page.evaluate(() => scrollY), { intervals: [10] }).toBe(initialScroll)
+    await expect
+      .poll(() =>
+        title.evaluate(
+          (el) =>
+            el.getAnimations().filter((animation) => animation.playState === 'running').length,
+        ),
+      )
+      .toBe(0)
     await expect
       .poll(async () => (await read()).opacity, { intervals: [20] })
       .toBeCloseTo(initial.opacity, 2)
