@@ -29,8 +29,20 @@ export function PinnedScenes({ children }: { children: ReactNode }) {
       const fraction = Math.min(1, Math.max(0, (center - bounds.top) / bounds.height))
       if (fill.current) fill.current.style.transform = `scaleY(${fraction})`
       progress.current?.setAttribute('aria-valuenow', String(Math.round(fraction * 100)))
-      const next = sections.findIndex((section) => section.getBoundingClientRect().bottom > center)
+      const geometry = sections.map((section) => section.getBoundingClientRect())
+      const next = geometry.findIndex((section) => section.bottom > center)
       setActive(next < 0 ? sections.length - 1 : next)
+      geometry.forEach((section, index) => {
+        // Full visibility by 35vh; stay readable until the last 25vh leaves the top.
+        // Position alone determines progress, so direction changes never restart anything.
+        const entering = (window.innerHeight - section.top) / (window.innerHeight * 0.65)
+        const leaving = section.bottom / (window.innerHeight * 0.25)
+        const linear = Math.min(1, Math.max(0, Math.min(entering, leaving)))
+        const reveal = media.matches ? 1 : linear * linear * (3 - 2 * linear)
+        const distance = window.innerWidth <= 700 ? 16 : 24
+        sections[index].style.setProperty('--scene-reveal', String(reveal))
+        sections[index].style.setProperty('--scene-offset', `${-distance * (1 - reveal)}px`)
+      })
     }
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update)
@@ -38,36 +50,18 @@ export function PinnedScenes({ children }: { children: ReactNode }) {
     const resize = new ResizeObserver(schedule)
     resize.observe(root)
     sections.forEach((section) => resize.observe(section))
-    const reveals = Array.from(root.querySelectorAll<HTMLElement>('[data-reveal]'))
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue
-          const element = entry.target as HTMLElement
-          observer.unobserve(element)
-          element.dataset.revealed = 'true'
-          if (media.matches) continue
-          element.classList.add('is-revealing')
-          element.addEventListener('animationend', () => element.classList.remove('is-revealing'), {
-            once: true,
-          })
-        }
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
-    )
-    reveals.forEach((element) => observer.observe(element))
-    const reduce = () => {
-      if (media.matches) reveals.forEach((element) => element.classList.remove('is-revealing'))
-    }
-    media.addEventListener('change', reduce)
+    media.addEventListener('change', schedule)
     window.addEventListener('scroll', schedule, { passive: true })
     window.addEventListener('resize', schedule)
     schedule()
     return () => {
       cancelAnimationFrame(frame)
       resize.disconnect()
-      observer.disconnect()
-      media.removeEventListener('change', reduce)
+      media.removeEventListener('change', schedule)
+      sections.forEach((section) => {
+        section.style.removeProperty('--scene-reveal')
+        section.style.removeProperty('--scene-offset')
+      })
       window.removeEventListener('scroll', schedule)
       window.removeEventListener('resize', schedule)
     }

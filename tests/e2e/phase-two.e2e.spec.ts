@@ -38,15 +38,15 @@ for (const viewport of [
         ),
       }
     })
-    for (const part of [
-      geometry.platform,
-      geometry.stories,
-      geometry.capabilities,
-      geometry.footer,
-    ]) {
+    for (const part of [geometry.stories, geometry.capabilities, geometry.footer]) {
       expect(part.left).toBeCloseTo(geometry.hero.left, 0)
       expect(part.right).toBeCloseTo(geometry.hero.right, 0)
     }
+    expect(geometry.platform.left).toBeCloseTo(0, 0)
+    expect(geometry.platform.right).toBeCloseTo(
+      await page.evaluate(() => document.documentElement.clientWidth),
+      0,
+    )
     expect(geometry.copy.left).toBeCloseTo(geometry.intro.left, 0)
     expect(Math.max(...geometry.cells) - Math.min(...geometry.cells)).toBeLessThan(1)
     expect(geometry.font).toContain('Inter')

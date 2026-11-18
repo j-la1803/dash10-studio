@@ -99,31 +99,13 @@ for (const mode of ['mobile', 'reduced'] as const) {
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
   })
 }
-test('reveals run once and FAQ supports smooth reversal and keyboard', async ({ page }) => {
+test('CTA focus and FAQ support keyboard and smooth reversal', async ({ page }) => {
   await page.goto(base)
-  await page.evaluate(() => {
-    document.documentElement.dataset.revealCount = '0'
-    document.addEventListener('animationstart', (e) => {
-      if ((e as AnimationEvent).animationName === 'editorial-reveal')
-        document.documentElement.dataset.revealCount = String(
-          Number(document.documentElement.dataset.revealCount) + 1,
-        )
-    })
-  })
-  const title = page.locator('.studio-scene h2').first()
-  await title.scrollIntoViewIfNeeded()
-  await expect(title).toHaveAttribute('data-revealed', 'true')
-  await expect(title).not.toHaveClass(/is-revealing/)
   const cta = page.locator('.studio-scene .studio-cta').first()
   await cta.hover()
   await expect(cta.locator('span')).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 3, -3)')
   await cta.focus()
   expect(await cta.evaluate((el) => getComputedStyle(el).outlineStyle)).not.toBe('none')
-  const count = await page.evaluate(() => document.documentElement.dataset.revealCount)
-  await page.locator('h1').scrollIntoViewIfNeeded()
-  await title.scrollIntoViewIfNeeded()
-  await page.waitForTimeout(900)
-  expect(await page.evaluate(() => document.documentElement.dataset.revealCount)).toBe(count)
   const details = page.locator('.capabilities-list details').first(),
     summary = details.locator('summary')
   await summary.click()

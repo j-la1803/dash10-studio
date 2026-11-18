@@ -928,27 +928,6 @@ textarea:focus-visible {
   color: #aaa;
   font-size: 0.9rem;
 }
-@media (min-width: 1000px) and (min-height: 750px) and (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .scene-copy,
-    .studio-window,
-    .systems-visual {
-      animation: scene-reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 85%;
-    }
-    @keyframes scene-reveal {
-      from {
-        opacity: 0.3;
-        translate: 0 40px;
-      }
-      to {
-        opacity: 1;
-        translate: 0 0;
-      }
-    }
-  }
-}
 @media (max-width: 999px), (max-height: 749px) {
   .studio-scene {
     min-height: auto;
@@ -1705,27 +1684,17 @@ body {
   color: #fff;
   transform: translateX(2px);
 }
-.studio-scenes [data-reveal].is-revealing {
-  animation: editorial-reveal 600ms cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+.studio-scenes[data-flow] [data-reveal] {
+  animation: none;
+  opacity: var(--scene-reveal, 1);
+  transform: translateX(var(--scene-offset, 0px));
+  transition:
+    transform 120ms linear,
+    opacity 120ms linear;
 }
-.studio-scenes [data-reveal='copy'].is-revealing {
-  animation-delay: 100ms;
-}
-.studio-scenes [data-reveal='cta'].is-revealing {
-  animation-delay: 180ms;
-}
-.studio-scenes [data-reveal='visual'].is-revealing {
-  animation-delay: 80ms;
-}
-@keyframes editorial-reveal {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.studio-scenes[data-flow] .studio-scene:focus-within [data-reveal] {
+  opacity: 1;
+  transform: translateX(0);
 }
 .studio-cta {
   position: relative;
@@ -1764,30 +1733,12 @@ body {
     display: none;
   }
 }
-@media (max-width: 700px) {
-  .studio-scenes [data-reveal].is-revealing {
-    animation-duration: 500ms;
-  }
-  .studio-scenes [data-reveal='copy'].is-revealing {
-    animation-delay: 60ms;
-  }
-  .studio-scenes [data-reveal='cta'].is-revealing {
-    animation-delay: 100ms;
-  }
-  @keyframes editorial-reveal {
-    from {
-      opacity: 0;
-      transform: translateY(12px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-}
 @media (prefers-reduced-motion: reduce) {
-  .studio-scenes [data-reveal].is-revealing {
+  .studio-scenes[data-flow] [data-reveal] {
     animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
   .scene-progress a,
   .studio-cta:after,
@@ -2006,4 +1957,31 @@ body {
   display: block;
   margin: 1rem var(--dash-page-padding);
   color: #aaa;
+}
+
+/* Edge-to-edge technology cells; the label retains the shared text gutter. */
+.dash-home .platform-section {
+  margin-inline: 0;
+  padding-inline: 0;
+}
+.platform-section > .studio-label {
+  padding-inline: var(--dash-page-padding);
+}
+/* The Capabilities rule and the story rail share the same shell-column origin. */
+.capabilities-intro {
+  position: relative;
+}
+.capabilities-intro::before {
+  content: '';
+  position: absolute;
+  left: calc(-1 * var(--dash-story-inset));
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #777;
+}
+@media (max-width: 1099px) {
+  .capabilities-intro {
+    padding-left: 1rem;
+  }
 }
