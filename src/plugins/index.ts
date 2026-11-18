@@ -12,14 +12,16 @@ import { beforeSyncWithSearch } from '@/search/beforeSync'
 
 import { Page, Post } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
+import { postCanonical } from '@/utilities/editorial/postMetadata'
 
 const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
   return doc?.title ? `${doc.title} | Dash 10 Studio` : 'Dash 10 Studio'
 }
 
-const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
+const generateURL: GenerateURL<Post | Page> = ({ doc, collectionConfig }) => {
   const url = getServerSideURL()
 
+  if (collectionConfig?.slug === 'posts' && doc?.slug) return postCanonical(doc.slug)
   return doc?.slug ? `${url}/${doc.slug}` : url
 }
 

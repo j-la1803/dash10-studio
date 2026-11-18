@@ -227,6 +227,10 @@ export interface Page {
 export interface Post {
   id: number;
   title: string;
+  /**
+   * Article summary shown on blog listings, separate from the SEO description.
+   */
+  excerpt?: string | null;
   heroImage?: (number | null) | Media;
   content: {
     root: {
@@ -1185,6 +1189,7 @@ export interface FormBlockSelect<T extends boolean = true> {
  */
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
+  excerpt?: T;
   heroImage?: T;
   content?: T;
   relatedPosts?: T;

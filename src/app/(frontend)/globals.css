@@ -2181,3 +2181,82 @@ body {
   line-height: 1.5;
   white-space: nowrap;
 }
+
+/* Editorial articles use the existing monochrome type and shared shell. */
+.studio-post {
+  padding: 5rem var(--dash-page-padding);
+  background: #0b0b0b;
+  color: #ddd;
+}
+.studio-post-heading,
+.studio-post .studio-post-reading {
+  max-width: 48rem;
+  margin-inline: auto;
+}
+.studio-post-heading h1 {
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+.studio-post-excerpt {
+  margin-block: 1.5rem 2rem;
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: #aaa;
+}
+.studio-post-image {
+  max-width: 64rem;
+  margin: 3rem auto;
+}
+.studio-post .studio-post-reading {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  --tw-prose-body: #bbb;
+  --tw-prose-headings: #fff;
+  --tw-prose-links: #fff;
+  --tw-prose-bold: #fff;
+  --tw-prose-bullets: #888;
+  --tw-prose-counters: #aaa;
+  --tw-prose-hr: #444;
+  --tw-prose-invert-body: #bbb;
+  --tw-prose-invert-headings: #fff;
+}
+.studio-post-reading :is(h2, h3) {
+  line-height: 1.3;
+  margin-top: 2.25em;
+  letter-spacing: -0.025em;
+}
+.studio-post-reading a {
+  text-underline-offset: 4px;
+}
+.studio-post-reading a:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 4px;
+}
+.studio-post-reading .lexical-table-container {
+  overflow-x: auto;
+  margin-block: 2rem;
+}
+.studio-post-reading table {
+  min-width: 38rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.studio-post-reading :is(td, th) {
+  border-color: #555 !important;
+  padding: 0.8rem !important;
+}
+@media (max-width: 700px) {
+  .studio-post {
+    padding-block: 3rem;
+  }
+  .studio-post-heading h1 {
+    font-size: 2.3rem;
+  }
+  .studio-post-excerpt {
+    font-size: 1rem;
+  }
+  .studio-post .studio-post-reading {
+    font-size: 1rem;
+  }
+}

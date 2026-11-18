@@ -11,7 +11,11 @@ import RichText from '@/components/RichText'
 import type { Post } from '@/payload-types'
 
 import { PostHero } from '@/heros/PostHero'
-import { generateMeta } from '@/utilities/generateMeta'
+import {
+  postMetadata,
+  postStructuredData,
+  serializeStructuredData,
+} from '@/utilities/editorial/postMetadata'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
@@ -52,7 +56,7 @@ export default async function Post({ params: paramsPromise }: Args) {
   if (!post) return <PayloadRedirects url={url} />
 
   return (
-    <article id="main-content" className="pt-16 pb-16">
+    <article id="main-content" className="studio-post">
       <PageClient />
 
       {/* Allows redirects for valid pages too */}
@@ -60,11 +64,15 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       {draft && <LivePreviewListener />}
 
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializeStructuredData(postStructuredData(post)) }}
+      />
       <PostHero post={post} />
 
       <div className="flex flex-col items-center gap-4 pt-8">
         <div className="container">
-          <RichText className="max-w-[48rem] mx-auto" data={post.content} enableGutter={false} />
+          <RichText className="studio-post-reading" data={post.content} enableGutter={false} />
           {post.relatedPosts && post.relatedPosts.length > 0 && (
             <RelatedPosts
               className="mt-12 max-w-[52rem] lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[2fr]"
@@ -83,7 +91,8 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
   const decodedSlug = decodeURIComponent(slug)
   const post = await queryPostBySlug({ slug: decodedSlug })
 
-  return generateMeta({ doc: post })
+  const { isEnabled: draft } = await draftMode()
+  return post ? postMetadata(post, draft) : { robots: { index: false, follow: false } }
 }
 
 const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {

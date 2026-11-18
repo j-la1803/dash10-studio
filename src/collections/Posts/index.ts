@@ -2,6 +2,10 @@ import type { CollectionConfig } from 'payload'
 
 import {
   BlocksFeature,
+  EXPERIMENTAL_TableFeature,
+  OrderedListFeature,
+  UnorderedListFeature,
+  InlineCodeFeature,
   FixedToolbarFeature,
   HeadingFeature,
   HorizontalRuleFeature,
@@ -72,6 +76,13 @@ export const Posts: CollectionConfig<'posts'> = {
       required: true,
     },
     {
+      name: 'excerpt',
+      type: 'textarea',
+      admin: {
+        description: 'Article summary shown on blog listings, separate from the SEO description.',
+      },
+    },
+    {
       type: 'tabs',
       tabs: [
         {
@@ -88,6 +99,10 @@ export const Posts: CollectionConfig<'posts'> = {
                 features: ({ rootFeatures }) => {
                   return [
                     ...rootFeatures,
+                    OrderedListFeature(),
+                    UnorderedListFeature(),
+                    InlineCodeFeature(),
+                    EXPERIMENTAL_TableFeature(),
                     HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
                     BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
                     FixedToolbarFeature(),
