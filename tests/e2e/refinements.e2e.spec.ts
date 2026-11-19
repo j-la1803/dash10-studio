@@ -77,7 +77,7 @@ for (const viewport of [
 test('original mountain plays once at 0.6 and holds its final frame', async ({ page }) => {
   await page.goto(base)
   const video = page.locator('video')
-  await expect(video.locator('source')).toHaveAttribute('src', '/videos/dash-10-video-bg-faststart.mp4')
+  await expect(video).toHaveAttribute('src', '/videos/dash-10-video-bg-faststart.mp4')
   await expect
     .poll(() => video.evaluate((node) => (node as HTMLVideoElement).readyState))
     .toBeGreaterThanOrEqual(2)

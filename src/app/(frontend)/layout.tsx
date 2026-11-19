@@ -27,7 +27,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link
           rel="preload"
           as="font"
-          href="/fonts/inter-semibold.woff2"
+          href="/fonts/inter-semibold-latin.woff2"
           type="font/woff2"
           crossOrigin="anonymous"
         />

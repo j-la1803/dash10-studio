@@ -1,0 +1,1920 @@
+[
+  {
+    "id": "GHSA-f88m-g3jw-g9cj",
+    "package": "sharp",
+    "severity": "high",
+    "title": "sharp inherited vulnerabilities in libvips: CVE-2026-33327, CVE-2026-33328, CVE-2026-35590, CVE-2026-35591",
+    "affectedInstalledVersions": "0.34.2, 0.34.5",
+    "vulnerableRange": "<0.35.0",
+    "patchedRange": ">=0.35.0",
+    "findings": [
+      {
+        "version": "0.34.5",
+        "paths": [
+          ".>@payloadcms/next>@payloadcms/ui>next>sharp",
+          ".>@payloadcms/next>next>sharp",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>next>sharp",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>next>sharp",
+          ".>@payloadcms/plugin-search>@payloadcms/next>next>sharp",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>next>sharp",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>next>sharp",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>next>sharp",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>next>sharp",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>next>sharp",
+          ".>@payloadcms/ui>next>sharp",
+          ".>geist>next>sharp",
+          ".>next>sharp",
+          ".>next-sitemap>next>sharp"
+        ],
+        "dev": false,
+        "optional": true,
+        "bundled": false
+      },
+      {
+        "version": "0.34.2",
+        "paths": [
+          ".>sharp"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Runtime image processing: staff-controlled media uploads; malicious native decoder input conditional. Direct 0.34.2 remains; Next now resolves patched 0.35.5.",
+    "status": "OPEN",
+    "source": "https://github.com/advisories/GHSA-f88m-g3jw-g9cj"
+  },
+  {
+    "id": "GHSA-6gpp-xcg3-4w24",
+    "package": "next",
+    "severity": "high",
+    "title": "Next.js: Middleware / Proxy bypass in App Router applications using Turbopack and single locale",
+    "affectedInstalledVersions": "16.2.6",
+    "vulnerableRange": ">=16.0.0 <16.2.11",
+    "patchedRange": ">=16.2.11",
+    "findings": [
+      {
+        "version": "16.2.6",
+        "paths": [
+          ".>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/next>next",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-search>@payloadcms/next>next",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>next",
+          ".>@payloadcms/ui>next",
+          ".>geist>next",
+          ".>next",
+          ".>next-sitemap>next"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "No single-locale i18n middleware authorization configuration; Payload enforces server access.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-6gpp-xcg3-4w24"
+  },
+  {
+    "id": "GHSA-m99w-x7hq-7vfj",
+    "package": "next",
+    "severity": "high",
+    "title": "Next.js: Denial of Service in App Router using Server Actions",
+    "affectedInstalledVersions": "16.2.6",
+    "vulnerableRange": ">=16.0.0 <16.2.11",
+    "patchedRange": ">=16.2.11",
+    "findings": [
+      {
+        "version": "16.2.6",
+        "paths": [
+          ".>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/next>next",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-search>@payloadcms/next>next",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>next",
+          ".>@payloadcms/ui>next",
+          ".>geist>next",
+          ".>next",
+          ".>next-sitemap>next"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Production reachable: App Router and public inquiry Server Action; CPU DoS prerequisite present.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-m99w-x7hq-7vfj"
+  },
+  {
+    "id": "GHSA-89xv-2m56-2m9x",
+    "package": "next",
+    "severity": "high",
+    "title": "Next.js: Server-Side Request Forgery in Server Actions on custom servers",
+    "affectedInstalledVersions": "16.2.6",
+    "vulnerableRange": ">=16.0.0 <16.2.11",
+    "patchedRange": ">=16.2.11",
+    "findings": [
+      {
+        "version": "16.2.6",
+        "paths": [
+          ".>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/next>next",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-search>@payloadcms/next>next",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>next",
+          ".>@payloadcms/ui>next",
+          ".>geist>next",
+          ".>next",
+          ".>next-sitemap>next"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Not expected on managed Vercel: upstream host pinned; no custom server.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-89xv-2m56-2m9x"
+  },
+  {
+    "id": "GHSA-p9j2-gv94-2wf4",
+    "package": "next",
+    "severity": "high",
+    "title": "Next.js: Server-Side Request Forgery in rewrites via attacker-controlled destination hostname",
+    "affectedInstalledVersions": "16.2.6",
+    "vulnerableRange": ">=16.0.0 <16.2.11",
+    "patchedRange": ">=16.2.11",
+    "findings": [
+      {
+        "version": "16.2.6",
+        "paths": [
+          ".>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/next>next",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-search>@payloadcms/next>next",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>next",
+          ".>@payloadcms/ui>next",
+          ".>geist>next",
+          ".>next",
+          ".>next-sitemap>next"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "No request-controlled external destination hostname in configured redirects/rewrites.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-p9j2-gv94-2wf4"
+  },
+  {
+    "id": "GHSA-6g55-p6wh-862q",
+    "package": "postcss",
+    "severity": "high",
+    "title": "PostCSS: Arbitrary file read and information disclosure via attacker-controlled sourceMappingURL in CSS comments",
+    "affectedInstalledVersions": "8.4.31",
+    "vulnerableRange": "<=8.5.11",
+    "patchedRange": ">=8.5.12",
+    "findings": [
+      {
+        "version": "8.4.31",
+        "paths": [
+          ".>@payloadcms/next>@payloadcms/ui>next>postcss",
+          ".>@payloadcms/next>next>postcss",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>next>postcss",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>next>postcss",
+          ".>@payloadcms/plugin-search>@payloadcms/next>next>postcss",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>next>postcss",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>next>postcss",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>next>postcss",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>next>postcss",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>next>postcss",
+          ".>@payloadcms/ui>next>postcss",
+          ".>geist>next>postcss",
+          ".>next>postcss",
+          ".>next-sitemap>next>postcss"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Build-time CSS/source-map processing; no public untrusted CSS processing route. Supply-chain/build input remains a risk.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-6g55-p6wh-862q"
+  },
+  {
+    "id": "GHSA-r28c-9q8g-f849",
+    "package": "postcss",
+    "severity": "high",
+    "title": "PostCSS: Path Traversal in Previous Source Map Auto-Loading (sourceMappingURL) leads to Arbitrary .map File Disclosure",
+    "affectedInstalledVersions": "8.4.31",
+    "vulnerableRange": "<=8.5.17",
+    "patchedRange": ">=8.5.18",
+    "findings": [
+      {
+        "version": "8.4.31",
+        "paths": [
+          ".>@payloadcms/next>@payloadcms/ui>next>postcss",
+          ".>@payloadcms/next>next>postcss",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>next>postcss",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>next>postcss",
+          ".>@payloadcms/plugin-search>@payloadcms/next>next>postcss",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>next>postcss",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>next>postcss",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>next>postcss",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>next>postcss",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>next>postcss",
+          ".>@payloadcms/ui>next>postcss",
+          ".>geist>next>postcss",
+          ".>next>postcss",
+          ".>next-sitemap>next>postcss"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Build-time CSS/source-map processing; no public untrusted CSS processing route. Supply-chain/build input remains a risk.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-r28c-9q8g-f849"
+  },
+  {
+    "id": "GHSA-5jgf-p345-68v8",
+    "package": "fast-uri",
+    "severity": "high",
+    "title": "fast-uri vulnerable to host confusion via skipped IDN canonicalization on scheme-relative references",
+    "affectedInstalledVersions": "3.1.5",
+    "vulnerableRange": ">=3.1.3 <3.1.6",
+    "patchedRange": ">=3.1.6",
+    "findings": [
+      {
+        "version": "3.1.5",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload>ajv>fast-uri",
+          ".>@payloadcms/db-postgres>payload>ajv>fast-uri",
+          ".>@payloadcms/next>@payloadcms/graphql>payload>ajv>fast-uri",
+          ".>@payloadcms/next>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/next>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-form-builder>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-nested-docs>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-redirects>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-seo>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>payload>ajv>fast-uri",
+          ".>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>payload>ajv>fast-uri"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Runtime dependency through Payload > AJV URI resolution. No app outbound host-policy decision using fast-uri found; not demonstrated SSRF in this app.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-5jgf-p345-68v8"
+  },
+  {
+    "id": "GHSA-f65p-4m7j-42xc",
+    "package": "fast-uri",
+    "severity": "high",
+    "title": "fast-uri vulnerable to server-side request forgery via malformed IPv6 normalization",
+    "affectedInstalledVersions": "3.1.5",
+    "vulnerableRange": ">=3.0.0 <3.1.6",
+    "patchedRange": ">=3.1.6",
+    "findings": [
+      {
+        "version": "3.1.5",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload>ajv>fast-uri",
+          ".>@payloadcms/db-postgres>payload>ajv>fast-uri",
+          ".>@payloadcms/next>@payloadcms/graphql>payload>ajv>fast-uri",
+          ".>@payloadcms/next>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/next>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-form-builder>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-nested-docs>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-redirects>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-seo>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>payload>ajv>fast-uri",
+          ".>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>payload>ajv>fast-uri"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Runtime dependency through Payload > AJV URI resolution. No app outbound host-policy decision using fast-uri found; not demonstrated SSRF in this app.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-f65p-4m7j-42xc"
+  },
+  {
+    "id": "GHSA-fph4-wmhf-6fwf",
+    "package": "fast-uri",
+    "severity": "high",
+    "title": "fast-uri vulnerable to server-side request forgery via repeated hostname percent-decoding",
+    "affectedInstalledVersions": "3.1.5",
+    "vulnerableRange": ">=3.1.2 <3.1.6",
+    "patchedRange": ">=3.1.6",
+    "findings": [
+      {
+        "version": "3.1.5",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload>ajv>fast-uri",
+          ".>@payloadcms/db-postgres>payload>ajv>fast-uri",
+          ".>@payloadcms/next>@payloadcms/graphql>payload>ajv>fast-uri",
+          ".>@payloadcms/next>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/next>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-form-builder>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-nested-docs>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-redirects>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-seo>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>payload>ajv>fast-uri",
+          ".>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>payload>ajv>fast-uri"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Runtime dependency through Payload > AJV URI resolution. No app outbound host-policy decision using fast-uri found; not demonstrated SSRF in this app.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-fph4-wmhf-6fwf"
+  },
+  {
+    "id": "GHSA-jqff-g426-hqxp",
+    "package": "fast-uri",
+    "severity": "high",
+    "title": "fast-uri vulnerable to host confusion via percent-encoded scheme normalization",
+    "affectedInstalledVersions": "3.1.5",
+    "vulnerableRange": ">=3.0.0 <3.1.6",
+    "patchedRange": ">=3.1.6",
+    "findings": [
+      {
+        "version": "3.1.5",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload>ajv>fast-uri",
+          ".>@payloadcms/db-postgres>payload>ajv>fast-uri",
+          ".>@payloadcms/next>@payloadcms/graphql>payload>ajv>fast-uri",
+          ".>@payloadcms/next>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/next>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-form-builder>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-nested-docs>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-redirects>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-seo>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>payload>ajv>fast-uri",
+          ".>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>payload>ajv>fast-uri"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Runtime dependency through Payload > AJV URI resolution. No app outbound host-policy decision using fast-uri found; not demonstrated SSRF in this app.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-jqff-g426-hqxp"
+  },
+  {
+    "id": "GHSA-p293-qw3h-jr36",
+    "package": "next",
+    "severity": "critical",
+    "title": "Next.js: Unauthenticated Remote Code Execution on windows-hosted servers",
+    "affectedInstalledVersions": "16.2.6",
+    "vulnerableRange": ">=16.0.0 <16.3.3",
+    "patchedRange": ">=16.3.3",
+    "findings": [
+      {
+        "version": "16.2.6",
+        "paths": [
+          ".>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/next>next",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-search>@payloadcms/next>next",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>next",
+          ".>@payloadcms/ui>next",
+          ".>geist>next",
+          ".>next",
+          ".>next-sitemap>next"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Not applicable: Windows-only; production is Vercel Linux.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-p293-qw3h-jr36"
+  },
+  {
+    "id": "GHSA-rgj7-g3m4-5g8c",
+    "package": "sharp",
+    "severity": "high",
+    "title": "sharp: Vulnerabilities in libheif: GHSA-g89c-p67h-r497 and GHSA-2jg2-4ch7-h545",
+    "affectedInstalledVersions": "0.34.2, 0.34.5",
+    "vulnerableRange": "<0.35.4",
+    "patchedRange": ">=0.35.4",
+    "findings": [
+      {
+        "version": "0.34.5",
+        "paths": [
+          ".>@payloadcms/next>@payloadcms/ui>next>sharp",
+          ".>@payloadcms/next>next>sharp",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>next>sharp",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>next>sharp",
+          ".>@payloadcms/plugin-search>@payloadcms/next>next>sharp",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>next>sharp",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>next>sharp",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>next>sharp",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>next>sharp",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>next>sharp",
+          ".>@payloadcms/ui>next>sharp",
+          ".>geist>next>sharp",
+          ".>next>sharp",
+          ".>next-sitemap>next>sharp"
+        ],
+        "dev": false,
+        "optional": true,
+        "bundled": false
+      },
+      {
+        "version": "0.34.2",
+        "paths": [
+          ".>sharp"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Runtime image processing: staff-controlled media uploads; malicious native decoder input conditional. Direct 0.34.2 remains; Next now resolves patched 0.35.5.",
+    "status": "OPEN",
+    "source": "https://github.com/advisories/GHSA-rgj7-g3m4-5g8c"
+  },
+  {
+    "id": "GHSA-2883-xcg3-v3hh",
+    "package": "js-yaml",
+    "severity": "high",
+    "title": "js-yaml: maxTotalMergeKeys does not limit CPU use for empty merge sources",
+    "affectedInstalledVersions": "4.3.1",
+    "vulnerableRange": ">=4.0.0 <4.3.2",
+    "patchedRange": ">=4.3.2",
+    "findings": [
+      {
+        "version": "4.3.1",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload>json-schema-to-typescript>@apidevtools/json-schema-ref-parser>js-yaml",
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload>json-schema-to-typescript>js-yaml",
+          ".>@payloadcms/db-postgres>payload>json-schema-to-typescript>@apidevtools/json-schema-ref-parser>js-yaml",
+          ".>@payloadcms/db-postgres>payload>json-schema-to-typescript>js-yaml",
+          ".>@payloadcms/next>@payloadcms/graphql>payload>json-schema-to-typescript>@apidevtools/json-schema-ref-parser>js-yaml",
+          ".>@payloadcms/next>@payloadcms/graphql>payload>json-schema-to-typescript>js-yaml",
+          ".>@payloadcms/next>@payloadcms/ui>payload>json-schema-to-typescript>@apidevtools/json-schema-ref-parser>js-yaml",
+          ".>@payloadcms/next>@payloadcms/ui>payload>json-schema-to-typescript>js-yaml",
+          ".>@payloadcms/next>payload>json-schema-to-typescript>@apidevtools/json-schema-ref-parser>js-yaml",
+          ".>@payloadcms/next>payload>json-schema-to-typescript>js-yaml",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload>json-schema-to-typescript>@apidevtools/json-schema-ref-parser>js-yaml",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload>json-schema-to-typescript>js-yaml",
+          ".>@payloadcms/plugin-form-builder>payload>json-schema-to-typescript>@apidevtools/json-schema-ref-parser>js-yaml",
+          ".>@payloadcms/plugin-form-builder>payload>json-schema-to-typescript>js-yaml",
+          ".>@payloadcms/plugin-nested-docs>payload>json-schema-to-typescript>@apidevtools/json-schema-ref-parser>js-yaml",
+          ".>@payloadcms/plugin-nested-docs>payload>json-schema-to-typescript>js-yaml",
+          ".>@payloadcms/plugin-redirects>payload>json-schema-to-typescript>@apidevtools/json-schema-ref-parser>js-yaml",
+          ".>@payloadcms/plugin-redirects>payload>json-schema-to-typescript>js-yaml",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload>json-schema-to-typescript>@apidevtools/json-schema-ref-parser>js-yaml",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload>json-schema-to-typescript>js-yaml",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload>json-schema-to-typescript>@apidevtools/json-schema-ref-parser>js-yaml",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload>json-schema-to-typescript>js-yaml",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload>json-schema-to-typescript>@apidevtools/json-schema-ref-parser>js-yaml",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload>json-schema-to-typescript>js-yaml",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload>json-schema-to-typescript>@apidevtools/json-schema-ref-parser>js-yaml",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload>json-schema-to-typescript>js-yaml",
+          ".>@payloadcms/plugin-search>payload>json-schema-to-typescript>@apidevtools/json-schema-ref-parser>js-yaml",
+          ".>@payloadcms/plugin-search>payload>json-schema-to-typescript>js-yaml",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload>json-schema-to-typescript>@apidevtools/json-schema-ref-parser>js-yaml",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload>json-schema-to-typescript>js-yaml",
+          ".>@payloadcms/plugin-seo>payload>json-schema-to-typescript>@apidevtools/json-schema-ref-parser>js-yaml",
+          ".>@payloadcms/plugin-seo>payload>json-schema-to-typescript>js-yaml",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload>json-schema-to-typescript>@apidevtools/json-schema-ref-parser>js-yaml",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload>json-schema-to-typescript>js-yaml",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload>json-schema-to-typescript>@apidevtools/json-schema-ref-parser>js-yaml",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload>json-schema-to-typescript>js-yaml",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload>json-schema-to-typescript>@apidevtools/json-schema-ref-parser>js-yaml",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload>json-schema-to-typescript>js-yaml",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload>json-schema-to-typescript>@apidevtools/json-schema-ref-parser>js-yaml",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload>json-schema-to-typescript>js-yaml",
+          ".>@payloadcms/richtext-lexical>payload>json-schema-to-typescript>@apidevtools/json-schema-ref-parser>js-yaml",
+          ".>@payloadcms/richtext-lexical>payload>json-schema-to-typescript>js-yaml",
+          ".>@payloadcms/ui>payload>json-schema-to-typescript>@apidevtools/json-schema-ref-parser>js-yaml",
+          ".>@payloadcms/ui>payload>json-schema-to-typescript>js-yaml",
+          ".>payload>json-schema-to-typescript>@apidevtools/json-schema-ref-parser>js-yaml",
+          ".>payload>json-schema-to-typescript>js-yaml"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Build/type-generation path through json-schema-to-typescript/ref-parser; no uploaded YAML endpoint.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-2883-xcg3-v3hh"
+  },
+  {
+    "id": "GHSA-2xp9-vwfh-vxw4",
+    "package": "next",
+    "severity": "critical",
+    "title": "Next.js: Unauthenticated Remote Code Execution in Image Optimization API when AVIF files are used",
+    "affectedInstalledVersions": "16.2.6",
+    "vulnerableRange": ">=16.0.0 <16.3.3",
+    "patchedRange": ">=16.3.3",
+    "findings": [
+      {
+        "version": "16.2.6",
+        "paths": [
+          ".>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/next>next",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-search>@payloadcms/next>next",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>next",
+          ".>@payloadcms/ui>next",
+          ".>geist>next",
+          ".>next",
+          ".>next-sitemap>next"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Conditional runtime: public image optimizer, AVIF input; uploads require staff. Patch still needed.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-2xp9-vwfh-vxw4"
+  },
+  {
+    "id": "GHSA-qw65-cvwx-89v3",
+    "package": "fast-uri",
+    "severity": "high",
+    "title": "fast-uri vulnerable to authority injection via an unvalidated port in serialize",
+    "affectedInstalledVersions": "3.1.5",
+    "vulnerableRange": ">=3.0.0 <3.1.7",
+    "patchedRange": ">=3.1.7",
+    "findings": [
+      {
+        "version": "3.1.5",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload>ajv>fast-uri",
+          ".>@payloadcms/db-postgres>payload>ajv>fast-uri",
+          ".>@payloadcms/next>@payloadcms/graphql>payload>ajv>fast-uri",
+          ".>@payloadcms/next>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/next>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-form-builder>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-nested-docs>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-redirects>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-search>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/plugin-seo>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>@payloadcms/richtext-lexical>payload>ajv>fast-uri",
+          ".>@payloadcms/ui>payload>ajv>fast-uri",
+          ".>payload>ajv>fast-uri"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Runtime dependency through Payload > AJV URI resolution. No app outbound host-policy decision using fast-uri found; not demonstrated SSRF in this app.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-qw65-cvwx-89v3"
+  },
+  {
+    "id": "GHSA-rfgv-xxqx-mfg5",
+    "package": "undici",
+    "severity": "high",
+    "title": "undici vulnerable to Denial of Service via unrequested WebSocket subprotocol",
+    "affectedInstalledVersions": "7.29.0",
+    "vulnerableRange": ">=7.0.0 <7.29.1",
+    "patchedRange": ">=7.29.1",
+    "findings": [
+      {
+        "version": "7.29.0",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload>undici",
+          ".>@payloadcms/db-postgres>payload>undici",
+          ".>@payloadcms/next>@payloadcms/graphql>payload>undici",
+          ".>@payloadcms/next>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/next>payload>undici",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-form-builder>payload>undici",
+          ".>@payloadcms/plugin-nested-docs>payload>undici",
+          ".>@payloadcms/plugin-redirects>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-search>payload>undici",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-seo>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/richtext-lexical>payload>undici",
+          ".>@payloadcms/ui>payload>undici",
+          ".>payload>undici"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Requires client WebSocket to malicious server/subprotocol; no application Undici WebSocket use found.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-rfgv-xxqx-mfg5"
+  },
+  {
+    "id": "GHSA-w293-vg96-wgc3",
+    "package": "undici",
+    "severity": "high",
+    "title": "undici vulnerable to TLS certificate validation bypass via dropped connect options in BalancedPool",
+    "affectedInstalledVersions": "7.29.0",
+    "vulnerableRange": ">=7.24.1 <7.29.1",
+    "patchedRange": ">=7.29.1",
+    "findings": [
+      {
+        "version": "7.29.0",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload>undici",
+          ".>@payloadcms/db-postgres>payload>undici",
+          ".>@payloadcms/next>@payloadcms/graphql>payload>undici",
+          ".>@payloadcms/next>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/next>payload>undici",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-form-builder>payload>undici",
+          ".>@payloadcms/plugin-nested-docs>payload>undici",
+          ".>@payloadcms/plugin-redirects>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-search>payload>undici",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-seo>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/richtext-lexical>payload>undici",
+          ".>@payloadcms/ui>payload>undici",
+          ".>payload>undici"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Requires BalancedPool with custom TLS callbacks; not configured in application.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-w293-vg96-wgc3"
+  },
+  {
+    "id": "GHSA-vcvr-r3jv-pc5j",
+    "package": "next",
+    "severity": "critical",
+    "title": "Next.js: Remote Code Execution in next/og ImageResponse",
+    "affectedInstalledVersions": "16.2.6",
+    "vulnerableRange": ">=16.2.0 <16.3.6",
+    "patchedRange": ">=16.3.6",
+    "findings": [
+      {
+        "version": "16.2.6",
+        "paths": [
+          ".>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/next>next",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-search>@payloadcms/next>next",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>next",
+          ".>@payloadcms/ui>next",
+          ".>geist>next",
+          ".>next",
+          ".>next-sitemap>next"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "No app ImageResponse/next/og route or attacker-supplied SVG generation found.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-vcvr-r3jv-pc5j"
+  },
+  {
+    "id": "GHSA-68fv-2mgg-jv7q",
+    "package": "source-map-js",
+    "severity": "high",
+    "title": "source-map-js allows event-loop denial of service through indexed source-map section offsets",
+    "affectedInstalledVersions": "1.2.1",
+    "vulnerableRange": ">=1.0.0 <1.2.2",
+    "patchedRange": ">=1.2.2",
+    "findings": [
+      {
+        "version": "1.2.1",
+        "paths": [
+          ".>@payloadcms/next>@payloadcms/ui>next>postcss>source-map-js",
+          ".>@payloadcms/next>@payloadcms/ui>next>sass>source-map-js",
+          ".>@payloadcms/next>next>postcss>source-map-js",
+          ".>@payloadcms/next>next>sass>source-map-js",
+          ".>@payloadcms/next>sass>source-map-js",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>next>postcss>source-map-js",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>next>sass>source-map-js",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>next>postcss>source-map-js",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>next>sass>source-map-js",
+          ".>@payloadcms/plugin-search>@payloadcms/next>next>postcss>source-map-js",
+          ".>@payloadcms/plugin-search>@payloadcms/next>next>sass>source-map-js",
+          ".>@payloadcms/plugin-search>@payloadcms/next>sass>source-map-js",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>next>postcss>source-map-js",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>next>sass>source-map-js",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>next>postcss>source-map-js",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>next>sass>source-map-js",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>next>postcss>source-map-js",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>next>sass>source-map-js",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>next>postcss>source-map-js",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>next>sass>source-map-js",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>sass>source-map-js",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>next>postcss>source-map-js",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>next>sass>source-map-js",
+          ".>@payloadcms/ui>next>postcss>source-map-js",
+          ".>@payloadcms/ui>next>sass>source-map-js",
+          ".>geist>next>postcss>source-map-js",
+          ".>geist>next>sass>source-map-js",
+          ".>next>postcss>source-map-js",
+          ".>next>sass>source-map-js",
+          ".>next-sitemap>next>postcss>source-map-js",
+          ".>next-sitemap>next>sass>source-map-js"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Build-time CSS/source-map processing; no public untrusted CSS processing route. Supply-chain/build input remains a risk.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-68fv-2mgg-jv7q"
+  },
+  {
+    "id": "GHSA-wq5f-xc86-pv6w",
+    "package": "sharp",
+    "severity": "high",
+    "title": "sharp : Vulnerability in librsvg dependency CVE-2026-96889",
+    "affectedInstalledVersions": "0.34.2, 0.34.5",
+    "vulnerableRange": "<0.35.5",
+    "patchedRange": ">=0.35.5",
+    "findings": [
+      {
+        "version": "0.34.5",
+        "paths": [
+          ".>@payloadcms/next>@payloadcms/ui>next>sharp",
+          ".>@payloadcms/next>next>sharp",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>next>sharp",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>next>sharp",
+          ".>@payloadcms/plugin-search>@payloadcms/next>next>sharp",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>next>sharp",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>next>sharp",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>next>sharp",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>next>sharp",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>next>sharp",
+          ".>@payloadcms/ui>next>sharp",
+          ".>geist>next>sharp",
+          ".>next>sharp",
+          ".>next-sitemap>next>sharp"
+        ],
+        "dev": false,
+        "optional": true,
+        "bundled": false
+      },
+      {
+        "version": "0.34.2",
+        "paths": [
+          ".>sharp"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Runtime image processing: staff-controlled media uploads; malicious native decoder input conditional. Direct 0.34.2 remains; Next now resolves patched 0.35.5.",
+    "status": "OPEN",
+    "source": "https://github.com/advisories/GHSA-wq5f-xc86-pv6w"
+  },
+  {
+    "id": "GHSA-fx49-4h83-wjv9",
+    "package": "payload",
+    "severity": "high",
+    "title": "Payload didn't enforce field-level password update restrictions",
+    "affectedInstalledVersions": "3.87.1",
+    "vulnerableRange": "<3.90.0",
+    "patchedRange": ">=3.90.0",
+    "findings": [
+      {
+        "version": "3.87.1",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload",
+          ".>@payloadcms/db-postgres>payload",
+          ".>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-form-builder>payload",
+          ".>@payloadcms/plugin-nested-docs>payload",
+          ".>@payloadcms/plugin-redirects>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>payload",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-seo>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>payload",
+          ".>@payloadcms/ui>payload",
+          ".>payload"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Requires password field access.update restriction; default Users config has collection-level authenticated access.",
+    "status": "OPEN",
+    "source": "https://github.com/advisories/GHSA-fx49-4h83-wjv9"
+  },
+  {
+    "id": "GHSA-2g7p-5934-q4w7",
+    "package": "payload",
+    "severity": "high",
+    "title": "Payload: ReDoS in Multipart Content-Type Validation",
+    "affectedInstalledVersions": "3.87.1",
+    "vulnerableRange": ">=3.0.0 <3.90.0",
+    "patchedRange": ">=3.90.0",
+    "findings": [
+      {
+        "version": "3.87.1",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload",
+          ".>@payloadcms/db-postgres>payload",
+          ".>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-form-builder>payload",
+          ".>@payloadcms/plugin-nested-docs>payload",
+          ".>@payloadcms/plugin-redirects>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>payload",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-seo>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>payload",
+          ".>@payloadcms/ui>payload",
+          ".>payload"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Public multipart request parsing: malformed requests can cause prolonged processing; production reachable DoS.",
+    "status": "OPEN",
+    "source": "https://github.com/advisories/GHSA-2g7p-5934-q4w7"
+  },
+  {
+    "id": "GHSA-238x-w2j9-gwwr",
+    "package": "payload",
+    "severity": "high",
+    "title": "Payload vulnerable to API key disclosure through ordinary document reads",
+    "affectedInstalledVersions": "3.87.1",
+    "vulnerableRange": ">=3.0.0 <3.90.0",
+    "patchedRange": ">=3.90.0",
+    "findings": [
+      {
+        "version": "3.87.1",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload",
+          ".>@payloadcms/db-postgres>payload",
+          ".>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-form-builder>payload",
+          ".>@payloadcms/plugin-nested-docs>payload",
+          ".>@payloadcms/plugin-redirects>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>payload",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-seo>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>payload",
+          ".>@payloadcms/ui>payload",
+          ".>payload"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "useAPIKey not enabled on Users; prerequisite absent.",
+    "status": "OPEN",
+    "source": "https://github.com/advisories/GHSA-238x-w2j9-gwwr"
+  },
+  {
+    "id": "GHSA-xgv3-crq2-6f69",
+    "package": "payload",
+    "severity": "high",
+    "title": "Payload: Token refresh and password reset responses may expose restricted user fields",
+    "affectedInstalledVersions": "3.87.1",
+    "vulnerableRange": ">=3.0.0 <3.90.0",
+    "patchedRange": ">=3.90.0",
+    "findings": [
+      {
+        "version": "3.87.1",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload",
+          ".>@payloadcms/db-postgres>payload",
+          ".>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-form-builder>payload",
+          ".>@payloadcms/plugin-nested-docs>payload",
+          ".>@payloadcms/plugin-redirects>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>payload",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-seo>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>payload",
+          ".>@payloadcms/ui>payload",
+          ".>payload"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Auth endpoints exist; no app custom hidden/restricted fields found. Built-in auth filtering still warrants patch.",
+    "status": "OPEN",
+    "source": "https://github.com/advisories/GHSA-xgv3-crq2-6f69"
+  },
+  {
+    "id": "GHSA-vc4h-q48j-5hcx",
+    "package": "payload",
+    "severity": "critical",
+    "title": "Payload: Field access control bypass on auth collections",
+    "affectedInstalledVersions": "3.87.1",
+    "vulnerableRange": ">3.0.0 <3.90.0",
+    "patchedRange": ">=3.90.0",
+    "findings": [
+      {
+        "version": "3.87.1",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload",
+          ".>@payloadcms/db-postgres>payload",
+          ".>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-form-builder>payload",
+          ".>@payloadcms/plugin-nested-docs>payload",
+          ".>@payloadcms/plugin-redirects>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>payload",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-seo>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>payload",
+          ".>@payloadcms/ui>payload",
+          ".>payload"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Authenticated duplication path; built-in disableDuplicate is not a sufficient mitigation. Staff-only create reduces exposure.",
+    "status": "OPEN",
+    "source": "https://github.com/advisories/GHSA-vc4h-q48j-5hcx"
+  },
+  {
+    "id": "GHSA-v49j-62m6-pgrr",
+    "package": "payload",
+    "severity": "critical",
+    "title": "Payload: SQL Injection in SQLite and Postgres",
+    "affectedInstalledVersions": "3.87.1",
+    "vulnerableRange": ">=3.0.0 <3.88.0",
+    "patchedRange": ">=3.88.0",
+    "findings": [
+      {
+        "version": "3.87.1",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload",
+          ".>@payloadcms/db-postgres>payload",
+          ".>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-form-builder>payload",
+          ".>@payloadcms/plugin-nested-docs>payload",
+          ".>@payloadcms/plugin-redirects>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>payload",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-seo>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>payload",
+          ".>@payloadcms/ui>payload",
+          ".>payload"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "P0 production reachable: Postgres plus public readable collections/dynamic REST/GraphQL filters. Access rules alone do not remediate SQL injection.",
+    "status": "OPEN",
+    "source": "https://github.com/advisories/GHSA-v49j-62m6-pgrr"
+  },
+  {
+    "id": "GHSA-fpww-c55p-cjv6",
+    "package": "payload",
+    "severity": "high",
+    "title": "Payload: Polymorphic join queries could disclose hidden fields",
+    "affectedInstalledVersions": "3.87.1",
+    "vulnerableRange": ">=3.0.0 <3.90.0",
+    "patchedRange": ">=3.90.0",
+    "findings": [
+      {
+        "version": "3.87.1",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload",
+          ".>@payloadcms/db-postgres>payload",
+          ".>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-form-builder>payload",
+          ".>@payloadcms/plugin-nested-docs>payload",
+          ".>@payloadcms/plugin-redirects>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>payload",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-seo>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>payload",
+          ".>@payloadcms/ui>payload",
+          ".>payload"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Conditional query inference through polymorphic joins; Payload folders enabled. No confirmed sensitive join exploit; cannot dismiss generated schema.",
+    "status": "OPEN",
+    "source": "https://github.com/advisories/GHSA-fpww-c55p-cjv6"
+  },
+  {
+    "id": "GHSA-cjq9-62q9-8jv4",
+    "package": "next",
+    "severity": "high",
+    "title": "Next.js has Server-Side Request Forgery in Image Optimization",
+    "affectedInstalledVersions": "16.2.6",
+    "vulnerableRange": ">=16.0.0 <16.3.8",
+    "patchedRange": ">=16.3.8",
+    "findings": [
+      {
+        "version": "16.2.6",
+        "paths": [
+          ".>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/next>next",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-search>@payloadcms/next>next",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>next",
+          ".>@payloadcms/ui>next",
+          ".>geist>next",
+          ".>next",
+          ".>next-sitemap>next"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Conditional runtime image optimizer SSRF; approved remote host restricted, server-fetched media remains a trust boundary.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-cjq9-62q9-8jv4"
+  },
+  {
+    "id": "GHSA-97rh-rhh2-7vjv",
+    "package": "payload",
+    "severity": "high",
+    "title": "Payload: Remote Code Execution through first-register",
+    "affectedInstalledVersions": "3.87.1",
+    "vulnerableRange": "<3.90.0",
+    "patchedRange": ">=3.90.0",
+    "findings": [
+      {
+        "version": "3.87.1",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload",
+          ".>@payloadcms/db-postgres>payload",
+          ".>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-form-builder>payload",
+          ".>@payloadcms/plugin-nested-docs>payload",
+          ".>@payloadcms/plugin-redirects>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>payload",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-seo>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>payload",
+          ".>@payloadcms/ui>payload",
+          ".>payload"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Initial user already exists; empty-user first-register prerequisite absent. Never test by deleting users.",
+    "status": "OPEN",
+    "source": "https://github.com/advisories/GHSA-97rh-rhh2-7vjv"
+  },
+  {
+    "id": "GHSA-2pwp-2369-8fg3",
+    "package": "payload",
+    "severity": "high",
+    "title": "Payload: Bypassed sanitization of user uploaded SVGs",
+    "affectedInstalledVersions": "3.87.1",
+    "vulnerableRange": "<3.90.0",
+    "patchedRange": ">=3.90.0",
+    "findings": [
+      {
+        "version": "3.87.1",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload",
+          ".>@payloadcms/db-postgres>payload",
+          ".>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-form-builder>payload",
+          ".>@payloadcms/plugin-nested-docs>payload",
+          ".>@payloadcms/plugin-redirects>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>payload",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-seo>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>payload",
+          ".>@payloadcms/ui>payload",
+          ".>payload"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Staff upload path accepts SVG; user opens malicious upload. Trusted staff reduces but does not remove exposure.",
+    "status": "OPEN",
+    "source": "https://github.com/advisories/GHSA-2pwp-2369-8fg3"
+  },
+  {
+    "id": "GHSA-p223-2wr2-j562",
+    "package": "payload",
+    "severity": "high",
+    "title": "Payload: Incomplete validation during the upload file lifecycle",
+    "affectedInstalledVersions": "3.87.1",
+    "vulnerableRange": "<3.90.0",
+    "patchedRange": ">=3.90.0",
+    "findings": [
+      {
+        "version": "3.87.1",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload",
+          ".>@payloadcms/db-postgres>payload",
+          ".>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-form-builder>payload",
+          ".>@payloadcms/plugin-nested-docs>payload",
+          ".>@payloadcms/plugin-redirects>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>payload",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-seo>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>payload",
+          ".>@payloadcms/ui>payload",
+          ".>payload"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Staff-only local upload update/delete cleanup; local storage configured. Authenticated malicious upload manager required.",
+    "status": "OPEN",
+    "source": "https://github.com/advisories/GHSA-p223-2wr2-j562"
+  },
+  {
+    "id": "GHSA-9qpg-3cf8-w33x",
+    "package": "payload",
+    "severity": "high",
+    "title": "Payload: Uploaded XML files could execute same-origin JavaScript",
+    "affectedInstalledVersions": "3.87.1",
+    "vulnerableRange": "<3.90.0",
+    "patchedRange": ">=3.90.0",
+    "findings": [
+      {
+        "version": "3.87.1",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload",
+          ".>@payloadcms/db-postgres>payload",
+          ".>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-form-builder>payload",
+          ".>@payloadcms/plugin-nested-docs>payload",
+          ".>@payloadcms/plugin-redirects>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>payload",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-seo>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>payload",
+          ".>@payloadcms/ui>payload",
+          ".>payload"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Staff uploads, no MIME allowlist; XML/XSL same-origin delivery is conditional exposure.",
+    "status": "OPEN",
+    "source": "https://github.com/advisories/GHSA-9qpg-3cf8-w33x"
+  },
+  {
+    "id": "GHSA-r488-j9vj-wx3q",
+    "package": "@payloadcms/plugin-form-builder",
+    "severity": "critical",
+    "title": "Payload Form Builder has an RCE issue",
+    "affectedInstalledVersions": "3.87.1",
+    "vulnerableRange": "<3.90.0",
+    "patchedRange": ">=3.90.0",
+    "findings": [
+      {
+        "version": "3.87.1",
+        "paths": [
+          ".>@payloadcms/plugin-form-builder"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "P0 production reachable: form-builder enabled and submissions supported. Custom contact hook narrows one path; not a complete plugin patch.",
+    "status": "OPEN",
+    "source": "https://github.com/advisories/GHSA-r488-j9vj-wx3q"
+  },
+  {
+    "id": "GHSA-f7hx-52q9-hcrf",
+    "package": "payload",
+    "severity": "critical",
+    "title": "Payload: Unauthorized update to collection documents",
+    "affectedInstalledVersions": "3.87.1",
+    "vulnerableRange": "<3.90.0",
+    "patchedRange": ">=3.90.0",
+    "findings": [
+      {
+        "version": "3.87.1",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload",
+          ".>@payloadcms/db-postgres>payload",
+          ".>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-form-builder>payload",
+          ".>@payloadcms/plugin-nested-docs>payload",
+          ".>@payloadcms/plugin-redirects>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>payload",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-seo>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>payload",
+          ".>@payloadcms/ui>payload",
+          ".>payload"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Requires orderable collections/joins; none explicitly enabled in application collections. Generated plugin behavior merits patched release.",
+    "status": "OPEN",
+    "source": "https://github.com/advisories/GHSA-f7hx-52q9-hcrf"
+  },
+  {
+    "id": "GHSA-66wr-7vmr-p5jq",
+    "package": "payload",
+    "severity": "critical",
+    "title": "Payload authentication token field handling issue",
+    "affectedInstalledVersions": "3.87.1",
+    "vulnerableRange": ">=3.0.0 <3.90.0",
+    "patchedRange": ">=3.90.0",
+    "findings": [
+      {
+        "version": "3.87.1",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload",
+          ".>@payloadcms/db-postgres>payload",
+          ".>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-form-builder>payload",
+          ".>@payloadcms/plugin-nested-docs>payload",
+          ".>@payloadcms/plugin-redirects>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>payload",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-seo>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>payload",
+          ".>@payloadcms/ui>payload",
+          ".>payload"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Requires custom field mapped to reserved JWT claim; no saveToJWT/custom reserved claim mapping found.",
+    "status": "OPEN",
+    "source": "https://github.com/advisories/GHSA-66wr-7vmr-p5jq"
+  },
+  {
+    "id": "GHSA-pj5h-5q6c-3pfx",
+    "package": "payload",
+    "severity": "high",
+    "title": "Payload external upload trust validation issue",
+    "affectedInstalledVersions": "3.87.1",
+    "vulnerableRange": ">=3.0.0 <3.90.0",
+    "patchedRange": ">=3.90.0",
+    "findings": [
+      {
+        "version": "3.87.1",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload",
+          ".>@payloadcms/db-postgres>payload",
+          ".>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-form-builder>payload",
+          ".>@payloadcms/plugin-nested-docs>payload",
+          ".>@payloadcms/plugin-redirects>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-search>payload",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload",
+          ".>@payloadcms/plugin-seo>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload",
+          ".>@payloadcms/richtext-lexical>payload",
+          ".>@payloadcms/ui>payload",
+          ".>payload"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Conditional authenticated external file retrieval; no custom external retrieval configured. Patch safe-fetch/session handling.",
+    "status": "OPEN",
+    "source": "https://github.com/advisories/GHSA-pj5h-5q6c-3pfx"
+  },
+  {
+    "id": "GHSA-2464-fhr4-w9xw",
+    "package": "next",
+    "severity": "critical",
+    "title": "Next.js: Unauthenticated Remote Code Execution in Image Optimization API when SVG files are used",
+    "affectedInstalledVersions": "16.2.6",
+    "vulnerableRange": ">=16.0.0 <=16.4.0",
+    "patchedRange": ">=16.4.1",
+    "findings": [
+      {
+        "version": "16.2.6",
+        "paths": [
+          ".>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/next>next",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-search>@payloadcms/next>next",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>next",
+          ".>@payloadcms/ui>next",
+          ".>geist>next",
+          ".>next",
+          ".>next-sitemap>next"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Conditional runtime: image optimizer on glibc Linux with malicious SVG; patch optimizer even though approved SVGs bypass optimization.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-2464-fhr4-w9xw"
+  },
+  {
+    "id": "GHSA-p3m5-59mp-jv5r",
+    "package": "next",
+    "severity": "high",
+    "title": "Next.js: Denial of Service in App Router using Server Actions",
+    "affectedInstalledVersions": "16.2.6",
+    "vulnerableRange": ">=16.0.0 <=16.4.0",
+    "patchedRange": ">=16.4.1",
+    "findings": [
+      {
+        "version": "16.2.6",
+        "paths": [
+          ".>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/next>next",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-search>@payloadcms/next>next",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>next",
+          ".>@payloadcms/ui>next",
+          ".>geist>next",
+          ".>next",
+          ".>next-sitemap>next"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Production reachable: App Router and Server Actions; subsequent DoS advisory.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-p3m5-59mp-jv5r"
+  },
+  {
+    "id": "GHSA-673q-mjm6-r5xr",
+    "package": "next",
+    "severity": "critical",
+    "title": "Next.js: Unauthenticated Remote Code Execution in `use cache` functions returning typed arrays",
+    "affectedInstalledVersions": "16.2.6",
+    "vulnerableRange": ">=16.0.0 <=16.4.0",
+    "patchedRange": ">=16.4.1",
+    "findings": [
+      {
+        "version": "16.2.6",
+        "paths": [
+          ".>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/next>next",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-search>@payloadcms/next>next",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>next",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>next",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>next",
+          ".>@payloadcms/ui>next",
+          ".>geist>next",
+          ".>next",
+          ".>next-sitemap>next"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "No Cache Components/use cache function returning typed arrays found.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-673q-mjm6-r5xr"
+  },
+  {
+    "id": "GHSA-834v-8h66-3h79",
+    "package": "happy-dom",
+    "severity": "high",
+    "title": "Happy DOM: Incomplete fix for CVE-2026-33943: unsanitized import alias leads to host code execution",
+    "affectedInstalledVersions": "20.11.2",
+    "vulnerableRange": ">=17.0.0 <=21.0.3",
+    "patchedRange": ">=21.0.4",
+    "findings": [
+      {
+        "version": "20.11.2",
+        "paths": [
+          ".>@payloadcms/richtext-lexical>@lexical/headless>happy-dom"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Server-capable transitive Lexical DOM helper, not simply dev-only. RCE requires JS evaluation enabled + untrusted module input; no application use found.",
+    "status": "OPEN",
+    "source": "https://github.com/advisories/GHSA-834v-8h66-3h79"
+  },
+  {
+    "id": "GHSA-xjj6-f33q-929c",
+    "package": "undici",
+    "severity": "high",
+    "title": "undici vulnerable to Denial of Service via unhandled error on excessive content-encodings",
+    "affectedInstalledVersions": "7.29.0",
+    "vulnerableRange": ">=7.18.0 <7.30.1",
+    "patchedRange": ">=7.30.1",
+    "findings": [
+      {
+        "version": "7.29.0",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload>undici",
+          ".>@payloadcms/db-postgres>payload>undici",
+          ".>@payloadcms/next>@payloadcms/graphql>payload>undici",
+          ".>@payloadcms/next>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/next>payload>undici",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-form-builder>payload>undici",
+          ".>@payloadcms/plugin-nested-docs>payload>undici",
+          ".>@payloadcms/plugin-redirects>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-search>payload>undici",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-seo>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/richtext-lexical>payload>undici",
+          ".>@payloadcms/ui>payload>undici",
+          ".>payload>undici"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Conditional runtime outbound fetch to malicious server; Payload file-fetch uses Undici. Patch even with caught fetch errors.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-xjj6-f33q-929c"
+  },
+  {
+    "id": "GHSA-4w7w-5xrc-9h26",
+    "package": "undici",
+    "severity": "high",
+    "title": "undici vulnerable to cache poisoning and cross-user disclosure via cross-origin redirects",
+    "affectedInstalledVersions": "7.29.0",
+    "vulnerableRange": ">=7.0.0 <7.30.1",
+    "patchedRange": ">=7.30.1",
+    "findings": [
+      {
+        "version": "7.29.0",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload>undici",
+          ".>@payloadcms/db-postgres>payload>undici",
+          ".>@payloadcms/next>@payloadcms/graphql>payload>undici",
+          ".>@payloadcms/next>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/next>payload>undici",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-form-builder>payload>undici",
+          ".>@payloadcms/plugin-nested-docs>payload>undici",
+          ".>@payloadcms/plugin-redirects>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-search>payload>undici",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-seo>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/richtext-lexical>payload>undici",
+          ".>@payloadcms/ui>payload>undici",
+          ".>payload>undici"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Requires shared cache + originless Agent + redirect/cache composition; no such configuration found.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-4w7w-5xrc-9h26"
+  },
+  {
+    "id": "GHSA-2m5v-pch6-74hx",
+    "package": "undici",
+    "severity": "high",
+    "title": "undici vulnerable to TLS certificate validation bypass via dropped tls options in Agent",
+    "affectedInstalledVersions": "7.29.0",
+    "vulnerableRange": ">=7.0.0 <7.30.1",
+    "patchedRange": ">=7.30.1",
+    "findings": [
+      {
+        "version": "7.29.0",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload>undici",
+          ".>@payloadcms/db-postgres>payload>undici",
+          ".>@payloadcms/next>@payloadcms/graphql>payload>undici",
+          ".>@payloadcms/next>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/next>payload>undici",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-form-builder>payload>undici",
+          ".>@payloadcms/plugin-nested-docs>payload>undici",
+          ".>@payloadcms/plugin-redirects>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-search>payload>undici",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-seo>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/richtext-lexical>payload>undici",
+          ".>@payloadcms/ui>payload>undici",
+          ".>payload>undici"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Requires function-valued tls verification override; not configured in application.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-2m5v-pch6-74hx"
+  },
+  {
+    "id": "GHSA-qrxm-fqhp-jwvm",
+    "package": "undici",
+    "severity": "high",
+    "title": "undici vulnerable to Denial of Service via TLS 1.2 certificate-changing renegotiation",
+    "affectedInstalledVersions": "7.29.0",
+    "vulnerableRange": ">=7.0.0 <7.30.1",
+    "patchedRange": ">=7.30.1",
+    "findings": [
+      {
+        "version": "7.29.0",
+        "paths": [
+          ".>@payloadcms/db-postgres>@payloadcms/drizzle>payload>undici",
+          ".>@payloadcms/db-postgres>payload>undici",
+          ".>@payloadcms/next>@payloadcms/graphql>payload>undici",
+          ".>@payloadcms/next>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/next>payload>undici",
+          ".>@payloadcms/plugin-form-builder>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-form-builder>payload>undici",
+          ".>@payloadcms/plugin-nested-docs>payload>undici",
+          ".>@payloadcms/plugin-redirects>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/graphql>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/next>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/next>payload>undici",
+          ".>@payloadcms/plugin-search>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-search>payload>undici",
+          ".>@payloadcms/plugin-seo>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/plugin-seo>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/graphql>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/next>payload>undici",
+          ".>@payloadcms/richtext-lexical>@payloadcms/ui>payload>undici",
+          ".>@payloadcms/richtext-lexical>payload>undici",
+          ".>@payloadcms/ui>payload>undici",
+          ".>payload>undici"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Conditional runtime outbound HTTPS/TLS1.2 to malicious endpoint; no need to prove with destructive DoS.",
+    "status": "Resolved in candidate lockfile",
+    "source": "https://github.com/advisories/GHSA-qrxm-fqhp-jwvm"
+  },
+  {
+    "id": "GHSA-c8p4-j97h-3vg8",
+    "package": "happy-dom",
+    "severity": "high",
+    "title": "Happy DOM: SSRF via iframe and link stylesheet when parsing untrusted HTML",
+    "affectedInstalledVersions": "20.11.2",
+    "vulnerableRange": "<=20.14.6",
+    "patchedRange": ">=20.14.7",
+    "findings": [
+      {
+        "version": "20.11.2",
+        "paths": [
+          ".>@payloadcms/richtext-lexical>@lexical/headless>happy-dom"
+        ],
+        "dev": false,
+        "optional": false,
+        "bundled": false
+      }
+    ],
+    "assessment": "Server-capable Lexical DOM helper; untrusted iframe/stylesheet HTML parsing required. App HTML conversion takes explicit JSDOM; no public Happy DOM parsing route found.",
+    "status": "OPEN",
+    "source": "https://github.com/advisories/GHSA-c8p4-j97h-3vg8"
+  }
+]
