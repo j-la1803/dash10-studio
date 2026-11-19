@@ -1926,8 +1926,7 @@ body {
   border: 0;
 }
 .hubspot-wrapper button,
-.analytics-consent button,
-.analytics-preferences {
+.analytics-consent button {
   padding: 0.75rem 1rem;
   border: 1px solid #777;
   font-size: 0.75rem;
@@ -1954,9 +1953,22 @@ body {
   margin-left: 0.75rem;
 }
 .analytics-preferences {
-  display: block;
+  display: inline-block;
+  width: fit-content;
   margin: 1rem var(--dash-page-padding);
-  color: #aaa;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #999;
+  font-size: 0.6rem;
+  line-height: 1.5;
+  cursor: pointer;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.analytics-preferences:hover {
+  color: #fff;
+  text-decoration-line: underline;
 }
 
 /* Edge-to-edge technology cells; the label retains the shared text gutter. */
