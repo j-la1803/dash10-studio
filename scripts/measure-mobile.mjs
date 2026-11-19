@@ -1,4 +1,5 @@
-// Sequential fresh-browser lab samples. Read-only; no consent, CMS writes or account cookies.
+// Sequential fresh-browser lab samples. No CMS writes or account cookies.
+// Optional --analytics-consent measures an isolated opted-in visit, not the user profile.
 import fs from 'node:fs/promises'
 import { chromium } from '@playwright/test'
 const url = process.argv[2],
@@ -6,6 +7,7 @@ const url = process.argv[2],
   results = []
 if (!url || !output)
   throw new Error('Usage: node scripts/measure-mobile.mjs <url> <private-output.json>')
+const consent = process.argv.includes('--analytics-consent')
 for (let i = 0; i < 3; i++) {
   const browser = await chromium.launch({ channel: 'chrome', headless: true })
   const context = await browser.newContext({
@@ -28,6 +30,11 @@ for (let i = 0; i < 3; i++) {
     connectionType: 'cellular4g',
   })
   await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 })
+  if (consent) {
+    await page.addInitScript(() => {
+      localStorage.setItem('dash10-analytics-consent-v1', 'allow')
+    })
+  }
   await page.addInitScript(() => {
     window.__lcp = []
     new PerformanceObserver((list) => {
@@ -45,15 +52,13 @@ for (let i = 0; i < 3; i++) {
   const result = await page.evaluate(() => ({
     lcp: window.__lcp.at(-1),
     entries: window.__lcp,
-    resources: performance
-      .getEntriesByType('resource')
-      .map((e) => ({
-        name: e.name,
-        size: e.transferSize,
-        start: e.startTime,
-        duration: e.duration,
-        initiator: e.initiatorType,
-      })),
+    resources: performance.getEntriesByType('resource').map((e) => ({
+      name: e.name,
+      size: e.transferSize,
+      start: e.startTime,
+      duration: e.duration,
+      initiator: e.initiatorType,
+    })),
     navigation: performance.getEntriesByType('navigation')[0].toJSON(),
   }))
   results.push(result)
@@ -71,6 +76,7 @@ await fs.writeFile(
         latency: 150,
         downloadBytesPerSecond: 196608,
         freshContext: true,
+        analyticsConsent: consent ? 'allow' : 'undecided',
       },
       results,
     },

@@ -1,0 +1,59 @@
+{
+  "implementationCommit": "be5209ab319c37642a04dc03934c078ee29065dc",
+  "production": "https://dash10studio.com",
+  "conditions": {
+    "viewport": "412x915",
+    "cpu": 4,
+    "latency": 150,
+    "downloadBytesPerSecond": 196608,
+    "freshContext": true
+  },
+  "realThrottledLcpMs": {
+    "before": [
+      4212,
+      4216,
+      4084
+    ],
+    "after": [
+      3080,
+      2844,
+      2896
+    ],
+    "separateConsentedCohort": [
+      2924,
+      2824,
+      2804
+    ]
+  },
+  "lighthouseSimulatedMobile": {
+    "before": {
+      "version": "13.6.0",
+      "performance": 0.77,
+      "lcpMs": 6054.661919999999,
+      "cls": 0,
+      "tbtMs": 44
+    },
+    "after": {
+      "version": "13.6.0",
+      "performance": 0.86,
+      "lcpMs": 4139.02124,
+      "cls": 0,
+      "tbtMs": 24.5
+    }
+  },
+  "security": {
+    "production": {
+      "critical": 0,
+      "high": 2,
+      "moderate": 1,
+      "low": 0
+    },
+    "allDependencies": {
+      "critical": 0,
+      "high": 2,
+      "moderate": 7,
+      "low": 0
+    }
+  },
+  "targetReached": false
+}
