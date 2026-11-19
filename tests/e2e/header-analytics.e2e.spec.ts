@@ -18,11 +18,13 @@ for (const width of [1440, 1280, 390]) {
     await expect(header).toHaveCSS('border-bottom-width', '0px')
     if (width < 700) await page.getByRole('button', { name: 'Menu' }).click()
     const cta = header.locator('a[href="/contact"]')
-    const arrow = cta.locator('span')
+    const arrow = cta.locator('.header-cta-arrow')
     const before = await cta.boundingBox()
     await cta.hover()
     await expect(arrow).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 3, -3)')
-    await expect(cta).toHaveCSS('box-shadow', 'rgb(255, 255, 255) 0px 0px 0px 1px inset')
+    await expect(cta).toHaveCSS('box-shadow', 'none')
+    await expect(cta).toHaveCSS('border-width', '1px')
+    await expect.poll(() => cta.locator('.nav-link-label').evaluate(el => getComputedStyle(el, '::after').transform)).toBe('matrix(1, 0, 0, 1, 0, 0)')
     expect(await cta.boundingBox()).toEqual(before)
     await page.mouse.move(0, 0)
     await cta.focus()
@@ -100,4 +102,31 @@ test('blocked tracking does not interrupt navigation, FAQ or the contact form', 
   await expect(page.locator('.capabilities-list details').first()).toHaveAttribute('open', '')
   await page.getByRole('link', { name: 'HAVE A PROJECT IN MIND?' }).click()
   await expect(page.getByRole('button', { name: 'SEND PROJECT INQUIRY' })).toBeVisible()
+})
+
+
+test('homepage overlay follows rendered content across navigation and an incorrect route flag', async ({ page }) => {
+  await page.goto(base)
+  const header = page.locator('.studio-header')
+  const verify = async () => {
+    const positions = await page.evaluate(() => {
+      const h = document.querySelector('.studio-header')!.getBoundingClientRect()
+      const hero = document.querySelector('.dash-hero')!.getBoundingClientRect()
+      const video = document.querySelector('video')!.getBoundingClientRect()
+      return { header: h.top, hero: hero.top, video: video.top }
+    })
+    expect(positions.hero).toBe(positions.header)
+    expect(positions.video).toBe(positions.header)
+    await expect(header).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)')
+  }
+  // Actual affected production tab had this flag despite rendering the homepage.
+  await header.evaluate(el => el.setAttribute('data-home', 'false'))
+  await verify()
+  await header.getByRole('link', { name: 'Services', exact: true }).click()
+  await expect(page).toHaveURL(`${base}/services`)
+  await expect(header).toHaveCSS('position', 'relative')
+  await expect(header).toHaveCSS('background-color', 'rgb(11, 11, 11)')
+  await header.getByRole('link', { name: 'Dash 10 Studio home' }).click()
+  await expect(page).toHaveURL(`${base}/`)
+  await verify()
 })

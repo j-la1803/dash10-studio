@@ -11,7 +11,7 @@ export function StudioHeader() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
   return (
-    <header className="studio-header" data-home={pathname === '/' || pathname === '/home'}>
+    <header className="studio-header">
       <Link href="/" aria-label="Dash 10 Studio home">
         <Image
           unoptimized
@@ -47,8 +47,8 @@ export function StudioHeader() {
             onClick={() => setOpen(false)}
             aria-current={pathname === href ? 'page' : undefined}
           >
-            {label}
-            {href === '/contact' && <span aria-hidden="true"> ↗</span>}
+            {href === '/contact' ? <span className="nav-link-label">{label}</span> : label}
+            {href === '/contact' && <span className="header-cta-arrow" aria-hidden="true"> ↗</span>}
           </Link>
         ))}
       </nav>

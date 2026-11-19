@@ -628,26 +628,20 @@ textarea:focus-visible {
 .studio-header nav a:last-child {
   padding: 1rem 1.4rem;
   border: 1px solid #555;
-  box-shadow: inset 0 0 0 0 currentColor;
-  transition: border-color 200ms ease-out, box-shadow 200ms ease-out;
 }
-.studio-header nav a[href='/contact'] span {
+.studio-header nav a[href='/contact'] .header-cta-arrow {
   display: inline-block;
   transition: transform 200ms ease-out;
 }
-.studio-header nav a[href='/contact']:is(:hover, :focus-visible) {
-  border-color: #fff;
-  box-shadow: inset 0 0 0 1px #fff;
-}
-.studio-header nav a[href='/contact']:is(:hover, :focus-visible) span {
+.studio-header nav a[href='/contact']:is(:hover, :focus-visible) .header-cta-arrow {
   transform: translate(3px, -3px);
 }
 @media (prefers-reduced-motion: reduce) {
   .studio-header nav a[href='/contact'],
-  .studio-header nav a[href='/contact'] span {
+  .studio-header nav a[href='/contact'] .header-cta-arrow {
     transition: none;
   }
-  .studio-header nav a[href='/contact']:is(:hover, :focus-visible) span {
+  .studio-header nav a[href='/contact']:is(:hover, :focus-visible) .header-cta-arrow {
     transform: none;
   }
 }
@@ -1145,7 +1139,7 @@ textarea:focus-visible {
 }
 
 /* Approved homepage composition: architectural rails, narrow hero, service footer. */
-.studio-header[data-home='true'] {
+.studio-header:has(+ .dash-home) {
   position: absolute;
   inset: 0 0 auto;
   background: transparent;
@@ -1540,7 +1534,7 @@ body {
     width: 143px;
     height: 82px;
   }
-  .studio-header[data-home='true'] nav {
+  .studio-header:has(+ .dash-home) nav {
     background: #111;
   }
   .dash-hero {
@@ -2048,10 +2042,12 @@ body {
 }
 
 /* Homepage polish: restrained navigation, a single seamless platform sequence, and FAQ rhythm. */
-.studio-header nav a:not([href='/contact']) {
+.studio-header nav a:not([href='/contact']),
+.studio-header .nav-link-label {
   position: relative;
 }
-.studio-header nav a:not([href='/contact'])::after {
+.studio-header nav a:not([href='/contact'])::after,
+.studio-header .nav-link-label::after {
   content: '';
   position: absolute;
   left: 0;
@@ -2063,8 +2059,13 @@ body {
   transform-origin: left;
   transition: transform 300ms ease;
 }
-.studio-header nav a:is(:hover, :focus-visible)::after {
+.studio-header nav a:is(:hover, :focus-visible)::after,
+.studio-header nav a:is(:hover, :focus-visible) .nav-link-label::after {
   transform: scaleX(1);
+}
+.studio-header .nav-link-label::after {
+  transition-duration: 225ms;
+  transition-timing-function: ease-out;
 }
 .platform-marquee {
   overflow: hidden;
@@ -2176,6 +2177,7 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .studio-header nav a::after,
+  .studio-header .nav-link-label::after,
   .faq-toggle::after,
   .capabilities-list summary {
     transition: none;
@@ -2211,8 +2213,13 @@ body {
   margin-top: 0;
 }
 
+/* The rendered homepage is authoritative: router pathname can disagree with
+   the retained header after hydration/navigation. Keep video underneath it. */
+.studio-header .nav-link-label {
+  display: inline-block;
+}
 /* Keep the approved header geometry; shade only the mountain behind it. */
-.studio-header[data-home='true']::before {
+.studio-header:has(+ .dash-home)::before {
   content: '';
   position: absolute;
   inset: 0 0 auto;
@@ -2225,7 +2232,8 @@ body {
 .studio-header nav a:is(:hover, :focus-visible) {
   color: #fff;
 }
-.studio-header nav a:not([href='/contact'])::after {
+.studio-header nav a:not([href='/contact'])::after,
+.studio-header .nav-link-label::after {
   background: #fff;
 }
 
