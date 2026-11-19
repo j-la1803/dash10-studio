@@ -1,0 +1,68 @@
+{
+  "auditDate": "2026-11-18",
+  "timezone": "America/Chicago",
+  "baselineCommit": "de14176",
+  "implementationCommit": "e82aef1",
+  "runs": {
+    "before-desktop": {
+      "url": "https://dash10studio.com/",
+      "fetchedAt": "2026-11-19T02:48:37.184Z",
+      "lighthouseVersion": "13.6.0",
+      "scores": {
+        "performance": 81,
+        "accessibility": 96,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 3372.31639,
+      "tbtMs": 0,
+      "cls": 0,
+      "transferBytes": 2784907
+    },
+    "before-mobile": {
+      "url": "https://dash10studio.com/",
+      "fetchedAt": "2026-11-19T02:49:00.315Z",
+      "lighthouseVersion": "13.6.0",
+      "scores": {
+        "performance": 74,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 16079.218499999999,
+      "tbtMs": 41,
+      "cls": 0,
+      "transferBytes": 3480078
+    },
+    "after-desktop": {
+      "url": "https://dash10studio.com/",
+      "fetchedAt": "2026-11-19T03:18:53.233Z",
+      "lighthouseVersion": "13.6.0",
+      "scores": {
+        "performance": 94,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 1636.5760750000009,
+      "tbtMs": 0,
+      "cls": 0,
+      "transferBytes": 744988
+    },
+    "after-mobile": {
+      "url": "https://dash10studio.com/",
+      "fetchedAt": "2026-11-19T03:17:05.729Z",
+      "lighthouseVersion": "13.6.0",
+      "scores": {
+        "performance": 79,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 5704.935659999999,
+      "tbtMs": 24,
+      "cls": 0,
+      "transferBytes": 1330050
+    }
+  }
+}

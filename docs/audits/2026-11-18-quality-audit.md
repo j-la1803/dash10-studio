@@ -29,7 +29,14 @@ Lighthouse CLI, Chrome, fresh profiles; default mobile simulated throttling and 
 | Desktop | 81 | 96 | 100 | 100 | 3.4s | 0ms | 0 |
 | Mobile | 74 | 100 | 100 | 100 | 16.1s | 40ms | 0 |
 
-The optimized local production build scored mobile Performance 80 / Accessibility 100 / Best practices 100 / SEO 100, LCP 5.2s, TBT 50ms, CLS 0. This is a different host/protocol from production and is not a direct before/after comparison; mobile LCP still exceeds the target in that sample. After-release production measurements will be recorded below. Field INP has not been measured; TBT is not INP. Meeting a lab score does not establish LCP/INP/CLS field thresholds. Sustained measurement requires real traffic and a reviewed field-data source.
+The optimized local production build scored mobile Performance 80 / Accessibility 100 / Best practices 100 / SEO 100, LCP 5.2s, TBT 50ms, CLS 0. This is a different host/protocol from production and is not a direct before/after comparison; mobile LCP still exceeds the target in that sample. Production after deployment `e82aef1` (Lighthouse 13.6.0, same live URL and desktop/mobile presets, sequential fresh-browser runs):
+
+| Production after | Performance | Accessibility | Best practices | SEO | LCP | TBT | CLS |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Desktop | 94 | 100 | 100 | 100 | 1.6s | 0ms | 0 |
+| Mobile | 79 | 100 | 100 | 100 | 5.7s | 20ms | 0 |
+
+Desktop LCP meets the lab target; desktop score is one point below 95. Mobile LCP and Performance remain below target and need further work, with the cinematic video and existing architecture preserved. These improvements do not establish a passing field-CWV assessment. One production mobile measurement was interrupted by a closed browser target and was rerun; only the completed sample is shown. Exact metrics and fetch times are in `2026-11-18-metrics.json`. Field INP has not been measured; TBT is not INP. Meeting a lab score does not establish LCP/INP/CLS field thresholds. Sustained measurement requires real traffic and a reviewed field-data source.
 
 ## Verification
 
@@ -39,7 +46,7 @@ All 16 offline unit tests pass; the one shared-CMS read test is opt-in and separ
 
 Axe WCAG 2/2.1/2.2 A/AA checks find zero violations across all twelve updated routes; no horizontal document overflow at 320px. Internal links and existing anchor destinations pass (42 URLs/endpoints in the audit, including intentional private 403 responses). Server HTML contains primary headings and meaningful prose. JSON-LD parses and uses only actual organization/website/article facts; no claim is made of Google rich-result eligibility.
 
-Native Chrome keyboard inspection verified the skip link is the first focusable page control, activates #main-content, and moves the subsequent tab stop into the main region. Browser keyboard regressions cover menu Escape, accordion controls, footer focus restoration and motion controls. Native accessibility-tree roles/names were inspected. Spoken VoiceOver/NVDA output has not been verified; representative assistive-technology testing by a human remains required. Automated checks do not establish WCAG 2.2 AA/ADA conformance.
+Native Chrome keyboard inspection verified the skip link is the first focusable page control and activates #main-content. Browser keyboard regressions cover menu Escape, accordion controls, footer focus restoration and motion controls. Native accessibility-tree roles/names were inspected. Spoken VoiceOver/NVDA output has not been verified; representative assistive-technology testing by a human remains required. Automated checks do not establish WCAG 2.2 AA/ADA conformance.
 
 ## Security and privacy findings that remain open
 
@@ -65,3 +72,7 @@ The focused non-destructive UI/SEO/accessibility/performance changes can ship af
 Deploy only through main → existing Vercel project/domain. No DNS/infrastructure/schema/secret changes or newly exposed private content. Keep review notices noindex and out of the sitemap. After deploy, repeat production browser/axe/link/header checks and Lighthouse desktop/mobile; record the production commit and measured results here.
 
 References: [Next native sitemap](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap), [Next headers](https://nextjs.org/docs/app/api-reference/config/next-config-js/headers), [W3C pause/stop/hide](https://www.w3.org/WAI/WCAG21/Understanding/pause-stop-hide.html), [Google consent debugging](https://developers.google.com/tag-platform/security/guides/consent-debugging).
+
+## Production release verification
+
+Implementation commit: `e82aef1`. Vercel production deployment completed successfully on the existing domain. All 33 live Chrome regression checks passed. The live twelve-route axe audit found zero violations, zero 320px overflow failures and no broken public/anchor destinations. Post-consent footer axe checks also passed at 1440px and 390px; screenshots were visually reviewed. Sitemap/robots, canonical/noindex behavior, the three published articles, private API rejection, consent-only single-container loading and compatibility with the new headers all passed. Production mobile LCP/performance remain below the requested targets; dependency and legal/operational findings above remain open. No policy text, private records or credentials were published. Original article IDs, prose, SEO and approved publication dates are preserved.
