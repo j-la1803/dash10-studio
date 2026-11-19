@@ -1115,6 +1115,21 @@ select:focus-visible {
   line-height: 1.7;
   border-radius: 0;
 }
+.inquiry-form select {
+  appearance: none;
+  min-width: 0;
+  padding-right: 3.75rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='m1 1 5 5 5-5' fill='none' stroke='%23f5f5f5' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1.5rem center;
+  background-size: 0.75rem 0.5rem;
+}
+@media (forced-colors: active) {
+  .inquiry-form select {
+    appearance: auto;
+    background-image: none;
+  }
+}
 .inquiry-form textarea {
   resize: vertical;
 }
