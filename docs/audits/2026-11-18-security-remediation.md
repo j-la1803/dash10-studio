@@ -85,7 +85,7 @@ Three comparable real-throttled production Chrome baseline samples: **4.212s, 4.
 
 - Added approved-font Latin/punctuation/technical-symbol WOFF2 subsets, ~100KB combined instead of ~258KB. Retained glyph outlines match; full complementary unicode-range faces preserve other scripts. Explicit ranges also avoid downloading full fonts to search for unsupported glyphs.
 - Deferred decorative MP4 source attachment until window load plus two animation frames, allowing initial resources/poster to paint first. Existing framing, overlays, once-only playback/rate, pause and final-frame hold remain. Reduced motion requests no MP4. No re-encoding; server HTML/content/poster remain available without JS.
-- Kept existing poster (~85KB), CSS and architecture. An AVIF experiment saved little at comparable quality and was not shipped. Removing initial framework/admin JS needs a separate compatibility review; no redesign or large dependency added.
+- Kept existing poster (~85KB), CSS and architecture. An AVIF experiment saved little at comparable quality and was not shipped. The root homepage now renders the existing StudioHome directly instead of re-exporting the generic CMS [slug] page. This removes unused generic form, syntax-highlighting and preview dependencies from its initial route bundle; CMS supporting routes and metadata are unchanged. The isolated build has 13 initial scripts totaling 203,772 bytes gzip and no Prism code in that set. No redesign or large dependency added.
 
 Local diagnostic samples are not production comparisons; the intermediate candidate measured 4.286s/86 while a needless fallback font still loaded. Live after-release results follow below. No 2.5s or field-CWV pass is claimed without evidence.
 
@@ -96,3 +96,5 @@ Production build and TypeScript pass. Offline units: 16 pass; separate opt-in sh
 Deploy through existing main → Vercel project/domain only. No hosting/DNS/secrets/analytics changes. Migration was explicit, not a build hook. Authenticated editors and live performance are verified after release and recorded below.
 
 References: [Payload 3.90 migration and security release](https://github.com/payloadcms/payload/releases/tag/v3.90.0), [Sharp 0.35 breaking notes](https://github.com/lovell/sharp/releases/tag/v0.35.0). Per-advisory primary links and exact ranges are in the matrix/JSON.
+
+Intermediate production release `570a37f` deployed successfully: all 37 live Chrome checks pass. Native Chrome login, editors 2/3/4, SEO controls and authenticated preview work. A fresh private snapshot after these checks remains identical to the pre-migration content snapshot. No article save/publish action was performed; editor round-trip was tested offline without writing. Comparable real-throttled mobile samples improved to 3.316s / 3.360s / 3.264s (median 3.316s); Lighthouse mobile 4.721s / 83, CLS 0. This is an intermediate result before the additional root-module bundle reduction.
