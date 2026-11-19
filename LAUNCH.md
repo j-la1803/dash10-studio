@@ -258,3 +258,8 @@ Observed the reported solid bar in the owner's existing production Chrome tab, i
 Removed the layout-critical data attribute and select homepage overlay/gradient from the actual sibling `.dash-home` via `:has()`. No opacity increase or hero crop change. Interior headers and mobile expanded menu retain existing contrast. Added a geometry regression that deliberately sets the old flag false and verifies header/hero/video share their top coordinate; also checks an interior/home navigation round trip. Replaced CTA border thickening with a label-only shared navigation underline (225ms ease-out); retained 1px outline, arrow movement and reduced-motion/focus behavior.
 
 TypeScript and production build pass. Seventeen relevant Chrome regressions pass at desktop/mobile sizes; focused axe WCAG A/AA checks have zero header violations at 1440px and 390px. Production screenshot verification follows deployment; no CMS, analytics, branding or unrelated content changes.
+
+
+## Focused visual refinements — November 19, 2026
+
+Header contact arrow now has an explicit 11px inline gap; original outline, padding, underline/focus and 3px hover movement remain. Fourth scene label is `TERMINAL / 004`. Removed only the visible email CTA/conditional placeholder above the Contact form; no delivery addresses, form implementation or analytics configuration changes. TypeScript, production build and 17 relevant desktop/mobile browser checks pass. Desktop/mobile screenshots reviewed for all three areas; no synthetic inquiry or CMS content mutation was needed.

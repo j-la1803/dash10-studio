@@ -631,6 +631,7 @@ textarea:focus-visible {
 }
 .studio-header nav a[href='/contact'] .header-cta-arrow {
   display: inline-block;
+  margin-inline-start: 11px;
   transition: transform 200ms ease-out;
 }
 .studio-header nav a[href='/contact']:is(:hover, :focus-visible) .header-cta-arrow {

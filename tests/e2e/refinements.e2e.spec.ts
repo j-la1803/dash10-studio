@@ -196,7 +196,7 @@ for (const width of [1440, 1280, 390]) {
       'UI / 001',
       'CODE / 002',
       'SYS / 003',
-      'TERM / 004',
+      'TERMINAL / 004',
     ])
     const geometry = await page.locator('.studio-scene').evaluateAll((sections) =>
       sections.map((section) => {

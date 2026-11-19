@@ -19,6 +19,9 @@ for (const width of [1440, 1280, 390]) {
     if (width < 700) await page.getByRole('button', { name: 'Menu' }).click()
     const cta = header.locator('a[href="/contact"]')
     const arrow = cta.locator('.header-cta-arrow')
+    const textBox = await cta.locator('.nav-link-label').boundingBox()
+    const arrowBox = await arrow.boundingBox()
+    expect(arrowBox!.x - (textBox!.x + textBox!.width)).toBeCloseTo(11, 0)
     const before = await cta.boundingBox()
     await cta.hover()
     await expect(arrow).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 3, -3)')
@@ -130,3 +133,17 @@ test('homepage overlay follows rendered content across navigation and an incorre
   await expect(page).toHaveURL(`${base}/`)
   await verify()
 })
+
+
+for (const width of [1440, 390]) {
+  test(`contact prioritizes the unchanged form without the email CTA at ${width}`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 })
+    await page.goto(`${base}/contact`)
+    await expect(page.locator('main a[href^="mailto:"]')).toHaveCount(0)
+    await expect(page.getByRole('form', { name: 'Project inquiry' })).toBeVisible()
+    for (const label of ['Your name', 'Email address', 'Tell us about your project'])
+      await expect(page.getByLabel(label, { exact: true })).toBeVisible()
+    await expect(page.getByRole('button', { name: 'SEND PROJECT INQUIRY' })).toBeVisible()
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+  })
+}

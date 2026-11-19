@@ -194,7 +194,7 @@ export function StudioHome() {
               <Illustration kind={scene.kind} />
             </div>
             <div className="scene-meta" aria-hidden="true">
-              {['UI', 'CODE', 'SYS', 'TERM'][i]} / 00{i + 1}
+              {['UI', 'CODE', 'SYS', 'TERMINAL'][i]} / 00{i + 1}
             </div>
           </section>
         ))}

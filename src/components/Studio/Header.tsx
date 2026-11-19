@@ -48,7 +48,7 @@ export function StudioHeader() {
             aria-current={pathname === href ? 'page' : undefined}
           >
             {href === '/contact' ? <span className="nav-link-label">{label}</span> : label}
-            {href === '/contact' && <span className="header-cta-arrow" aria-hidden="true"> ↗</span>}
+            {href === '/contact' && <span className="header-cta-arrow" aria-hidden="true">↗</span>}
           </Link>
         ))}
       </nav>

@@ -8,7 +8,6 @@ export const metadata = siteMetadata(
   'Tell Dash 10 Studio about your website, e-commerce, or integration project.',
 )
 export default function ContactPage() {
-  const email = process.env.CONTACT_EMAIL || 'justin@dash10.studio'
   return (
     <main id="main-content" className="studio-page">
       <p className="studio-label">LET’S TALK</p>
@@ -17,17 +16,6 @@ export default function ContactPage() {
         A new website. A better storefront. Systems that need to connect. Tell us what you’re
         working on, what’s getting in the way, and where you want to go.
       </p>
-      {email ? (
-        <a
-          className="studio-cta"
-          href={`mailto:${email}?subject=Let%E2%80%99s%20talk%20about%20a%20project`}
-        >
-          {email}
-          <span aria-hidden="true">↗</span>
-        </a>
-      ) : (
-        <p className="contact-pending">Project inquiries will open here soon.</p>
-      )}
       <HubSpotForm config={hubSpotConfig(process.env)} fallback={<ContactForm />} />
       <div className="detail-grid">
         <section>

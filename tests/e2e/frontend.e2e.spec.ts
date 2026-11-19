@@ -99,9 +99,7 @@ test('contact validates, stores an inquiry, prevents bypass and protects private
   const base = process.env.QA_BASE_URL || 'http://localhost:3000'
   const marker = process.env.QA_INQUIRY_MARKER || `qa-${Date.now()}`
   await page.goto(`${base}/contact`)
-  await expect(
-    page.locator('main').getByRole('link', { name: 'justin@dash10.studio' }),
-  ).toHaveAttribute('href', /mailto:justin@dash10.studio/)
+  await expect(page.locator('main a[href^="mailto:"]')).toHaveCount(0)
   await page.getByLabel('Your name', { exact: true }).fill('Dash 10 QA')
   await page.getByLabel('Email address', { exact: true }).fill(`${marker}@example.com`)
   await page.getByLabel('Tell us about your project').fill('short')
