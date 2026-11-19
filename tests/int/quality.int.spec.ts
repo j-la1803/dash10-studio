@@ -17,7 +17,9 @@ describe('canonical public discovery', () => {
       [{ slug: 'useful-article', updatedAt: '2026-11-18T18:00:00Z' }],
     )
     expect(entries.filter((e) => e.url === 'https://dash10studio.com/services')).toHaveLength(1)
-    expect(entries.some((e) => /\/(search|privacy|admin|next)(\/|$)/.test(e.url))).toBe(false)
+    expect(entries.some((e) => /\/(search|admin|next)(\/|$)/.test(e.url))).toBe(false)
+    for (const path of ['privacy', 'terms'])
+      expect(entries.filter((e) => e.url === `https://dash10studio.com/${path}`)).toHaveLength(1)
     expect(entries.find((e) => e.url === 'https://dash10studio.com/')?.lastModified).toBeUndefined()
     expect(entries.find((e) => e.url.endsWith('/guide'))?.lastModified).toBe('2026-11-04T18:00:00Z')
     expect(entries.find((e) => e.url.endsWith('/posts'))?.lastModified).toBe('2026-11-18T18:00:00Z')

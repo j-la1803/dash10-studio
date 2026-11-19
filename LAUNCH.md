@@ -263,3 +263,10 @@ TypeScript and production build pass. Seventeen relevant Chrome regressions pass
 ## Focused visual refinements — November 19, 2026
 
 Header contact arrow now has an explicit 11px inline gap; original outline, padding, underline/focus and 3px hover movement remain. Fourth scene label is `TERMINAL / 004`. Removed only the visible email CTA/conditional placeholder above the Contact form; no delivery addresses, form implementation or analytics configuration changes. TypeScript, production build and 17 relevant desktop/mobile browser checks pass. Desktop/mobile screenshots reviewed for all three areas; no synthetic inquiry or CMS content mutation was needed.
+
+
+## Public Privacy Policy and Website Terms — November 18, 2026
+
+Owner authorized completion and publication of `/privacy` and `/terms`, superseding the earlier owner-review placeholder gate. Both pages now have complete policies, November 18 effective date (America/Chicago), production canonicals, semantic editorial layout and one privacy/contact email link. Placeholder noindex is removed; legal routes are in the public sitemap with a new cache key. Authenticated preview noindex remains.
+
+Verified current inquiry storage, provider configuration, absent email notifications/HubSpot, consent-only GTM and inactive published GA4 before writing. Retention is described without an invented schedule. See `docs/audits/2026-11-18-legal-publication.md` for evidence and unasserted provider-specific details. TypeScript/build/scoped lint pass, 16 offline units pass and 16 relevant browser checks pass; four whole-page desktop/mobile axe checks have zero A/AA violations. CMS records, infrastructure and analytics configuration are unchanged.

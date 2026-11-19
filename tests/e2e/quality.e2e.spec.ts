@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 const base = process.env.QA_BASE_URL || 'http://localhost:3102'
 const paths = ['/', '/services', '/process', '/about', '/contact', '/posts']
 
-test('canonical metadata, semantic server HTML, reflow and legal review gates', async ({
+test('canonical metadata, semantic server HTML, reflow and public policies', async ({
   page,
 }) => {
   const titles = new Set<string>()
@@ -20,10 +20,16 @@ test('canonical metadata, semantic server HTML, reflow and legal review gates', 
     expect(titles.has(title)).toBe(false)
     titles.add(title)
     expect(await page.locator('meta[name="description"]').getAttribute('content')).toBeTruthy()
-    if (['/privacy', '/terms', '/search'].includes(path))
+    if (path === '/search')
       await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/)
-    if (path === '/privacy' || path === '/terms')
-      await expect(page.getByText('OWNER REVIEW PENDING')).toBeVisible()
+    if (path === '/privacy' || path === '/terms') {
+      await expect(page.getByText('OWNER REVIEW PENDING')).toHaveCount(0)
+      expect(
+        await page
+          .locator('meta[name="robots"]')
+          .evaluateAll((nodes) => nodes.map((n) => n.getAttribute('content') || '').join(' ')),
+      ).not.toMatch(/noindex/)
+    }
     await page.setViewportSize({ width: 320, height: 900 })
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
     await page.setViewportSize({ width: 1280, height: 800 })
@@ -47,9 +53,11 @@ test('native sitemap, redirects, robots and security headers', async ({ page, re
   expect(entries.invalid).toBe(false)
   expect(new Set(entries.urls).size).toBe(entries.urls.length)
   for (const path of paths) expect(entries.urls).toContain(`https://dash10studio.com${path}`)
+  for (const path of ['/privacy', '/terms'])
+    expect(entries.urls).toContain(`https://dash10studio.com${path}`)
   const published = await (await request.get(`${base}/api/posts?limit=100`)).json()
   expect(entries.urls.filter((url) => url.includes('/posts/'))).toHaveLength(published.totalDocs)
-  expect(xml).not.toMatch(/\/admin|\/next\/|\/search|\/privacy|\/terms|\/posts\/page\/1</)
+  expect(xml).not.toMatch(/\/admin|\/next\/|\/search|\/posts\/page\/1</)
   const robots = await (await request.get(`${base}/robots.txt`)).text()
   expect(robots).toContain('Sitemap: https://dash10studio.com/sitemap.xml')
   expect(robots).not.toMatch(/Disallow:.*(_next|images|fonts)/)

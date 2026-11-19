@@ -1,6 +1,15 @@
 import type { MetadataRoute } from 'next'
 import { productionOrigin } from './siteMetadata'
-export const publicRoutes = ['/', '/services', '/process', '/about', '/contact', '/posts']
+export const publicRoutes = [
+  '/',
+  '/services',
+  '/process',
+  '/about',
+  '/contact',
+  '/posts',
+  '/privacy',
+  '/terms',
+]
 const reserved = new Set([
   'home',
   'admin',

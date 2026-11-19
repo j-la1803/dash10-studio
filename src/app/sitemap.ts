@@ -21,7 +21,7 @@ const publicContent = unstable_cache(
     ])
     return sitemapEntries(pages.docs, posts.docs)
   },
-  ['canonical-public-sitemap'],
+  ['canonical-public-sitemap-v2'],
   { tags: ['pages-sitemap', 'posts-sitemap'], revalidate: 600 },
 )
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
