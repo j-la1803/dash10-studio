@@ -9,7 +9,7 @@ export const metadata = siteMetadata(
 
 export default function Page() {
   return (
-    <LegalPage title="Privacy Policy">
+    <LegalPage title="Privacy Policy" effectiveDate="2026-11-19">
       <p>
         Dash 10 Studio operates dash10studio.com. This policy explains how information is handled
         when you visit this website or contact us through it. It applies to this website; a client
@@ -17,21 +17,26 @@ export default function Page() {
       </p>
       <h2>Information you choose to provide</h2>
       <p>
-        Our Contact form asks for your name, email address and a message about your project. We use
-        that information to understand your request, respond to you, discuss potential work and keep
-        a record of the conversation. Please do not submit passwords, payment details or sensitive
-        personal information that is unnecessary for an initial inquiry.
+        Our Contact form asks for your name, email address, selected service and project details,
+        with optional company or agency and website fields. We use that information to understand
+        your request, respond to you, discuss potential work and keep a record of the conversation.
+        Please do not submit passwords, payment details or sensitive personal information that is
+        unnecessary for an initial inquiry.
       </p>
       <p>
         Inquiries are stored in our Payload content management system (CMS), using a Supabase
         PostgreSQL database. Authorized CMS users can access them; the website does not make inquiry
         records available through its public collection API. Form validation, an anti-spam field and
-        a short submission cooldown help limit invalid or repeated requests.
+        submission rate limits help limit invalid or repeated requests. A daily pseudonymous key
+        derived from the hosting-provided IP address supports rate limiting; the inquiry record does
+        not store the raw IP address.
       </p>
       <p>
-        A successful submission means the inquiry has been saved. Automatic email notifications are
-        not currently enabled. If you contact us directly by email, we use the message and contact
-        details to handle your correspondence through our email service.
+        A successful submission means the inquiry has been saved. We use Resend to send the
+        submitted fields to our designated notification inboxes so we can respond. Notification
+        delivery can fail independently of saved inquiry storage. If you contact us directly by
+        email, we use the message and contact details to handle your correspondence through our
+        email service.
       </p>
       <h2>Information involved in operating the website</h2>
       <p>
@@ -93,6 +98,10 @@ export default function Page() {
         </li>
         <li>
           <strong>Payload:</strong> the CMS software through which we manage content and inquiries.
+        </li>
+        <li>
+          <strong>Resend:</strong> transactional delivery of contact inquiry notifications,
+          including the submitted fields.
         </li>
         <li>
           <strong>Google Tag Manager:</strong> optional tag management, loaded after analytics

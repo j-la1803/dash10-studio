@@ -16,7 +16,10 @@ for (const width of [1440, 390, 320]) {
       await expect(page.locator('main h1')).toHaveText(title)
       await expect(page.locator('main h1')).toHaveCount(1)
       await expect(page.locator('main article')).toHaveCount(1)
-      await expect(page.locator('main time')).toHaveAttribute('datetime', '2026-11-18')
+      await expect(page.locator('main time')).toHaveAttribute(
+        'datetime',
+        path === '/privacy' ? '2026-11-19' : '2026-11-18',
+      )
       expect(await page.locator('main h2').count()).toBeGreaterThan(7)
       const email = path === '/terms' ? 'info@dash10studio.com' : 'justin@dash10.studio'
       await expect(page.locator(`main a[href="mailto:${email}"]`)).toHaveCount(1)
@@ -66,7 +69,7 @@ test('privacy facts match the current inactive integrations and stored-inquiry w
     'Payload',
     'Supabase',
     'Vercel',
-    'not currently enabled',
+    'Resend',
     'Google Analytics 4 is not active',
     'fixed automatic deletion period',
   ])
