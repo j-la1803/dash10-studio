@@ -27,14 +27,18 @@ for (const width of [1440, 1280, 390]) {
     await expect(arrow).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 3, -3)')
     await expect(cta).toHaveCSS('box-shadow', 'none')
     await expect(cta).toHaveCSS('border-width', '1px')
-    await expect.poll(() => cta.locator('.nav-link-label').evaluate(el => getComputedStyle(el, '::after').transform)).toBe('matrix(1, 0, 0, 1, 0, 0)')
+    await expect
+      .poll(() =>
+        cta.locator('.nav-link-label').evaluate((el) => getComputedStyle(el, '::after').transform),
+      )
+      .toBe('matrix(1, 0, 0, 1, 0, 0)')
     expect(await cta.boundingBox()).toEqual(before)
     await page.mouse.move(0, 0)
     await cta.focus()
     await page.keyboard.press('Shift+Tab')
     await page.keyboard.press('Tab')
     await expect(arrow).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 3, -3)')
-    expect(await cta.evaluate(el => getComputedStyle(el).outlineStyle)).not.toBe('none')
+    expect(await cta.evaluate((el) => getComputedStyle(el).outlineStyle)).not.toBe('none')
     await page.emulateMedia({ reducedMotion: 'reduce' })
     await expect(arrow).toHaveCSS('transform', 'none')
     await page.emulateMedia({ reducedMotion: 'no-preference' })
@@ -107,8 +111,9 @@ test('blocked tracking does not interrupt navigation, FAQ or the contact form', 
   await expect(page.getByRole('button', { name: 'SEND PROJECT INQUIRY' })).toBeVisible()
 })
 
-
-test('homepage overlay follows rendered content across navigation and an incorrect route flag', async ({ page }) => {
+test('homepage overlay follows rendered content across navigation and an incorrect route flag', async ({
+  page,
+}) => {
   await page.goto(base)
   const header = page.locator('.studio-header')
   const verify = async () => {
@@ -123,7 +128,7 @@ test('homepage overlay follows rendered content across navigation and an incorre
     await expect(header).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)')
   }
   // Actual affected production tab had this flag despite rendering the homepage.
-  await header.evaluate(el => el.setAttribute('data-home', 'false'))
+  await header.evaluate((el) => el.setAttribute('data-home', 'false'))
   await verify()
   await header.getByRole('link', { name: 'Services', exact: true }).click()
   await expect(page).toHaveURL(`${base}/services`)
@@ -134,14 +139,15 @@ test('homepage overlay follows rendered content across navigation and an incorre
   await verify()
 })
 
-
 for (const width of [1440, 390]) {
-  test(`contact prioritizes the unchanged form without the email CTA at ${width}`, async ({ page }) => {
+  test(`contact prioritizes the unchanged form without the email CTA at ${width}`, async ({
+    page,
+  }) => {
     await page.setViewportSize({ width, height: 900 })
     await page.goto(`${base}/contact`)
     await expect(page.locator('main a[href^="mailto:"]')).toHaveCount(0)
     await expect(page.getByRole('form', { name: 'Project inquiry' })).toBeVisible()
-    for (const label of ['Your name', 'Email address', 'Tell us about your project'])
+    for (const label of ['Full name', 'Email address', 'Project details'])
       await expect(page.getByLabel(label, { exact: true })).toBeVisible()
     await expect(page.getByRole('button', { name: 'SEND PROJECT INQUIRY' })).toBeVisible()
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)

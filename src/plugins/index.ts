@@ -57,6 +57,9 @@ export const plugins: Plugin[] = [
     generateURL,
   }),
   formBuilderPlugin({
+    // Studio inquiry notifications use the server-side Resend path once verified;
+    // do not also run configurable plugin email templates for the same record.
+    beforeEmail: (emails, { req }) => (req.context.studioInquiry ? [] : emails),
     fields: {
       payment: false,
     },

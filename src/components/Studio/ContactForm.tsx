@@ -1,20 +1,30 @@
 'use client'
 
-import { useActionState, useState, useRef } from 'react'
+import { useActionState, useState, useRef, useEffect } from 'react'
 import { measureSubmission } from '@/utilities/integrations/analytics'
 import { submitInquiry } from '@/app/(frontend)/contact/actions'
-import type { InquiryState } from '@/app/(frontend)/contact/validation'
+import { inquiryServices, type InquiryState } from '@/app/(frontend)/contact/validation'
 
 const initial: InquiryState = { status: 'idle', message: '' }
 export function ContactForm() {
   const locked = useRef(false)
   const receipt = useRef<string | null>(null)
-  const [values, setValues] = useState({ name: '', email: '', message: '' })
+  const requestId = useRef<string | null>(null)
+  const [values, setValues] = useState({
+    name: '',
+    email: '',
+    company: '',
+    website: '',
+    service: '',
+    message: '',
+  })
   const [state, action, pending] = useActionState(
     async (previous: InquiryState, data: FormData): Promise<InquiryState> => {
       if (locked.current) return previous
       locked.current = true
       try {
+        requestId.current ||= crypto.randomUUID()
+        data.set('requestId', requestId.current)
         const result = await submitInquiry(previous, data)
         if (result.status === 'success') {
           receipt.current ||= crypto.randomUUID()
@@ -26,22 +36,31 @@ export function ContactForm() {
         return {
           status: 'error',
           message:
-            'We couldn’t save your inquiry. Please try again, or email justin@dash10.studio.',
+            'We couldn’t confirm your inquiry was saved. Please try again, or email justin@dash10.studio.',
         }
       }
     },
     initial,
   )
+  const feedback = useRef<HTMLParagraphElement>(null)
+  useEffect(() => {
+    if (state.status !== 'idle') feedback.current?.focus()
+  }, [state])
   return (
     <div className="inquiry-panel">
       {state.status === 'success' ? (
-        <p role="status" className="inquiry-success">
+        <p ref={feedback} tabIndex={-1} role="status" className="inquiry-success">
           {state.message}
         </p>
       ) : (
-        <form action={action} className="inquiry-form" aria-label="Project inquiry">
+        <form
+          action={action}
+          className="inquiry-form"
+          aria-label="Project inquiry"
+          aria-busy={pending}
+        >
           <label htmlFor="inquiry-name">
-            Your name
+            Full name
             <input
               id="inquiry-name"
               name="name"
@@ -66,8 +85,52 @@ export function ContactForm() {
               required
             />
           </label>
+          <label htmlFor="inquiry-company">
+            Company / Agency (optional)
+            <input
+              id="inquiry-company"
+              name="company"
+              autoComplete="organization"
+              maxLength={200}
+              value={values.company}
+              onChange={(event) => setValues({ ...values, company: event.target.value })}
+            />
+          </label>
+          <label htmlFor="inquiry-url">
+            Website URL (optional)
+            <input
+              id="inquiry-url"
+              name="website"
+              type="url"
+              autoComplete="url"
+              maxLength={2048}
+              placeholder="https://"
+              value={values.website}
+              onChange={(event) => setValues({ ...values, website: event.target.value })}
+            />
+          </label>
+          <label htmlFor="inquiry-service">
+            <span id="inquiry-service-label">Service needed</span>
+            <select
+              aria-labelledby="inquiry-service-label"
+              id="inquiry-service"
+              name="service"
+              required
+              value={values.service}
+              onChange={(event) => setValues({ ...values, service: event.target.value })}
+            >
+              <option value="" disabled>
+                Select a service
+              </option>
+              {inquiryServices.map((service) => (
+                <option key={service} value={service}>
+                  {service}
+                </option>
+              ))}
+            </select>
+          </label>
           <label htmlFor="inquiry-message">
-            Tell us about your project
+            Project details
             <textarea
               id="inquiry-message"
               name="message"
@@ -81,20 +144,29 @@ export function ContactForm() {
             />
           </label>
           <p id="inquiry-help">
-            Include your goals, current platform, and any timing or budget you have in mind. Please
-            leave out passwords and other sensitive information.
+            Include your goals, current platform, and the technical help you need. Please leave out
+            passwords and other sensitive information.
           </p>
           <div className="inquiry-honeypot" aria-hidden="true">
-            <label htmlFor="inquiry-website">
+            <label htmlFor="inquiry-contact-check">
               Leave this empty
-              <input id="inquiry-website" name="website" tabIndex={-1} autoComplete="off" />
+              <input
+                id="inquiry-contact-check"
+                name="contact_check"
+                tabIndex={-1}
+                autoComplete="off"
+              />
             </label>
           </div>
           <p className="inquiry-notice">
-            Your name, email, and message are stored privately so Dash 10 Studio can respond to your
+            The information you provide is stored privately so Dash 10 Studio can respond to your
             inquiry.
           </p>
-          {state.status === 'error' && <p role="alert">{state.message}</p>}
+          {state.status === 'error' && (
+            <p ref={feedback} tabIndex={-1} role="alert">
+              {state.message}
+            </p>
+          )}
           <button className="studio-cta" type="submit" disabled={pending}>
             {pending ? 'SAVING INQUIRY…' : 'SEND PROJECT INQUIRY'}
             <span aria-hidden="true">↗</span>

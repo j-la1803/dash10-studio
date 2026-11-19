@@ -100,18 +100,22 @@ test('contact validates, stores an inquiry, prevents bypass and protects private
   const marker = process.env.QA_INQUIRY_MARKER || `qa-${Date.now()}`
   await page.goto(`${base}/contact`)
   await expect(page.locator('main a[href^="mailto:"]')).toHaveCount(0)
-  await page.getByLabel('Your name', { exact: true }).fill('Dash 10 QA')
+  await page.getByLabel('Full name', { exact: true }).fill('Dash 10 QA')
+  await page.getByLabel('Service needed', { exact: true }).selectOption('White-label development')
   await page.getByLabel('Email address', { exact: true }).fill(`${marker}@example.com`)
-  await page.getByLabel('Tell us about your project').fill('short')
+  await page.getByLabel('Project details').fill('short')
   await page.locator('form').evaluate((form) => {
     form.setAttribute('novalidate', '')
   })
   await page.getByRole('button', { name: 'SEND PROJECT INQUIRY' }).click()
   await expect(page.locator('.inquiry-panel').getByRole('alert')).toContainText('20 and 5,000')
-  await page.getByLabel('Your name', { exact: true }).fill('Dash 10 QA')
+  await page.getByLabel('Full name', { exact: true }).fill('Dash 10 QA')
+  await page.getByLabel('Service needed', { exact: true }).selectOption('White-label development')
   await page.getByLabel('Email address', { exact: true }).fill(`${marker}@example.com`)
+  await page.getByLabel('Company / Agency (optional)').fill('Synthetic agency QA')
+  await page.getByLabel('Website URL (optional)').fill('https://example.com/agency')
   await page
-    .getByLabel('Tell us about your project')
+    .getByLabel('Project details')
     .fill(`QA verification only. Please ignore this test inquiry. Reference: ${marker}`)
   await page.getByRole('button', { name: 'SEND PROJECT INQUIRY' }).click()
   await expect(page.locator('.inquiry-panel').getByRole('status')).toContainText(
@@ -136,10 +140,11 @@ test('contact validates, stores an inquiry, prevents bypass and protects private
   })
   expect(bypass.status()).toBe(403)
   await page.reload()
-  await page.getByLabel('Your name', { exact: true }).fill('Dash 10 QA')
+  await page.getByLabel('Full name', { exact: true }).fill('Dash 10 QA')
+  await page.getByLabel('Service needed', { exact: true }).selectOption('White-label development')
   await page.getByLabel('Email address', { exact: true }).fill(`${marker}@example.com`)
   await page
-    .getByLabel('Tell us about your project')
+    .getByLabel('Project details')
     .fill(`QA duplicate check for ${marker}. No new inquiry should be saved.`)
   await page.getByRole('button', { name: 'SEND PROJECT INQUIRY' }).click()
   await expect(page.locator('.inquiry-panel').getByRole('alert')).toContainText('wait a minute')
@@ -147,17 +152,18 @@ test('contact validates, stores an inquiry, prevents bypass and protects private
 
 test('contact shows a useful error when the server cannot be reached', async ({ page }) => {
   await page.goto(`${process.env.QA_BASE_URL || 'http://localhost:3000'}/contact`)
-  await page.getByLabel('Your name', { exact: true }).fill('Dash 10 QA')
+  await page.getByLabel('Full name', { exact: true }).fill('Dash 10 QA')
+  await page.getByLabel('Service needed', { exact: true }).selectOption('White-label development')
   await page.getByLabel('Email address', { exact: true }).fill('offline@example.com')
   await page
-    .getByLabel('Tell us about your project')
+    .getByLabel('Project details')
     .fill('QA network failure test; this should never reach the server.')
   await page.route('**/contact', (route) =>
     route.request().method() === 'POST' ? route.abort('failed') : route.continue(),
   )
   await page.getByRole('button', { name: 'SEND PROJECT INQUIRY' }).click()
   await expect(page.locator('.inquiry-panel').getByRole('alert')).toContainText(
-    'couldn’t save your inquiry',
+    'couldn’t confirm your inquiry was saved',
   )
 })
 

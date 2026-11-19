@@ -160,12 +160,15 @@ describe('HubSpot verified success lifecycle', () => {
         }),
     )
     const view = render(createElement(ContactForm))
-    fireEvent.change(screen.getByLabelText('Your name'), { target: { value: 'Test Person' } })
+    fireEvent.change(screen.getByLabelText('Full name'), { target: { value: 'Test Person' } })
     fireEvent.change(screen.getByLabelText('Email address'), {
       target: { value: 'private@example.com' },
     })
-    fireEvent.change(screen.getByLabelText('Tell us about your project'), {
+    fireEvent.change(screen.getByLabelText('Project details'), {
       target: { value: 'A private project description with enough characters.' },
+    })
+    fireEvent.change(screen.getByLabelText('Service needed'), {
+      target: { value: 'White-label development' },
     })
     const form = view.container.querySelector('form')!
     fireEvent.submit(form)
