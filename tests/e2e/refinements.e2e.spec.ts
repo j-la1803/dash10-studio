@@ -74,7 +74,7 @@ for (const viewport of [
   })
 }
 
-test('original mountain plays once at 0.6 and holds its final frame', async ({ page }) => {
+test('original mountain plays once at 0.3 and holds its final frame', async ({ page }) => {
   await page.goto(base)
   const video = page.locator('video')
   await expect(video).toHaveAttribute('src', '/videos/dash-10-video-bg-faststart.mp4')
@@ -92,7 +92,7 @@ test('original mountain plays once at 0.6 and holds its final frame', async ({ p
         width: v.videoWidth,
       }
     }),
-  ).toEqual({ loop: false, muted: true, inline: true, rate: 0.6, width: 1438 })
+  ).toEqual({ loop: false, muted: true, inline: true, rate: 0.3, width: 1438 })
   await video.evaluate(async (node) => {
     const v = node as HTMLVideoElement
     v.currentTime = v.duration - 0.2

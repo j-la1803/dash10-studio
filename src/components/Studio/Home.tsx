@@ -134,7 +134,7 @@ export function StudioHome() {
         eyebrow="DIGITAL DEVELOPMENT STUDIO"
         lines={['THE RIGHT', 'TECHNOLOGY.', 'BUILT THE', 'RIGHT WAY.']}
         video="/videos/dash-10-video-bg-faststart.mp4"
-        playbackRate={0.6}
+        playbackRate={0.3}
       />
       <TechnologyMarquee>
         <div className="platform-track">

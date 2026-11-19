@@ -242,3 +242,10 @@ Production verification of the quality release: 33 live browser regressions pass
 Approved Payload 3.90.0 / Sharp 0.35.5 upgrades, Next 16.4.5 and compatible dependency patches are deployed, including the explicitly reviewed nullable user-security timestamp migration. Content snapshots are unchanged. Production dependency audit is now 0 critical / 2 high / 1 moderate; remaining Happy DOM feature-conditional highs and build-tool esbuild moderate are documented in `docs/audits/2026-11-18-security-remediation.md`. Do not force an unreviewed Happy DOM major override.
 
 Homepage delivery improvements preserve the design: approved font subsets, deferred decorative video and removal of unused generic CMS blocks from the homepage entry. Repeated production mobile LCP median improves 4.212s → 2.896s; Lighthouse simulated-mobile LCP 6.055s → 4.139s, Performance 77 → 86, CLS 0. The 2.5s mobile target and field verification remain open. Existing storage/email/legal/secret/CSP operational gates above are unchanged. Implementation deployed at `be5209ab319c37642a04dc03934c078ee29065dc`; full measurements and residual risks are in the remediation report.
+
+
+## Header atmosphere and CTA refinement — November 18, 2026
+
+Homepage retains the existing 150px black-to-transparent overlay with top opacity strengthened 72% → 86.4%; no solid header or geometry change. Contact CTA arrow shifts (3px, −3px) over 200ms ease-out on hover/keyboard focus; inset shadow adds the second border pixel without resizing. Reduced motion disables translation/transitions and existing focus outline remains. Video now plays once at 0.3×, keeping deferred loading, final-frame hold and unchanged source/crop.
+
+Production build and TypeScript pass; 16 targeted browser checks pass across desktop 1440/1280 and mobile 390. White navigation contrast sampled over a synthetic white video frame is 5.92:1–7.46:1; black frame 21:1. Four-second Chrome video sample: 30 presented frames, zero dropped, media elapsed 1.208s over 4.033s. Slower playback gives approximately 7 distinct source frames per second and may appear stepped; no interpolation or re-encoding was added.
