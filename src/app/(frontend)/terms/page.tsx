@@ -93,7 +93,7 @@ export default function Page() {
       <h2>Contact</h2>
       <p>
         Questions about these terms may be sent to Dash 10 Studio at{' '}
-        <a href="mailto:justin@dash10.studio">justin@dash10.studio</a>.
+        <a href="mailto:info@dash10studio.com">info@dash10studio.com</a>.
       </p>
     </LegalPage>
   )

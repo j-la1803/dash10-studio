@@ -18,7 +18,8 @@ for (const width of [1440, 390, 320]) {
       await expect(page.locator('main article')).toHaveCount(1)
       await expect(page.locator('main time')).toHaveAttribute('datetime', '2026-11-18')
       expect(await page.locator('main h2').count()).toBeGreaterThan(7)
-      await expect(page.locator('main a[href="mailto:justin@dash10.studio"]')).toHaveCount(1)
+      const email = path === '/terms' ? 'info@dash10studio.com' : 'justin@dash10.studio'
+      await expect(page.locator(`main a[href="mailto:${email}"]`)).toHaveCount(1)
       expect(
         await page
           .locator('meta[name="robots"]')
