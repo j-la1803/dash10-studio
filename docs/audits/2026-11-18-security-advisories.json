@@ -40,9 +40,10 @@
         "bundled": false
       }
     ],
-    "assessment": "Runtime image processing: staff-controlled media uploads; malicious native decoder input conditional. Direct 0.34.2 remains; Next now resolves patched 0.35.5.",
-    "status": "OPEN",
-    "source": "https://github.com/advisories/GHSA-f88m-g3jw-g9cj"
+    "assessment": "Runtime image processing: staff-controlled media uploads; malicious native decoder input conditional. Both direct Payload and Next image paths now use patched 0.35.5.",
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-f88m-g3jw-g9cj",
+    "candidateVersions": "0.35.5"
   },
   {
     "id": "GHSA-6gpp-xcg3-4w24",
@@ -77,8 +78,9 @@
       }
     ],
     "assessment": "No single-locale i18n middleware authorization configuration; Payload enforces server access.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-6gpp-xcg3-4w24"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-6gpp-xcg3-4w24",
+    "candidateVersions": "16.4.5"
   },
   {
     "id": "GHSA-m99w-x7hq-7vfj",
@@ -113,8 +115,9 @@
       }
     ],
     "assessment": "Production reachable: App Router and public inquiry Server Action; CPU DoS prerequisite present.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-m99w-x7hq-7vfj"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-m99w-x7hq-7vfj",
+    "candidateVersions": "16.4.5"
   },
   {
     "id": "GHSA-89xv-2m56-2m9x",
@@ -149,8 +152,9 @@
       }
     ],
     "assessment": "Not expected on managed Vercel: upstream host pinned; no custom server.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-89xv-2m56-2m9x"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-89xv-2m56-2m9x",
+    "candidateVersions": "16.4.5"
   },
   {
     "id": "GHSA-p9j2-gv94-2wf4",
@@ -185,8 +189,9 @@
       }
     ],
     "assessment": "No request-controlled external destination hostname in configured redirects/rewrites.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-p9j2-gv94-2wf4"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-p9j2-gv94-2wf4",
+    "candidateVersions": "16.4.5"
   },
   {
     "id": "GHSA-6g55-p6wh-862q",
@@ -221,8 +226,9 @@
       }
     ],
     "assessment": "Build-time CSS/source-map processing; no public untrusted CSS processing route. Supply-chain/build input remains a risk.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-6g55-p6wh-862q"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-6g55-p6wh-862q",
+    "candidateVersions": "8.5.23 / 8.5.33"
   },
   {
     "id": "GHSA-r28c-9q8g-f849",
@@ -257,8 +263,9 @@
       }
     ],
     "assessment": "Build-time CSS/source-map processing; no public untrusted CSS processing route. Supply-chain/build input remains a risk.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-r28c-9q8g-f849"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-r28c-9q8g-f849",
+    "candidateVersions": "8.5.23 / 8.5.33"
   },
   {
     "id": "GHSA-5jgf-p345-68v8",
@@ -302,8 +309,9 @@
       }
     ],
     "assessment": "Runtime dependency through Payload > AJV URI resolution. No app outbound host-policy decision using fast-uri found; not demonstrated SSRF in this app.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-5jgf-p345-68v8"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-5jgf-p345-68v8",
+    "candidateVersions": "3.1.9"
   },
   {
     "id": "GHSA-f65p-4m7j-42xc",
@@ -347,8 +355,9 @@
       }
     ],
     "assessment": "Runtime dependency through Payload > AJV URI resolution. No app outbound host-policy decision using fast-uri found; not demonstrated SSRF in this app.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-f65p-4m7j-42xc"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-f65p-4m7j-42xc",
+    "candidateVersions": "3.1.9"
   },
   {
     "id": "GHSA-fph4-wmhf-6fwf",
@@ -392,8 +401,9 @@
       }
     ],
     "assessment": "Runtime dependency through Payload > AJV URI resolution. No app outbound host-policy decision using fast-uri found; not demonstrated SSRF in this app.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-fph4-wmhf-6fwf"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-fph4-wmhf-6fwf",
+    "candidateVersions": "3.1.9"
   },
   {
     "id": "GHSA-jqff-g426-hqxp",
@@ -437,8 +447,9 @@
       }
     ],
     "assessment": "Runtime dependency through Payload > AJV URI resolution. No app outbound host-policy decision using fast-uri found; not demonstrated SSRF in this app.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-jqff-g426-hqxp"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-jqff-g426-hqxp",
+    "candidateVersions": "3.1.9"
   },
   {
     "id": "GHSA-p293-qw3h-jr36",
@@ -473,8 +484,9 @@
       }
     ],
     "assessment": "Not applicable: Windows-only; production is Vercel Linux.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-p293-qw3h-jr36"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-p293-qw3h-jr36",
+    "candidateVersions": "16.4.5"
   },
   {
     "id": "GHSA-rgj7-g3m4-5g8c",
@@ -517,9 +529,10 @@
         "bundled": false
       }
     ],
-    "assessment": "Runtime image processing: staff-controlled media uploads; malicious native decoder input conditional. Direct 0.34.2 remains; Next now resolves patched 0.35.5.",
-    "status": "OPEN",
-    "source": "https://github.com/advisories/GHSA-rgj7-g3m4-5g8c"
+    "assessment": "Runtime image processing: staff-controlled media uploads; malicious native decoder input conditional. Both direct Payload and Next image paths now use patched 0.35.5.",
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-rgj7-g3m4-5g8c",
+    "candidateVersions": "0.35.5"
   },
   {
     "id": "GHSA-2883-xcg3-v3hh",
@@ -586,8 +599,9 @@
       }
     ],
     "assessment": "Build/type-generation path through json-schema-to-typescript/ref-parser; no uploaded YAML endpoint.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-2883-xcg3-v3hh"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-2883-xcg3-v3hh",
+    "candidateVersions": "4.3.2"
   },
   {
     "id": "GHSA-2xp9-vwfh-vxw4",
@@ -622,8 +636,9 @@
       }
     ],
     "assessment": "Conditional runtime: public image optimizer, AVIF input; uploads require staff. Patch still needed.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-2xp9-vwfh-vxw4"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-2xp9-vwfh-vxw4",
+    "candidateVersions": "16.4.5"
   },
   {
     "id": "GHSA-qw65-cvwx-89v3",
@@ -667,8 +682,9 @@
       }
     ],
     "assessment": "Runtime dependency through Payload > AJV URI resolution. No app outbound host-policy decision using fast-uri found; not demonstrated SSRF in this app.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-qw65-cvwx-89v3"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-qw65-cvwx-89v3",
+    "candidateVersions": "3.1.9"
   },
   {
     "id": "GHSA-rfgv-xxqx-mfg5",
@@ -712,8 +728,9 @@
       }
     ],
     "assessment": "Requires client WebSocket to malicious server/subprotocol; no application Undici WebSocket use found.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-rfgv-xxqx-mfg5"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-rfgv-xxqx-mfg5",
+    "candidateVersions": "7.30.1"
   },
   {
     "id": "GHSA-w293-vg96-wgc3",
@@ -757,8 +774,9 @@
       }
     ],
     "assessment": "Requires BalancedPool with custom TLS callbacks; not configured in application.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-w293-vg96-wgc3"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-w293-vg96-wgc3",
+    "candidateVersions": "7.30.1"
   },
   {
     "id": "GHSA-vcvr-r3jv-pc5j",
@@ -793,8 +811,9 @@
       }
     ],
     "assessment": "No app ImageResponse/next/og route or attacker-supplied SVG generation found.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-vcvr-r3jv-pc5j"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-vcvr-r3jv-pc5j",
+    "candidateVersions": "16.4.5"
   },
   {
     "id": "GHSA-68fv-2mgg-jv7q",
@@ -846,8 +865,9 @@
       }
     ],
     "assessment": "Build-time CSS/source-map processing; no public untrusted CSS processing route. Supply-chain/build input remains a risk.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-68fv-2mgg-jv7q"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-68fv-2mgg-jv7q",
+    "candidateVersions": "1.2.2"
   },
   {
     "id": "GHSA-wq5f-xc86-pv6w",
@@ -890,9 +910,10 @@
         "bundled": false
       }
     ],
-    "assessment": "Runtime image processing: staff-controlled media uploads; malicious native decoder input conditional. Direct 0.34.2 remains; Next now resolves patched 0.35.5.",
-    "status": "OPEN",
-    "source": "https://github.com/advisories/GHSA-wq5f-xc86-pv6w"
+    "assessment": "Runtime image processing: staff-controlled media uploads; malicious native decoder input conditional. Both direct Payload and Next image paths now use patched 0.35.5.",
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-wq5f-xc86-pv6w",
+    "candidateVersions": "0.35.5"
   },
   {
     "id": "GHSA-fx49-4h83-wjv9",
@@ -936,8 +957,9 @@
       }
     ],
     "assessment": "Requires password field access.update restriction; default Users config has collection-level authenticated access.",
-    "status": "OPEN",
-    "source": "https://github.com/advisories/GHSA-fx49-4h83-wjv9"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-fx49-4h83-wjv9",
+    "candidateVersions": "3.90.0"
   },
   {
     "id": "GHSA-2g7p-5934-q4w7",
@@ -981,8 +1003,9 @@
       }
     ],
     "assessment": "Public multipart request parsing: malformed requests can cause prolonged processing; production reachable DoS.",
-    "status": "OPEN",
-    "source": "https://github.com/advisories/GHSA-2g7p-5934-q4w7"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-2g7p-5934-q4w7",
+    "candidateVersions": "3.90.0"
   },
   {
     "id": "GHSA-238x-w2j9-gwwr",
@@ -1026,8 +1049,9 @@
       }
     ],
     "assessment": "useAPIKey not enabled on Users; prerequisite absent.",
-    "status": "OPEN",
-    "source": "https://github.com/advisories/GHSA-238x-w2j9-gwwr"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-238x-w2j9-gwwr",
+    "candidateVersions": "3.90.0"
   },
   {
     "id": "GHSA-xgv3-crq2-6f69",
@@ -1071,8 +1095,9 @@
       }
     ],
     "assessment": "Auth endpoints exist; no app custom hidden/restricted fields found. Built-in auth filtering still warrants patch.",
-    "status": "OPEN",
-    "source": "https://github.com/advisories/GHSA-xgv3-crq2-6f69"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-xgv3-crq2-6f69",
+    "candidateVersions": "3.90.0"
   },
   {
     "id": "GHSA-vc4h-q48j-5hcx",
@@ -1116,8 +1141,9 @@
       }
     ],
     "assessment": "Authenticated duplication path; built-in disableDuplicate is not a sufficient mitigation. Staff-only create reduces exposure.",
-    "status": "OPEN",
-    "source": "https://github.com/advisories/GHSA-vc4h-q48j-5hcx"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-vc4h-q48j-5hcx",
+    "candidateVersions": "3.90.0"
   },
   {
     "id": "GHSA-v49j-62m6-pgrr",
@@ -1161,8 +1187,9 @@
       }
     ],
     "assessment": "P0 production reachable: Postgres plus public readable collections/dynamic REST/GraphQL filters. Access rules alone do not remediate SQL injection.",
-    "status": "OPEN",
-    "source": "https://github.com/advisories/GHSA-v49j-62m6-pgrr"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-v49j-62m6-pgrr",
+    "candidateVersions": "3.90.0"
   },
   {
     "id": "GHSA-fpww-c55p-cjv6",
@@ -1206,8 +1233,9 @@
       }
     ],
     "assessment": "Conditional query inference through polymorphic joins; Payload folders enabled. No confirmed sensitive join exploit; cannot dismiss generated schema.",
-    "status": "OPEN",
-    "source": "https://github.com/advisories/GHSA-fpww-c55p-cjv6"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-fpww-c55p-cjv6",
+    "candidateVersions": "3.90.0"
   },
   {
     "id": "GHSA-cjq9-62q9-8jv4",
@@ -1242,8 +1270,9 @@
       }
     ],
     "assessment": "Conditional runtime image optimizer SSRF; approved remote host restricted, server-fetched media remains a trust boundary.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-cjq9-62q9-8jv4"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-cjq9-62q9-8jv4",
+    "candidateVersions": "16.4.5"
   },
   {
     "id": "GHSA-97rh-rhh2-7vjv",
@@ -1287,8 +1316,9 @@
       }
     ],
     "assessment": "Initial user already exists; empty-user first-register prerequisite absent. Never test by deleting users.",
-    "status": "OPEN",
-    "source": "https://github.com/advisories/GHSA-97rh-rhh2-7vjv"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-97rh-rhh2-7vjv",
+    "candidateVersions": "3.90.0"
   },
   {
     "id": "GHSA-2pwp-2369-8fg3",
@@ -1332,8 +1362,9 @@
       }
     ],
     "assessment": "Staff upload path accepts SVG; user opens malicious upload. Trusted staff reduces but does not remove exposure.",
-    "status": "OPEN",
-    "source": "https://github.com/advisories/GHSA-2pwp-2369-8fg3"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-2pwp-2369-8fg3",
+    "candidateVersions": "3.90.0"
   },
   {
     "id": "GHSA-p223-2wr2-j562",
@@ -1377,8 +1408,9 @@
       }
     ],
     "assessment": "Staff-only local upload update/delete cleanup; local storage configured. Authenticated malicious upload manager required.",
-    "status": "OPEN",
-    "source": "https://github.com/advisories/GHSA-p223-2wr2-j562"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-p223-2wr2-j562",
+    "candidateVersions": "3.90.0"
   },
   {
     "id": "GHSA-9qpg-3cf8-w33x",
@@ -1422,8 +1454,9 @@
       }
     ],
     "assessment": "Staff uploads, no MIME allowlist; XML/XSL same-origin delivery is conditional exposure.",
-    "status": "OPEN",
-    "source": "https://github.com/advisories/GHSA-9qpg-3cf8-w33x"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-9qpg-3cf8-w33x",
+    "candidateVersions": "3.90.0"
   },
   {
     "id": "GHSA-r488-j9vj-wx3q",
@@ -1445,8 +1478,9 @@
       }
     ],
     "assessment": "P0 production reachable: form-builder enabled and submissions supported. Custom contact hook narrows one path; not a complete plugin patch.",
-    "status": "OPEN",
-    "source": "https://github.com/advisories/GHSA-r488-j9vj-wx3q"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-r488-j9vj-wx3q",
+    "candidateVersions": "3.90.0"
   },
   {
     "id": "GHSA-f7hx-52q9-hcrf",
@@ -1490,8 +1524,9 @@
       }
     ],
     "assessment": "Requires orderable collections/joins; none explicitly enabled in application collections. Generated plugin behavior merits patched release.",
-    "status": "OPEN",
-    "source": "https://github.com/advisories/GHSA-f7hx-52q9-hcrf"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-f7hx-52q9-hcrf",
+    "candidateVersions": "3.90.0"
   },
   {
     "id": "GHSA-66wr-7vmr-p5jq",
@@ -1535,8 +1570,9 @@
       }
     ],
     "assessment": "Requires custom field mapped to reserved JWT claim; no saveToJWT/custom reserved claim mapping found.",
-    "status": "OPEN",
-    "source": "https://github.com/advisories/GHSA-66wr-7vmr-p5jq"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-66wr-7vmr-p5jq",
+    "candidateVersions": "3.90.0"
   },
   {
     "id": "GHSA-pj5h-5q6c-3pfx",
@@ -1580,8 +1616,9 @@
       }
     ],
     "assessment": "Conditional authenticated external file retrieval; no custom external retrieval configured. Patch safe-fetch/session handling.",
-    "status": "OPEN",
-    "source": "https://github.com/advisories/GHSA-pj5h-5q6c-3pfx"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-pj5h-5q6c-3pfx",
+    "candidateVersions": "3.90.0"
   },
   {
     "id": "GHSA-2464-fhr4-w9xw",
@@ -1616,8 +1653,9 @@
       }
     ],
     "assessment": "Conditional runtime: image optimizer on glibc Linux with malicious SVG; patch optimizer even though approved SVGs bypass optimization.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-2464-fhr4-w9xw"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-2464-fhr4-w9xw",
+    "candidateVersions": "16.4.5"
   },
   {
     "id": "GHSA-p3m5-59mp-jv5r",
@@ -1652,8 +1690,9 @@
       }
     ],
     "assessment": "Production reachable: App Router and Server Actions; subsequent DoS advisory.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-p3m5-59mp-jv5r"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-p3m5-59mp-jv5r",
+    "candidateVersions": "16.4.5"
   },
   {
     "id": "GHSA-673q-mjm6-r5xr",
@@ -1688,8 +1727,9 @@
       }
     ],
     "assessment": "No Cache Components/use cache function returning typed arrays found.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-673q-mjm6-r5xr"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-673q-mjm6-r5xr",
+    "candidateVersions": "16.4.5"
   },
   {
     "id": "GHSA-834v-8h66-3h79",
@@ -1710,9 +1750,10 @@
         "bundled": false
       }
     ],
-    "assessment": "Server-capable transitive Lexical DOM helper, not simply dev-only. RCE requires JS evaluation enabled + untrusted module input; no application use found.",
-    "status": "OPEN",
-    "source": "https://github.com/advisories/GHSA-834v-8h66-3h79"
+    "assessment": "Server-capable transitive Lexical DOM helper, not simply dev-only. RCE requires JS evaluation enabled + untrusted module input; no application use found. Refreshed to 20.14.6; advisory floor 20.14.7 is unavailable from registry. Fix 21.0.4 is a major and has not been forced into Lexical.",
+    "status": "OPEN: feature prerequisites absent in inspected app",
+    "source": "https://github.com/advisories/GHSA-834v-8h66-3h79",
+    "candidateVersions": "20.14.6"
   },
   {
     "id": "GHSA-xjj6-f33q-929c",
@@ -1756,8 +1797,9 @@
       }
     ],
     "assessment": "Conditional runtime outbound fetch to malicious server; Payload file-fetch uses Undici. Patch even with caught fetch errors.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-xjj6-f33q-929c"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-xjj6-f33q-929c",
+    "candidateVersions": "7.30.1"
   },
   {
     "id": "GHSA-4w7w-5xrc-9h26",
@@ -1801,8 +1843,9 @@
       }
     ],
     "assessment": "Requires shared cache + originless Agent + redirect/cache composition; no such configuration found.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-4w7w-5xrc-9h26"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-4w7w-5xrc-9h26",
+    "candidateVersions": "7.30.1"
   },
   {
     "id": "GHSA-2m5v-pch6-74hx",
@@ -1846,8 +1889,9 @@
       }
     ],
     "assessment": "Requires function-valued tls verification override; not configured in application.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-2m5v-pch6-74hx"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-2m5v-pch6-74hx",
+    "candidateVersions": "7.30.1"
   },
   {
     "id": "GHSA-qrxm-fqhp-jwvm",
@@ -1891,8 +1935,9 @@
       }
     ],
     "assessment": "Conditional runtime outbound HTTPS/TLS1.2 to malicious endpoint; no need to prove with destructive DoS.",
-    "status": "Resolved in candidate lockfile",
-    "source": "https://github.com/advisories/GHSA-qrxm-fqhp-jwvm"
+    "status": "Resolved in approved lockfile",
+    "source": "https://github.com/advisories/GHSA-qrxm-fqhp-jwvm",
+    "candidateVersions": "7.30.1"
   },
   {
     "id": "GHSA-c8p4-j97h-3vg8",
@@ -1913,8 +1958,9 @@
         "bundled": false
       }
     ],
-    "assessment": "Server-capable Lexical DOM helper; untrusted iframe/stylesheet HTML parsing required. App HTML conversion takes explicit JSDOM; no public Happy DOM parsing route found.",
-    "status": "OPEN",
-    "source": "https://github.com/advisories/GHSA-c8p4-j97h-3vg8"
+    "assessment": "Server-capable Lexical DOM helper; untrusted iframe/stylesheet HTML parsing required. App HTML conversion takes explicit JSDOM; no public Happy DOM parsing route found. Refreshed to 20.14.6; advisory floor 20.14.7 is unavailable from registry. Fix 21.0.4 is a major and has not been forced into Lexical.",
+    "status": "OPEN: feature prerequisites absent in inspected app",
+    "source": "https://github.com/advisories/GHSA-c8p4-j97h-3vg8",
+    "candidateVersions": "20.14.6"
   }
 ]
