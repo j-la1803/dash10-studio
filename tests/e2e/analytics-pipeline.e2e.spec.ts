@@ -9,6 +9,7 @@ for (const width of [1440, 390]) {
     expect(await page.locator('#dash-gtm').count()).toBe(0)
     await page.getByRole('button', { name: 'Decline analytics', exact: true }).click()
     await page.locator('footer a.studio-cta[href="/contact"]').click()
+    await expect(page).toHaveURL(`${base}/contact`)
     expect(await page.locator('#dash-gtm').count()).toBe(0)
     await page.getByRole('button', { name: 'Analytics preferences', exact: true }).click()
     await page.getByRole('button', { name: 'Allow analytics', exact: true }).click()
