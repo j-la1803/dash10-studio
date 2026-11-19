@@ -70,7 +70,7 @@ test('privacy facts match the current inactive integrations and stored-inquiry w
     'Supabase',
     'Vercel',
     'Resend',
-    'Google Analytics 4 is not active',
+    'Google Analytics 4 measures',
     'fixed automatic deletion period',
   ])
     expect(text.replace(/\s+/g, ' ')).toContain(phrase)

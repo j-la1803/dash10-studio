@@ -44,9 +44,11 @@ afterEach(() => {
   delete window.HubSpotFormsV4
 })
 const events = () =>
-  window.dataLayer!.filter(
-    (x): x is Record<string, unknown> => !!x && typeof x === 'object' && 'event' in x,
-  )
+  window
+    .dataLayer!.filter(
+      (x): x is Record<string, unknown> => !!x && typeof x === 'object' && 'event' in x,
+    )
+    .map((x) => Object.fromEntries(Object.entries(x).filter(([, v]) => v !== null)))
 
 describe('integration release gates', () => {
   it('uses only the confirmed GTM container, supports disabling, and keeps HubSpot gated', () => {
@@ -99,6 +101,36 @@ describe('consented analytics', () => {
     measureSubmission('payload', 'after-consent-fixture')
     measureSubmission('payload', 'after-consent-fixture')
     expect(events()).toEqual([{ event: 'contact_form_success', form_provider: 'payload' }])
+  })
+  it('honors GPC over saved acceptance and prevents any analytics opt-in', () => {
+    localStorage.setItem('dash10-analytics-consent-v1', 'allow')
+    Object.defineProperty(navigator, 'globalPrivacyControl', { value: true, configurable: true })
+    try {
+      render(createElement(Analytics, { containerId: 'GTM-MZ6ZN2NH' }))
+      expect(document.getElementById('dash-gtm')).toBeNull()
+      expect(screen.queryByText('Allow analytics')).toBeNull()
+      expect(events()).toHaveLength(0)
+    } finally {
+      delete (navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl
+    }
+  })
+  it('allows only fixed scroll and outbound metadata and clears stale event fields', () => {
+    window.dashAnalyticsAllowed = true
+    measure({
+      event: 'scroll',
+      percent_scrolled: 90,
+      email: 'private@example.com',
+    } as unknown as MeasurementEvent)
+    measure({
+      event: 'outbound_click',
+      destination_id: 'external',
+      link_url: 'mailto:private@example.com',
+    } as unknown as MeasurementEvent)
+    expect(events()).toEqual([
+      { event: 'scroll', percent_scrolled: 90 },
+      { event: 'outbound_click', destination_id: 'external' },
+    ])
+    expect((window.dataLayer!.at(-1) as Record<string, unknown>).percent_scrolled).toBeNull()
   })
   it('decline and disabled integration never load GTM', () => {
     const view = render(createElement(Analytics, { containerId: null }))

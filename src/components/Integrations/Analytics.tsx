@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { createPortal } from 'react-dom'
 import { usePathname } from 'next/navigation'
-import { measure, safePath } from '@/utilities/integrations/analytics'
+import { measure, pageContext, privacyOptOut } from '@/utilities/integrations/analytics'
 function readFooterTarget() {
   return document.getElementById('footer-analytics-preferences')
 }
@@ -12,9 +12,10 @@ function subscribeFooter() {
 const preferenceKey = 'dash10-analytics-consent-v1'
 let memoryChoice: 'allow' | 'deny' | null = null
 function readPreference() {
+  if (privacyOptOut()) return 'deny'
   try {
     const value = localStorage.getItem(preferenceKey)
-    return value === 'allow' || value === 'deny' ? value : null
+    return value === 'allow' || value === 'deny' ? value : memoryChoice
   } catch {
     return memoryChoice
   }
@@ -56,6 +57,7 @@ export function Analytics({ containerId }: { containerId: string | null }) {
   const path = usePathname()
   const choice = useSyncExternalStore(subscribePreference, readPreference, () => null)
   const [show, setShow] = useState(false)
+  const optOut = useSyncExternalStore(subscribePreference, privacyOptOut, () => false)
   const footerTarget = useSyncExternalStore(subscribeFooter, readFooterTarget, () => null)
   const preferencesButton = useRef<HTMLButtonElement>(null)
   const consentPanel = useRef<HTMLElement>(null)
@@ -75,6 +77,7 @@ export function Analytics({ containerId }: { containerId: string | null }) {
       return
     }
     window.dataLayer ||= []
+    window.dataLayer.push(pageContext(path, lastPath.current || ''))
     if (!document.getElementById('dash-gtm')) {
       // Arguments objects are the Google consent command format.
       function consent(..._args: unknown[]) {
@@ -101,25 +104,26 @@ export function Analytics({ containerId }: { containerId: string | null }) {
       document.head.append(script)
     }
     window.dashAnalyticsAllowed = true
-    const page = safePath(path)
     if (lastPath.current !== path) {
-      window.dataLayer.push({
-        event: 'page_view',
-        page_path: page,
-        page_location: `https://dash10studio.com${page}`,
-        page_referrer: lastPath.current
-          ? `https://dash10studio.com${safePath(lastPath.current)}`
-          : '',
-      })
+      window.dataLayer.push({ event: 'page_view', ...pageContext(path, lastPath.current || '') })
       lastPath.current = path
     }
   }, [choice, containerId, path])
   useEffect(() => {
     if (!containerId) return
     const clicked = (event: MouseEvent) => {
-      const link = (event.target as Element).closest?.(
-        'a.studio-cta, .studio-header a[href="/contact"]',
-      )
+      const element = event.target instanceof Element ? event.target : null
+      const anchor = element?.closest<HTMLAnchorElement>('a[href]')
+      if (anchor) {
+        const url = new URL(anchor.href, location.href)
+        if (['http:', 'https:'].includes(url.protocol) && url.origin !== location.origin) {
+          measure({
+            event: 'outbound_click',
+            destination_id: url.hostname === 'policies.google.com' ? 'google_privacy' : 'external',
+          })
+        }
+      }
+      const link = element?.closest('a.studio-cta, .studio-header a[href="/contact"]')
       if (!link) return
       const href = link.getAttribute('href') || ''
       const cta_id = href.startsWith('mailto:')
@@ -147,17 +151,40 @@ export function Analytics({ containerId }: { containerId: string | null }) {
     document.addEventListener('click', clicked)
     return () => document.removeEventListener('click', clicked)
   }, [containerId])
+  useEffect(() => {
+    if (choice !== 'allow' || !containerId || privacyOptOut()) return
+    let sent = false
+    let frame = 0
+    const check = () => {
+      frame = 0
+      const height = document.documentElement.scrollHeight
+      if (!sent && height > innerHeight && (scrollY + innerHeight) / height >= 0.9) {
+        sent = true
+        measure({ event: 'scroll', percent_scrolled: 90 })
+      }
+    }
+    const schedule = () => {
+      if (!frame && !sent) frame = requestAnimationFrame(check)
+    }
+    window.addEventListener('scroll', schedule, { passive: true })
+    window.addEventListener('resize', schedule)
+    return () => {
+      window.removeEventListener('scroll', schedule)
+      window.removeEventListener('resize', schedule)
+      cancelAnimationFrame(frame)
+    }
+  }, [path, choice, containerId])
   function choose(value: 'allow' | 'deny') {
+    if (privacyOptOut()) value = 'deny'
     try {
       localStorage.setItem(preferenceKey, value)
     } catch {
-      /* In-memory consent still works. */
+      memoryChoice = value
     }
     if (choice === 'allow' && value === 'deny') {
       revokeConsent()
       return
     }
-    memoryChoice = value
     window.dispatchEvent(new Event('dash10:consent'))
     setShow(false)
     if (show) preferencesButton.current?.focus()
@@ -183,7 +210,14 @@ export function Analytics({ containerId }: { containerId: string | null }) {
           Allow optional analytics to help us understand which pages are useful? Your project
           inquiry works either way.
         </p>
-        <button onClick={() => choose('allow')}>Allow analytics</button>
+        {optOut ? (
+          <p>
+            Your browser’s privacy signal disables analytics. Change that browser preference to
+            enable optional analytics.
+          </p>
+        ) : (
+          <button onClick={() => choose('allow')}>Allow analytics</button>
+        )}
         <button onClick={() => choose('deny')}>Decline analytics</button>
       </section>
       {footerTarget &&

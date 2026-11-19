@@ -1,6 +1,8 @@
 // No arbitrary payloads, field values, URLs, query strings, titles or personal identifiers.
 export type MeasurementEvent =
   | { event: 'contact_form_success'; form_provider: 'payload' | 'hubspot' }
+  | { event: 'scroll'; percent_scrolled: 90 }
+  | { event: 'outbound_click'; destination_id: 'google_privacy' | 'external' }
   | {
       event: 'cta_click' | 'project_inquiry'
       cta_id: 'contact' | 'services' | 'process' | 'home_story' | 'email'
@@ -16,14 +18,46 @@ declare global {
 const submissionReceipts = new Set<string>()
 export function safePath(path: string) {
   const clean = path.split(/[?#]/)[0]
-  if (['/', '/services', '/process', '/about', '/contact', '/posts', '/search'].includes(clean))
+  if (
+    [
+      '/',
+      '/services',
+      '/process',
+      '/about',
+      '/contact',
+      '/posts',
+      '/search',
+      '/privacy',
+      '/terms',
+    ].includes(clean)
+  )
     return clean
   return clean.startsWith('/posts/') ? '/posts/article' : '/other'
 }
+export function privacyOptOut() {
+  if (typeof navigator === 'undefined') return false
+  return (
+    (navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl === true ||
+    navigator.doNotTrack === '1'
+  )
+}
+export function pageContext(path: string, previous = '') {
+  const page = safePath(path)
+  return {
+    page_path: page,
+    page_location: `https://dash10studio.com${page}`,
+    page_referrer: previous ? `https://dash10studio.com${safePath(previous)}` : '',
+    page_title: 'Dash 10 Studio',
+  }
+}
 export function measure(event: MeasurementEvent) {
-  if (typeof window === 'undefined' || !window.dashAnalyticsAllowed) return
+  if (typeof window === 'undefined' || !window.dashAnalyticsAllowed || privacyOptOut()) return
   if (event.event === 'contact_form_success') {
     if (!['payload', 'hubspot'].includes(event.form_provider)) return
+  } else if (event.event === 'scroll') {
+    if (event.percent_scrolled !== 90) return
+  } else if (event.event === 'outbound_click') {
+    if (!['google_privacy', 'external'].includes(event.destination_id)) return
   } else if (
     !['cta_click', 'project_inquiry'].includes(event.event) ||
     !['contact', 'services', 'process', 'home_story', 'email'].includes(event.cta_id) ||
@@ -34,9 +68,20 @@ export function measure(event: MeasurementEvent) {
   const payload =
     event.event === 'contact_form_success'
       ? { event: event.event, form_provider: event.form_provider }
-      : { event: event.event, cta_id: event.cta_id, placement: event.placement }
+      : event.event === 'scroll'
+        ? { event: event.event, percent_scrolled: 90 }
+        : event.event === 'outbound_click'
+          ? { event: event.event, destination_id: event.destination_id }
+          : { event: event.event, cta_id: event.cta_id, placement: event.placement }
   try {
-    window.dataLayer?.push(payload)
+    window.dataLayer?.push({
+      form_provider: null,
+      cta_id: null,
+      placement: null,
+      percent_scrolled: null,
+      destination_id: null,
+      ...payload,
+    })
   } catch {
     /* Measurement must never interrupt a saved inquiry or navigation. */
   }

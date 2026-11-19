@@ -66,11 +66,18 @@ export default function Page() {
         limited to predefined categories and exclude URL query strings.
       </p>
       <p>
-        As of this policy’s effective date, Google Tag Manager is installed, but Google Analytics 4
-        is not active in its published container. Our production check did not observe GA4
-        measurement requests or analytics cookies. We do not describe an unpublished GA4
-        configuration as active collection. We will update this policy if the website’s measurement
-        practices change.
+        After you allow analytics, Google Analytics 4 measures page visits and navigation,
+        90-percent scroll depth, outbound-link categories, selected calls to action and confirmed
+        saved project inquiries. We use fixed event categories and sanitized page paths rather than
+        submitted form values, email addresses, names, telephone numbers, search terms or full
+        outbound URLs. Advertising storage, advertising user data and advertising personalization
+        remain denied. Automatic detection of personal information is disabled.
+      </p>
+      <p>
+        We currently require affirmative analytics consent globally because we do not have a
+        verified jurisdiction-specific consent system. We do not assume that a U.S. location alone
+        permits default-on analytics. A saved decline, Global Privacy Control signal or Do Not Track
+        signal keeps optional analytics off, including when an older saved choice allowed it.
       </p>
       <p>
         You can reopen <strong>Analytics preferences</strong> in the footer at any time. Choosing
@@ -104,8 +111,8 @@ export default function Page() {
           including the submitted fields.
         </li>
         <li>
-          <strong>Google Tag Manager:</strong> optional tag management, loaded after analytics
-          consent.
+          <strong>Google Tag Manager and Google Analytics 4:</strong> optional tag management and
+          website measurement, loaded after analytics consent.
         </li>
       </ul>
       <p>
