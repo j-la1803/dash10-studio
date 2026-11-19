@@ -1,11 +1,12 @@
-import type { Metadata } from 'next'
+import { siteMetadata } from '@/utilities/siteMetadata'
 import { HubSpotForm } from '@/components/Integrations/HubSpotForm'
 import { hubSpotConfig } from '@/utilities/integrations/config'
 import { ContactForm } from '@/components/Studio/ContactForm'
-export const metadata: Metadata = {
-  title: 'Let’s Talk | Dash 10 Studio',
-  description: 'Tell Dash 10 Studio about your website, e-commerce, or integration project.',
-}
+export const metadata = siteMetadata(
+  '/contact',
+  'Let’s Talk | Dash 10 Studio',
+  'Tell Dash 10 Studio about your website, e-commerce, or integration project.',
+)
 export default function ContactPage() {
   const email = process.env.CONTACT_EMAIL || 'justin@dash10.studio'
   return (

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next/types'
+import { siteMetadata } from '@/utilities/siteMetadata'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
 import { PageRange } from '@/components/PageRange'
@@ -23,7 +24,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   const sanitizedPageNumber = Number(pageNumber)
 
-  if (!Number.isInteger(sanitizedPageNumber)) notFound()
+  if (!Number.isInteger(sanitizedPageNumber) || sanitizedPageNumber < 2) notFound()
 
   const posts = await payload.find({
     collection: 'posts',
@@ -32,6 +33,8 @@ export default async function Page({ params: paramsPromise }: Args) {
     page: sanitizedPageNumber,
     overrideAccess: false,
   })
+
+  if (sanitizedPageNumber > posts.totalPages) notFound()
 
   return (
     <main id="main-content" className="studio-page">
@@ -64,9 +67,11 @@ export default async function Page({ params: paramsPromise }: Args) {
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { pageNumber } = await paramsPromise
-  return {
-    title: `Blog | Dash 10 Studio — Page ${pageNumber || ''}`,
-  }
+  return siteMetadata(
+    `/posts/page/${pageNumber}`,
+    `Blog | Dash 10 Studio — Page ${pageNumber}`,
+    `More practical articles from Dash 10 Studio — page ${pageNumber}.`,
+  )
 }
 
 export async function generateStaticParams() {
@@ -80,7 +85,7 @@ export async function generateStaticParams() {
 
   const pages: { pageNumber: string }[] = []
 
-  for (let i = 1; i <= totalPages; i++) {
+  for (let i = 2; i <= totalPages; i++) {
     pages.push({ pageNumber: String(i) })
   }
 

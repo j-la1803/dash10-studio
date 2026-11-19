@@ -1,10 +1,10 @@
 import Link from 'next/link'
-import type { Metadata } from 'next'
-export const metadata: Metadata = {
-  title: 'Services | Dash 10 Studio',
-  description:
-    'Websites, commerce, and connected systems built around the way your business works.',
-}
+import { siteMetadata } from '@/utilities/siteMetadata'
+export const metadata = siteMetadata(
+  '/services',
+  'Services | Dash 10 Studio',
+  'Websites, commerce, and connected systems built around the way your business works.',
+)
 export default function Page() {
   return (
     <main id="main-content" className="studio-page">

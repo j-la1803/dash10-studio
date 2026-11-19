@@ -93,7 +93,7 @@ export function PinnedScenes({ children }: { children: ReactNode }) {
               <li key={name}>
                 <a
                   href={`#story-step-${index + 1}`}
-                  aria-label={`Scene ${index + 1}: ${name}`}
+                  aria-label={`0${index + 1}: ${name}`}
                   aria-current={index === active ? 'step' : undefined}
                 >
                   0{index + 1}

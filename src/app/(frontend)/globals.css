@@ -539,14 +539,14 @@ html[data-theme='light'] {
 
 @font-face {
   font-family: Inter;
-  src: url('/fonts/inter-regular.ttf') format('truetype');
+  src: url('/fonts/inter-regular.woff2') format('woff2');
   font-style: normal;
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: Inter;
-  src: url('/fonts/inter-semibold.ttf') format('truetype');
+  src: url('/fonts/inter-semibold.woff2') format('woff2');
   font-style: normal;
   font-weight: 600;
   font-display: swap;
@@ -775,7 +775,7 @@ textarea:focus-visible {
   padding: 2rem;
   background:
     linear-gradient(0deg, #111b, #1114),
-    url('/images/dash10-mountain.png') center/cover;
+    url('/images/dash10-mountain.webp') center/cover;
   filter: grayscale(1);
 }
 .browser-preview > img {
@@ -1044,7 +1044,7 @@ textarea:focus-visible {
     display: none;
   }
   .dash-hero {
-    background: url('/images/dash10-mountain.png') center/cover;
+    background: url('/images/dash10-mountain.webp') center/cover;
   }
   .scene-copy,
   .studio-window,
@@ -1673,7 +1673,7 @@ body {
 .scene-progress a {
   display: block;
   padding: 0.8rem 0.5rem;
-  color: #777;
+  color: #999;
   font-size: 0.65rem;
   letter-spacing: 0.12em;
   transition:
@@ -1811,7 +1811,7 @@ body {
 /* Approved Inter / JetBrains Mono system and shared homepage grid. */
 @font-face {
   font-family: 'JetBrains Mono';
-  src: url('/fonts/jetbrains-mono-regular.ttf') format('truetype');
+  src: url('/fonts/jetbrains-mono-regular.woff2') format('woff2');
   font-style: normal;
   font-weight: 400;
   font-display: swap;
@@ -1955,7 +1955,7 @@ body {
 .analytics-preferences {
   display: inline-block;
   width: fit-content;
-  margin: 1rem var(--dash-page-padding);
+  margin: 0;
   padding: 0;
   border: 0;
   background: none;
@@ -2270,5 +2270,87 @@ body {
   }
   .studio-post .studio-post-reading {
     font-size: 1rem;
+  }
+}
+
+/* Shared legal utility row; consent controls remain content-sized. */
+.footer-bottom {
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+}
+.footer-utilities {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+}
+.footer-utilities :is(a, button) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  font: inherit;
+  color: inherit;
+}
+.footer-utilities :is(a, button):is(:hover, :focus-visible) {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.studio-page {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+.studio-page h1 {
+  overflow-wrap: anywhere;
+}
+.studio-post-reading :not(pre) > code {
+  color: #ddd;
+}
+.legal-review {
+  max-width: 52rem;
+  line-height: 1.85;
+}
+@media (max-width: 700px) {
+  .footer-bottom {
+    align-items: flex-start;
+  }
+  .footer-utilities {
+    gap: 0.5rem 1rem;
+  }
+}
+.platform-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-inline: var(--dash-page-padding);
+}
+.platform-motion-toggle,
+.hero-video-control {
+  font-size: 0.65rem;
+  min-height: 24px;
+  color: #bbb;
+  cursor: pointer;
+  text-underline-offset: 3px;
+}
+.platform-motion-toggle:is(:hover, :focus-visible),
+.hero-video-control:is(:hover, :focus-visible) {
+  color: #fff;
+  text-decoration: underline;
+}
+.platform-marquee[data-paused='true'] .platform-track {
+  animation-play-state: paused;
+}
+.hero-video-control {
+  position: absolute;
+  z-index: 4;
+  bottom: 1.5rem;
+  right: var(--dash-page-padding);
+}
+@media (prefers-reduced-motion: reduce) {
+  .platform-motion-toggle,
+  .hero-video-control {
+    display: none;
   }
 }

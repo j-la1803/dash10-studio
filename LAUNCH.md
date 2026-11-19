@@ -226,3 +226,10 @@ Verification: production build, standalone TypeScript and 14 unit checks pass; l
 Publication clarification: the user confirmed publishing the imported articles and requested preserving current publication status. Read-only comparison confirms IDs 2–4 are published with unchanged article content, titles, excerpts and SEO metadata. The former test post ID 1 is no longer found; this fix neither deletes nor restores records. Draft-only assertions are superseded by current-status verification for this release.
 
 Current-status verification: all six desktop/mobile previews pass exact source-word, title, excerpt, SEO, canonical, tables, overflow and preview-noindex checks; published timestamps are now valid structured-data fields. The user additionally approved publication dates November 4/11/18, 2026 for IDs 2/3/4. Applied only publishedAt at noon America/Chicago in a backed-up transaction, verifying content, SEO, excerpts, title, slug, category, authors and published status unchanged. Production deployment will refresh public caches.
+
+
+## Production quality and technical SEO audit — November 18, 2026
+
+See `docs/audits/2026-11-18-quality-audit.md` for baseline measurements, focused changes, tests and remaining gates. Legal policies remain private owner-review drafts; /privacy and /terms are noindex review notices. Footer utilities, native canonical sitemap/robots, metadata, accurate Organization/WebSite data, contrast/reflow/motion controls, lossless font/video delivery and compatible security headers are approved incremental improvements. No CMS content/schema, DNS, infrastructure or secrets are changed.
+
+Critical/high dependency advisories require coordinated Next/Payload maintenance and schema compatibility review before reference-quality security signoff. Media upload storage, owner notification/retention workflows, preview-secret rotation, full script CSP, field INP and spoken screen-reader verification remain open. Do not present automated scores as WCAG/ADA compliance or publish legal drafts without review. Existing consent-only GTM and unpublished integration gates remain intact.

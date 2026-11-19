@@ -55,8 +55,12 @@ test('all header, footer, and scene links reach their destinations', async ({ pa
       continue
     }
     const response = await page.request.get(`${base}${href}`)
-    await page.goto(`${base}${href}`)
     expect(response?.status(), href).toBe(200)
+    if (href === '/sitemap.xml') {
+      expect(response.headers()['content-type']).toContain('xml')
+      continue
+    }
+    await page.goto(`${base}${href}`)
     await expect(page.locator('#main-content')).toHaveCount(1)
     if (href.includes('#')) await expect(page.locator(`#${href.split('#')[1]}`)).toBeInViewport()
   }
@@ -68,7 +72,7 @@ test('desktop exposes four normal-flow sections and native progress links', asyn
   await expect(page.locator('.studio-scenes')).toHaveAttribute('data-flow', 'true')
   await expect(page.locator('.studio-scene:visible')).toHaveCount(4)
   await expect(page.locator('.story-panel[inert]')).toHaveCount(0)
-  await page.getByRole('link', { name: 'Scene 4: Build, fix, connect' }).click()
+  await page.getByRole('link', { name: '04: Build, fix, connect' }).click()
   await expect(page).toHaveURL(/#story-step-4$/)
   await expect(page.locator('.studio-scenes')).toHaveAttribute('data-active-scene', '4')
 })

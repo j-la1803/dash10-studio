@@ -1,9 +1,10 @@
 import Link from 'next/link'
-import type { Metadata } from 'next'
-export const metadata: Metadata = {
-  title: 'Process | Dash 10 Studio',
-  description: 'A practical process that keeps the work connected to your goals.',
-}
+import { siteMetadata } from '@/utilities/siteMetadata'
+export const metadata = siteMetadata(
+  '/process',
+  'Process | Dash 10 Studio',
+  'A practical process that keeps the work connected to your goals.',
+)
 export default function Page() {
   return (
     <main id="main-content" className="studio-page">

@@ -1,7 +1,14 @@
 'use client'
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
+import { createPortal } from 'react-dom'
 import { usePathname } from 'next/navigation'
 import { measure, safePath } from '@/utilities/integrations/analytics'
+function readFooterTarget() {
+  return document.getElementById('footer-analytics-preferences')
+}
+function subscribeFooter() {
+  return () => {}
+}
 const preferenceKey = 'dash10-analytics-consent-v1'
 let memoryChoice: 'allow' | 'deny' | null = null
 function readPreference() {
@@ -49,6 +56,12 @@ export function Analytics({ containerId }: { containerId: string | null }) {
   const path = usePathname()
   const choice = useSyncExternalStore(subscribePreference, readPreference, () => null)
   const [show, setShow] = useState(false)
+  const footerTarget = useSyncExternalStore(subscribeFooter, readFooterTarget, () => null)
+  const preferencesButton = useRef<HTMLButtonElement>(null)
+  const consentPanel = useRef<HTMLElement>(null)
+  useEffect(() => {
+    if (show) consentPanel.current?.querySelector<HTMLButtonElement>('button')?.focus()
+  }, [show])
   const lastPath = useRef<string | null>(null)
   useEffect(
     () => () => {
@@ -147,25 +160,45 @@ export function Analytics({ containerId }: { containerId: string | null }) {
     memoryChoice = value
     window.dispatchEvent(new Event('dash10:consent'))
     setShow(false)
+    if (show) preferencesButton.current?.focus()
   }
   if (!containerId) return null
   return (
     <>
-      {(show || choice === null) && (
-        <section className="analytics-consent" role="region" aria-label="Analytics preferences">
-          <p>
-            Allow optional analytics to help us understand which pages are useful? Your project
-            inquiry works either way.
-          </p>
-          <button onClick={() => choose('allow')}>Allow analytics</button>
-          <button onClick={() => choose('deny')}>Decline analytics</button>
-        </section>
-      )}
-      {!show && choice !== null && (
-        <button className="analytics-preferences" onClick={() => setShow(true)}>
-          Analytics preferences
-        </button>
-      )}
+      <section
+        hidden={!show && choice !== null}
+        id="analytics-consent"
+        ref={consentPanel}
+        className="analytics-consent"
+        role="region"
+        aria-label="Analytics preferences"
+        onKeyDown={(event) => {
+          if (event.key === 'Escape' && choice !== null) {
+            setShow(false)
+            preferencesButton.current?.focus()
+          }
+        }}
+      >
+        <p>
+          Allow optional analytics to help us understand which pages are useful? Your project
+          inquiry works either way.
+        </p>
+        <button onClick={() => choose('allow')}>Allow analytics</button>
+        <button onClick={() => choose('deny')}>Decline analytics</button>
+      </section>
+      {footerTarget &&
+        createPortal(
+          <button
+            ref={preferencesButton}
+            className="analytics-preferences"
+            aria-expanded={show || choice === null}
+            aria-controls="analytics-consent"
+            onClick={() => setShow(!show)}
+          >
+            Analytics preferences
+          </button>,
+          footerTarget,
+        )}
     </>
   )
 }

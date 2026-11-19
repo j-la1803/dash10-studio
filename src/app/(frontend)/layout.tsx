@@ -9,6 +9,8 @@ import { StudioFooter } from '@/components/Studio/Footer'
 import { StudioHeader } from '@/components/Studio/Header'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
+import { siteStructuredData } from '@/utilities/siteMetadata'
+import { serializeStructuredData } from '@/utilities/editorial/postMetadata'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
 
@@ -22,6 +24,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="en" suppressHydrationWarning>
       <head>
         <InitTheme />
+        <link
+          rel="preload"
+          as="font"
+          href="/fonts/inter-semibold.woff2"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        {isEnabled && <meta name="robots" content="noindex, nofollow" />}
         <link href="/favicon-32.png" rel="icon" sizes="32x32" type="image/png" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
         <link href="/apple-touch-icon.png" rel="apple-touch-icon" />
@@ -37,6 +47,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <a className="skip-link" href="#main-content">
             Skip to content
           </a>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: serializeStructuredData(siteStructuredData) }}
+          />
           <StudioHeader />
           {children}
           <StudioFooter />

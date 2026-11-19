@@ -31,6 +31,9 @@ export const generateMeta = async (args: {
     : `${doc?.title || 'Dash 10 Studio'} | Dash 10 Studio`
 
   return {
+    alternates: {
+      canonical: `${getServerSideURL()}/${doc?.slug === 'home' ? '' : doc?.slug || ''}`,
+    },
     description: doc?.meta?.description,
     openGraph: mergeOpenGraph({
       description: doc?.meta?.description || '',
@@ -42,7 +45,7 @@ export const generateMeta = async (args: {
           ]
         : undefined,
       title,
-      url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
+      url: `${getServerSideURL()}/${doc?.slug === 'home' ? '' : doc?.slug || ''}`,
     }),
     title,
   }

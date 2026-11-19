@@ -83,6 +83,9 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
 
 export function generateMetadata(): Metadata {
   return {
-    title: `Payload Website Template Search`,
+    title: 'Search | Dash 10 Studio',
+    description: 'Search Dash 10 Studio articles about websites, commerce, and connected systems.',
+    robots: { index: false, follow: true },
+    alternates: { canonical: 'https://dash10studio.com/search' },
   }
 }

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next/types'
+import { siteMetadata } from '@/utilities/siteMetadata'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
 import { PageRange } from '@/components/PageRange'
@@ -63,7 +64,9 @@ export default async function Page() {
 }
 
 export function generateMetadata(): Metadata {
-  return {
-    title: `Blog | Dash 10 Studio`,
-  }
+  return siteMetadata(
+    '/posts',
+    'Blog | Dash 10 Studio',
+    'Practical guidance on websites, e-commerce, and connected business systems from Dash 10 Studio.',
+  )
 }

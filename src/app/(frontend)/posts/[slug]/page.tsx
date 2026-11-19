@@ -56,7 +56,7 @@ export default async function Post({ params: paramsPromise }: Args) {
   if (!post) return <PayloadRedirects url={url} />
 
   return (
-    <article id="main-content" className="studio-post">
+    <main id="main-content" className="studio-post">
       <PageClient />
 
       {/* Allows redirects for valid pages too */}
@@ -81,7 +81,7 @@ export default async function Post({ params: paramsPromise }: Args) {
           )}
         </div>
       </div>
-    </article>
+    </main>
   )
 }
 

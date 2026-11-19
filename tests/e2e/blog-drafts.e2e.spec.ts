@@ -6,22 +6,26 @@ const slugs = [
   'choosing-ecommerce-platform-for-growing-business',
 ]
 
-test('imported drafts stay out of public posts, APIs, search and sitemap', async ({ page }) => {
-  const sitemap = await (await page.request.get(`${base}/posts-sitemap.xml`)).text()
-  const search = await (await page.request.get(`${base}/api/search?limit=100`)).text()
+test('approved published articles are discoverable while unpublished records remain private', async ({
+  page,
+}) => {
+  const sitemap = await (await page.request.get(`${base}/sitemap.xml`)).text()
   await page.goto(`${base}/posts`)
   for (const slug of slugs) {
-    expect((await page.request.get(`${base}/posts/${slug}`)).status()).toBe(404)
+    expect((await page.request.get(`${base}/posts/${slug}`)).status()).toBe(200)
     const response = await page.request.get(
       `${base}/api/posts?where[slug][equals]=${slug}&draft=true`,
     )
-    expect((await response.json()).docs).toEqual([])
-    expect(sitemap).not.toContain(slug)
-    expect(search).not.toContain(slug)
-    await expect(page.locator(`a[href="/posts/${slug}"]`)).toHaveCount(0)
+    const result = await response.json()
+    expect(result.docs).toHaveLength(1)
+    expect(result.docs[0]._status).toBe('published')
+    expect(sitemap).toContain(slug)
+    await expect(page.locator(`a[href="/posts/${slug}"]`).first()).toBeVisible()
   }
-  for (const id of [2, 3, 4])
-    expect((await page.request.get(`${base}/api/posts/${id}?draft=true`)).status()).toBe(404)
+  const unpublished = await page.request.get(
+    `${base}/api/posts?where[_status][equals]=draft&draft=true`,
+  )
+  expect((await unpublished.json()).docs).toEqual([])
   const preview = await page.request.get(`${base}/next/preview?path=/posts/${slugs[0]}`, {
     maxRedirects: 0,
   })

@@ -57,6 +57,12 @@ export function StudioFooter() {
       </div>
       <div className="footer-bottom">
         <span>© {new Date().getFullYear()} Dash 10 Studio. All rights reserved.</span>
+        <nav className="footer-utilities" aria-label="Footer utilities">
+          <Link href="/privacy">Privacy</Link>
+          <Link href="/terms">Terms</Link>
+          <a href="/sitemap.xml">Sitemap</a>
+          <span id="footer-analytics-preferences" />
+        </nav>
       </div>
     </footer>
   )

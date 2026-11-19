@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteMetadata } from '@/utilities/siteMetadata'
 
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
@@ -60,7 +61,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   const { hero, layout } = page
 
   return (
-    <article id="main-content" className="pt-16 pb-24">
+    <main id="main-content" className="pt-16 pb-24">
       <PageClient />
 
       <PayloadRedirects disableNotFound url={url} />
@@ -69,7 +70,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
       <RenderHero {...hero} />
       <RenderBlocks blocks={layout} />
-    </article>
+    </main>
   )
 }
 
@@ -77,11 +78,11 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
   const { slug = 'home' } = await paramsPromise
 
   if (slug === 'home')
-    return {
-      title: 'Dash 10 Studio — The right technology. Built the right way.',
-      description:
-        'Custom websites, e-commerce platforms, and connected systems engineered to move your business forward.',
-    }
+    return siteMetadata(
+      '/',
+      'Dash 10 Studio — The right technology. Built the right way.',
+      'Custom websites, e-commerce platforms, and connected systems engineered to move your business forward.',
+    )
 
   const decodedSlug = decodeURIComponent(slug)
 

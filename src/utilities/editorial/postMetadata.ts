@@ -10,14 +10,21 @@ export function postMetadata(post: Post, preview = false): Metadata {
   const imageURL =
     image && typeof image === 'object' && image.url
       ? new URL(image.url, 'https://dash10studio.com').href
-      : undefined
+      : 'https://dash10studio.com/images/dash10-mountain.webp'
   return {
     title: { absolute: post.meta?.title || post.title },
     description: post.meta?.description,
     alternates: { canonical },
     ...(preview ? { robots: { index: false, follow: false } } : {}),
+    twitter: {
+      card: 'summary_large_image',
+      title: post.meta?.title || post.title,
+      description: post.meta?.description || undefined,
+      images: [imageURL],
+    },
     openGraph: {
       type: 'article',
+      siteName: 'Dash 10 Studio',
       title: post.meta?.title || post.title,
       description: post.meta?.description || undefined,
       url: canonical,
