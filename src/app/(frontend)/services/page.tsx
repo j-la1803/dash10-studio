@@ -1,4 +1,3 @@
-import { DisplayTitle } from '@/components/Studio/DisplayTitle'
 import Link from 'next/link'
 import { siteMetadata } from '@/utilities/siteMetadata'
 export const metadata = siteMetadata(
@@ -10,9 +9,7 @@ export default function Page() {
   return (
     <main id="main-content" className="studio-page">
       <p className="studio-label">SERVICES</p>
-      <h1>
-        <DisplayTitle outline="REAL-WORLD RESULTS.">THE RIGHT TOOLS. </DisplayTitle>
-      </h1>
+      <h1>THE RIGHT TOOLS. REAL-WORLD RESULTS.</h1>
       <p>Websites, commerce, and connected systems built around the way your business works.</p>
       <div className="detail-grid">
         <section id="web-development">

@@ -1,4 +1,3 @@
-import styles from '@/components/Studio/Posters.module.css'
 import { formatDateTime } from 'src/utilities/formatDateTime'
 import React from 'react'
 
@@ -17,7 +16,7 @@ export const PostHero: React.FC<{
 
   return (
     <header className="studio-post-hero">
-      <div className={`studio-post-heading ${styles.editorialHeader}`}>
+      <div className="studio-post-heading">
         <div className="col-start-1 col-span-1 md:col-start-2 md:col-span-2">
           <div className="uppercase text-sm mb-6">
             {categories?.map((category, index) => {

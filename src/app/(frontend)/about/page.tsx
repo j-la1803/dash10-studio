@@ -1,4 +1,3 @@
-import { DisplayTitle } from '@/components/Studio/DisplayTitle'
 import Link from 'next/link'
 import { siteMetadata } from '@/utilities/siteMetadata'
 export const metadata = siteMetadata(
@@ -10,9 +9,7 @@ export default function Page() {
   return (
     <main id="main-content" className="studio-page">
       <p className="studio-label">ABOUT DASH 10 STUDIO</p>
-      <h1>
-        <DisplayTitle outline="YOUR BUSINESS.">BUILT AROUND </DisplayTitle>
-      </h1>
+      <h1>BUILT AROUND YOUR BUSINESS.</h1>
       <p>
         Dash 10 Studio is an independent digital studio focused on custom websites, e-commerce
         platforms, and connected systems.

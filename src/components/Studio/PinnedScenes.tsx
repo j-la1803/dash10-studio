@@ -2,8 +2,6 @@
 
 import { Children, useEffect, useRef, useState, type ReactNode } from 'react'
 
-import styles from './Posters.module.css'
-
 const sceneNames = [
   'Built for the real world',
   'Web development',
@@ -32,8 +30,6 @@ export function PinnedScenes({ children }: { children: ReactNode }) {
       if (fill.current) fill.current.style.transform = `scaleY(${fraction})`
       progress.current?.setAttribute('aria-valuenow', String(Math.round(fraction * 100)))
       const geometry = sections.map((section) => section.getBoundingClientRect())
-      root.dataset.motion = String(!media.matches)
-      root.style.setProperty('--prog', String(fraction))
       const next = geometry.findIndex((section) => section.bottom > center)
       setActive(next < 0 ? sections.length - 1 : next)
       geometry.forEach((section, index) => {
@@ -44,21 +40,6 @@ export function PinnedScenes({ children }: { children: ReactNode }) {
         const linear = Math.min(1, Math.max(0, Math.min(entering, leaving)))
         const reveal = media.matches ? 1 : linear * linear * (3 - 2 * linear)
         const distance = window.innerWidth <= 700 ? 16 : 24
-        sections[index].style.setProperty(
-          '--p',
-          String(media.matches ? 1 : Math.min(1, Math.max(0, entering))),
-        )
-        sections[index].style.setProperty(
-          '--s',
-          String(
-            media.matches
-              ? 0
-              : Math.min(
-                  1,
-                  Math.max(-1, (section.top + section.height / 2 - center) / window.innerHeight),
-                ),
-          ),
-        )
         sections[index].style.setProperty('--scene-reveal', String(reveal))
         sections[index].style.setProperty('--scene-offset', `${-distance * (1 - reveal)}px`)
       })
@@ -66,18 +47,6 @@ export function PinnedScenes({ children }: { children: ReactNode }) {
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update)
     }
-    // Observe visibility, not scroll direction. Re-entry replays only the brief glitch.
-    const visibility = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const section = entry.target as HTMLElement
-          section.dataset.inView = String(entry.isIntersecting)
-          section.dataset.glitch = String(entry.intersectionRatio >= 0.35)
-        })
-      },
-      { threshold: [0, 0.35] },
-    )
-    sections.forEach((section) => visibility.observe(section))
     const resize = new ResizeObserver(schedule)
     resize.observe(root)
     sections.forEach((section) => resize.observe(section))
@@ -88,15 +57,8 @@ export function PinnedScenes({ children }: { children: ReactNode }) {
     return () => {
       cancelAnimationFrame(frame)
       resize.disconnect()
-      visibility.disconnect()
-      delete root.dataset.motion
-      root.style.removeProperty('--prog')
       media.removeEventListener('change', schedule)
       sections.forEach((section) => {
-        delete section.dataset.inView
-        delete section.dataset.glitch
-        section.style.removeProperty('--p')
-        section.style.removeProperty('--s')
         section.style.removeProperty('--scene-reveal')
         section.style.removeProperty('--scene-offset')
       })
@@ -108,7 +70,7 @@ export function PinnedScenes({ children }: { children: ReactNode }) {
   return (
     <div
       id="what-we-do"
-      className={`studio-scenes ${styles.sceneRoot}`}
+      className="studio-scenes"
       data-flow="true"
       ref={track}
       data-active-scene={active + 1}

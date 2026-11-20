@@ -1,4 +1,3 @@
-import { DisplayTitle } from '@/components/Studio/DisplayTitle'
 import type { Metadata } from 'next/types'
 import { siteMetadata } from '@/utilities/siteMetadata'
 
@@ -36,9 +35,7 @@ export default async function Page() {
       <div className="container mb-16">
         <div className="prose dark:prose-invert max-w-none">
           <p className="studio-label">THE JOURNAL</p>
-          <h1>
-            <DisplayTitle outline="PRACTICAL THINKING.">IDEAS. INSIGHTS. </DisplayTitle>
-          </h1>
+          <h1>IDEAS. INSIGHTS. PRACTICAL THINKING.</h1>
         </div>
       </div>
 
