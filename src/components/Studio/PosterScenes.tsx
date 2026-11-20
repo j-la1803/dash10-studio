@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { PinnedScenes } from './PinnedScenes'
-import { DisplayTitle } from './DisplayTitle'
 import styles from './Posters.module.css'
 
 const scenes = [
@@ -57,7 +56,9 @@ function TechnicalPanel({ kind }: { kind: string }) {
     <div className={styles.panel} data-reveal="visual">
       <div className={styles.panelHeader}>
         <span>{heading}</span>
-        <span aria-hidden="true">↗</span>
+        <span className={styles.status} aria-hidden="true">
+          {kind === 'browser' ? '4 / 4' : kind === 'systems' ? 'LINKED' : 'READY'}
+        </span>
       </div>
       {kind === 'browser' ? (
         <ol className={styles.phases}>
@@ -136,9 +137,74 @@ $ dash10 deploy --production
 All systems ready.
 Built for what comes next.
 
-› _`}
+› `}
+            {kind === 'terminal' && <span className={styles.cursor} aria-hidden="true" />}
           </code>
         </pre>
+      )}
+    </div>
+  )
+}
+
+/** Decorative layers are independent of readable panel content. */
+function PosterAtmosphere({ kind }: { kind: string }) {
+  return (
+    <div className={styles.atmosphere} aria-hidden="true" data-atmosphere>
+      {kind === 'browser' ? (
+        <svg
+          className={styles.reticle}
+          viewBox="-100 -100 200 200"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth=".8"
+        >
+          <g className={styles.ring}>
+            <circle r="86" strokeDasharray="2 6" />
+            <path d="M0-96V-80M0 96V80M-96 0H-80M96 0H80" />
+          </g>
+          <circle r="38" />
+          <path d="M-60 0H-24M24 0H60M0-60V-24M0 24V60" />
+          <text x="46" y="-46">
+            TGT-01
+          </text>
+        </svg>
+      ) : kind === 'code' ? (
+        <div className={styles.codeMotion}>
+          <pre>
+            {[0, 1].map((i) => (
+              <span key={i}>{`const platform = await connect({
+  content: 'Payload',
+  framework: 'Next.js',
+});
+platform.launch({ performance: true });
+export const revalidate = 60;
+
+`}</span>
+            ))}
+          </pre>
+        </div>
+      ) : kind === 'systems' ? (
+        <svg
+          className={styles.networkMotion}
+          viewBox="0 0 400 300"
+          fill="none"
+          stroke="currentColor"
+        >
+          <path d="M200 150L60 50M200 150L200 30M200 150L340 50M200 150L60 250M200 150L200 270M200 150L340 250" />
+          {[
+            [200, 150],
+            [60, 50],
+            [200, 30],
+            [340, 50],
+            [60, 250],
+            [200, 270],
+            [340, 250],
+          ].map(([x, y]) => (
+            <circle cx={x} cy={y} r="3" key={`${x}-${y}`} />
+          ))}
+        </svg>
+      ) : (
+        <span className={styles.deployStatus}>[ SYSTEM READY ]</span>
       )}
     </div>
   )
@@ -150,16 +216,21 @@ export function PosterScenes() {
       {scenes.map((scene, index) => (
         <section
           className={`studio-scene ${styles.poster}`}
+          data-kind={scene.kind}
           key={scene.kind}
           aria-labelledby={`scene-${index}`}
         >
-          <span className={styles.number} aria-hidden="true">
+          <PosterAtmosphere kind={scene.kind} />
+          <span className={styles.number} aria-hidden="true" data-poster-number>
             0{index + 1}
           </span>
           <div className={styles.hud} aria-hidden="true">
             <span>SECTOR 0{index + 1}</span>
             <span>
-              {identifiers[index]} / 00{index + 1}
+              {identifiers[index]} / 00{index + 1}{' '}
+              <span className={styles.status}>
+                {['ONLINE', 'READY', 'LINKED', 'DEPLOY'][index]}
+              </span>
             </span>
           </div>
           <div className={styles.composition}>
@@ -169,15 +240,28 @@ export function PosterScenes() {
               </p>
               <h2
                 id={`scene-${index}`}
+                aria-label={scene.title}
                 tabIndex={-1}
                 data-reveal="heading"
                 className={styles.heading}
               >
-                {lines[index].map((line, i) => (
-                  <span className={styles.line} key={line}>
-                    {i === lines[index].length - 1 ? <DisplayTitle outline={line} /> : line}{' '}
-                  </span>
-                ))}
+                <span
+                  className={styles.glitch}
+                  aria-hidden="true"
+                  data-text={lines[index].join('\n')}
+                >
+                  {lines[index].map((line, i) => (
+                    <span className={styles.line} key={line}>
+                      {i === lines[index].length - 1 ? (
+                        <span className={styles.headlineOutline} data-outline>
+                          {line}
+                        </span>
+                      ) : (
+                        line
+                      )}{' '}
+                    </span>
+                  ))}
+                </span>
               </h2>
               <p className={styles.lede} data-reveal="copy">
                 {scene.copy}
