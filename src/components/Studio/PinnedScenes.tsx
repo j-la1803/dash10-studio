@@ -2,6 +2,8 @@
 
 import { Children, useEffect, useRef, useState, type ReactNode } from 'react'
 
+import styles from './Posters.module.css'
+
 const sceneNames = [
   'Built for the real world',
   'Web development',
@@ -70,7 +72,7 @@ export function PinnedScenes({ children }: { children: ReactNode }) {
   return (
     <div
       id="what-we-do"
-      className="studio-scenes"
+      className={`studio-scenes ${styles.sceneRoot}`}
       data-flow="true"
       ref={track}
       data-active-scene={active + 1}

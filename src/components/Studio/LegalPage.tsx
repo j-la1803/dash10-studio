@@ -1,3 +1,4 @@
+import { DisplayTitle } from './DisplayTitle'
 import type { ReactNode } from 'react'
 
 // Publication date in the studio's America/Chicago time zone.
@@ -18,7 +19,9 @@ export function LegalPage({
         <header className="studio-post-heading">
           <p className="studio-label">DASH 10 STUDIO</p>
           <h1 id="legal-title" className="text-4xl md:text-6xl">
-            {title}
+            <DisplayTitle outline={title.split(' ').at(-1)}>
+              {title.split(' ').slice(0, -1).join(' ')}{' '}
+            </DisplayTitle>
           </h1>
           <p className="studio-post-excerpt">
             Effective date:{' '}

@@ -38,6 +38,14 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
 const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
   ...defaultConverters,
   ...LinkJSXConverter({ internalDocToHref }),
+  // Wide article tables must remain operable with a keyboard on narrow screens.
+  table: ({ node, nodesToJSX }) => (
+    <div className="lexical-table-container" tabIndex={0} role="region" aria-label="Article table">
+      <table className="lexical-table" style={{ borderCollapse: 'collapse' }}>
+        <tbody>{nodesToJSX({ nodes: node.children })}</tbody>
+      </table>
+    </div>
+  ),
   blocks: {
     banner: ({ node }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,
     mediaBlock: ({ node }) => (

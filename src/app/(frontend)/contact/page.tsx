@@ -1,3 +1,4 @@
+import { DisplayTitle } from '@/components/Studio/DisplayTitle'
 import { siteMetadata } from '@/utilities/siteMetadata'
 import { HubSpotForm } from '@/components/Integrations/HubSpotForm'
 import { hubSpotConfig } from '@/utilities/integrations/config'
@@ -11,7 +12,9 @@ export default function ContactPage() {
   return (
     <main id="main-content" className="studio-page">
       <p className="studio-label">LET’S TALK</p>
-      <h1>WHAT’S YOUR NEXT MOVE?</h1>
+      <h1>
+        <DisplayTitle outline="NEXT MOVE?">WHAT’S YOUR </DisplayTitle>
+      </h1>
       <p>
         A new website. A better storefront. Systems that need to connect. Tell us what you’re
         working on, what’s getting in the way, and where you want to go.

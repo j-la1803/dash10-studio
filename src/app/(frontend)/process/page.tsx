@@ -1,3 +1,4 @@
+import { DisplayTitle } from '@/components/Studio/DisplayTitle'
 import Link from 'next/link'
 import { siteMetadata } from '@/utilities/siteMetadata'
 export const metadata = siteMetadata(
@@ -9,7 +10,9 @@ export default function Page() {
   return (
     <main id="main-content" className="studio-page">
       <p className="studio-label">PROCESS</p>
-      <h1>CLEAR THINKING. SOLID EXECUTION.</h1>
+      <h1>
+        <DisplayTitle outline="SOLID EXECUTION.">CLEAR THINKING. </DisplayTitle>
+      </h1>
       <p>A practical process that keeps the work connected to your goals.</p>
       <div className="detail-grid">
         <section>
