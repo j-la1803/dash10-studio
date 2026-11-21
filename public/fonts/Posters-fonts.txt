@@ -1,0 +1,26 @@
+Scoped Posters 80 fonts (downloaded 2026-11-20)
+
+Inter Latin variable, weights 400–700:
+https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2
+License: Posters-Inter-OFL.txt (SIL Open Font License 1.1)
+
+JetBrains Mono Latin variable, weights 400–500:
+https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwgknk-4.woff2
+License: JetBrains-Mono-OFL.txt (SIL Open Font License 1.1)
+
+These are the official Google Fonts sources requested by the approved
+Dash 10 Posters 80 (1).html reference. CSS aliases Posters Inter and Posters Mono
+scope them to the four homepage posters. Existing site fonts are unchanged.
+
+Loading optimization:
+- Posters Inter 400 reuses inter-regular-latin.woff2.
+- Posters Mono 400 reuses jetbrains-mono-regular-latin.woff2.
+- Their regular ASCII outlines and advance widths were verified identical to
+  the reference sources using fontTools DecomposingRecordingPen.
+- The two new variable files retain only U+0020, U+002E–002F, U+0030–0039,
+  U+0041–005A, covering the uppercase 600/700 headlines/CTAs and 500 technical
+  labels. The original variation axes, outlines and hinting are retained.
+- Combined new font transfer: 17,292 bytes (before HTTP headers/compression).
+
+Reproduce each subset from its original source with fontTools/Brotli:
+pyftsubset ORIGINAL.woff2 --unicodes=U+0020,U+002E-002F,U+0030-0039,U+0041-005A --layout-features='*' --flavor=woff2 --output-file=OUTPUT.woff2

@@ -123,7 +123,9 @@ export function Analytics({ containerId }: { containerId: string | null }) {
           })
         }
       }
-      const link = element?.closest('a.studio-cta, .studio-header a[href="/contact"]')
+      const link = element?.closest(
+        'a.studio-cta, a[data-studio-cta], .studio-header a[href="/contact"]',
+      )
       if (!link) return
       const href = link.getAttribute('href') || ''
       const cta_id = href.startsWith('mailto:')

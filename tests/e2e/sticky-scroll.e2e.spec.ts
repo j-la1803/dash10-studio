@@ -1,136 +1,128 @@
 import { test, expect } from '@playwright/test'
-const base = process.env.QA_BASE_URL || 'http://localhost:3000'
-for (const viewport of [
-  { width: 1440, height: 900 },
-  { width: 1280, height: 800 },
-]) {
-  test(`normal sections and sticky rail at ${viewport.width}x${viewport.height}`, async ({
-    page,
-  }, info) => {
-    await page.setViewportSize(viewport)
+const base = process.env.QA_BASE_URL || 'http://localhost:3102'
+for (const width of [375, 390, 430, 1280, 1440]) {
+  test(`native poster scrolling and bounded rail at ${width}`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 })
     await page.goto(base)
-    await expect(page.locator('.studio-scenes')).toHaveAttribute('data-flow', 'true')
-    const geometry = await page.locator('.studio-scenes').evaluate((el) => ({
+    await page.getByRole('button', { name: 'Decline analytics', exact: true }).click()
+    await page.evaluate(() => document.fonts.ready)
+    const root = page.locator('[data-posters-80]')
+    const rail = root.getByRole('navigation', { name: 'Section progress' })
+    const geometry = await root.evaluate((el) => ({
       start: el.getBoundingClientRect().top + scrollY,
       end: el.getBoundingClientRect().bottom + scrollY,
     }))
-    const samples: {
-      scroll: number
-      section: number
-      rail: number
-      progress: number
-      active: number
-    }[] = []
-    const seen = new Set<number>()
-    await page.mouse.move(viewport.width * 0.8, viewport.height * 0.5)
-    while ((await page.evaluate(() => scrollY)) < geometry.end - 100) {
+    const seen = new Set<string>()
+    let previous: { y: number; section: number; progress: number } | undefined
+    await page.evaluate((y) => scrollTo(0, y), geometry.start + 10)
+    await page.mouse.move(width * 0.8, 450)
+    while ((await page.evaluate(() => scrollY)) < geometry.end - 1100) {
       const before = await page.evaluate(() => scrollY)
-      await page.mouse.wheel(0, 100)
+      await page.mouse.wheel(0, 180)
       await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(before)
-      await page.waitForTimeout(20)
-      const m = await page.evaluate(() => ({
-        scroll: scrollY,
-        section: document.querySelector('.studio-scene')!.getBoundingClientRect().top,
-        rail: document.querySelector('.scene-progress')!.getBoundingClientRect().top,
-        progress: Number(
-          document.querySelector('[role=progressbar]')!.getAttribute('aria-valuenow'),
-        ),
-        active: Number(document.querySelector('.studio-scenes')!.getAttribute('data-active-scene')),
+      await page.waitForTimeout(30)
+      const value = await root.evaluate((el) => ({
+        y: scrollY,
+        section: el.querySelector('[data-poster]')!.getBoundingClientRect().top,
+        progress: Number((el as HTMLElement).style.getPropertyValue('--prog')),
+        label: el.querySelector('[data-rail-lbl]')!.textContent!,
       }))
-      expect(m.scroll - before).toBeLessThanOrEqual(102)
-      if (m.scroll > geometry.start && m.scroll < geometry.end - viewport.height) {
-        samples.push(m)
-        seen.add(m.active)
+      expect(value.y - before).toBeLessThanOrEqual(182)
+      expect((await rail.boundingBox())!.y).toBeCloseTo(0, 0)
+      seen.add(value.label)
+      if (previous) {
+        expect(previous.section - value.section).toBeCloseTo(value.y - previous.y, 0)
+        expect(value.progress).toBeGreaterThanOrEqual(previous.progress)
       }
+      previous = value
     }
-    expect(samples.length).toBeGreaterThan(10)
-    for (let i = 1; i < samples.length; i++) {
-      expect(samples[i - 1].section - samples[i].section).toBeCloseTo(
-        samples[i].scroll - samples[i - 1].scroll,
-        0,
-      )
-      expect(Math.abs(samples[i].rail - samples[0].rail)).toBeLessThan(2)
-      expect(samples[i].progress).toBeGreaterThanOrEqual(samples[i - 1].progress)
-    }
-    expect([...seen]).toEqual([1, 2, 3, 4])
-    expect(new Set(samples.map((s) => s.progress)).size).toBeGreaterThan(12)
-    expect(
-      await page.locator('.scene-progress').evaluate((el) => el.getBoundingClientRect().top),
-    ).toBeLessThan(samples[0].rail - 50)
+    expect([...seen]).toEqual(['UI / 001', 'CODE / 002', 'SYS / 003', 'TERMINAL / 004'])
+    await page.evaluate((y) => scrollTo(0, y), geometry.end - 500)
+    await expect.poll(async () => (await rail.boundingBox())!.y).toBeLessThan(-350)
     await expect(page.locator('.studio-capabilities')).toBeInViewport()
-    const last = Number(await page.getByRole('progressbar').getAttribute('aria-valuenow'))
-    await page.mouse.wheel(0, -700)
+    await page.mouse.wheel(0, -500)
     await expect
-      .poll(async () => Number(await page.getByRole('progressbar').getAttribute('aria-valuenow')))
-      .toBeLessThan(last)
-    while ((await page.evaluate(() => scrollY)) > geometry.start + 150) {
-      const before = await page.evaluate(() => scrollY)
-      await page.mouse.wheel(0, -300)
-      await expect.poll(() => page.evaluate(() => scrollY)).toBeLessThan(before)
-    }
-    await expect(page.locator('.studio-scenes')).toHaveAttribute('data-active-scene', '1')
-    await info.attach('normal-scroll-coordinates', {
-      body: JSON.stringify(samples),
-      contentType: 'application/json',
-    })
+      .poll(() =>
+        root.evaluate((el) => Number((el as HTMLElement).style.getPropertyValue('--prog'))),
+      )
+      .toBeLessThan(1)
+    await page.evaluate((y) => scrollTo(0, y), geometry.start + 10)
+    await expect(root.locator('[data-rail-lbl]')).toHaveText('UI / 001')
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width)
   })
 }
-for (const mode of ['mobile', 'reduced'] as const) {
-  test(`${mode} scrolling preserves accessible content`, async ({ page }) => {
-    await page.setViewportSize(
-      mode === 'mobile' ? { width: 390, height: 844 } : { width: 1440, height: 900 },
-    )
-    await page.emulateMedia({ reducedMotion: mode === 'reduced' ? 'reduce' : 'no-preference' })
-    await page.goto(base)
-    await expect(page.locator('.studio-scene:visible')).toHaveCount(4)
-    await page.locator('.studio-scene').first().scrollIntoViewIfNeeded()
-    const before = await page.locator('.studio-scene').first().boundingBox()
-    const y = await page.evaluate(() => scrollY)
-    await page.mouse.wheel(0, 250)
-    await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(y)
-    const after = await page.locator('.studio-scene').first().boundingBox()
-    expect(before!.y - after!.y).toBeCloseTo((await page.evaluate(() => scrollY)) - y, 0)
-    if (mode === 'reduced')
-      expect(
-        await page
-          .locator('[data-reveal]')
-          .evaluateAll((els) => els.every((el) => getComputedStyle(el).animationName === 'none')),
-      ).toBe(true)
-    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
-  })
-}
-test('CTA focus and FAQ support keyboard and smooth reversal', async ({ page }) => {
+
+test('all poster CTAs resolve and preserve keyboard focus', async ({ page }) => {
   await page.goto(base)
-  const cta = page.locator('.studio-scene .studio-cta').first()
-  await cta.hover()
-  await expect(cta.locator('span')).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 3, -3)')
-  await cta.focus()
-  expect(await cta.evaluate((el) => getComputedStyle(el).outlineStyle)).not.toBe('none')
-  const details = page.locator('.capabilities-list details').first(),
-    summary = details.locator('summary')
-  await summary.click()
-  await page.waitForTimeout(100)
-  await summary.click()
-  await expect(details).not.toHaveAttribute('open', '')
-  await summary.focus()
-  await page.keyboard.press('Enter')
-  await expect(details).toHaveAttribute('open', '')
-  await expect.poll(() => details.evaluate((el) => el.getAnimations().length)).toBe(0)
-  await page.keyboard.press('Enter')
-  await expect(details).not.toHaveAttribute('open', '')
+  await page.getByRole('button', { name: 'Decline analytics', exact: true }).click()
+  const destinations = ['/services', '/process', '/services#integrations', '/contact']
+  for (let index = 0; index < 4; index++) {
+    const cta = page.locator('[data-studio-cta]').nth(index)
+    await expect(cta).toHaveAttribute('href', destinations[index])
+    await page.keyboard.press('Tab')
+    await cta.focus()
+    await expect(cta).toBeFocused()
+    expect(await cta.evaluate((el) => getComputedStyle(el).outlineStyle)).toBe('solid')
+    const response = await page.request.get(base + destinations[index].split('#')[0])
+    expect(response.status()).toBe(200)
+    await page.keyboard.press('Enter')
+    await expect(page).toHaveURL(base + destinations[index])
+    await page.goto(base)
+  }
+  await page.goto(base + '/services')
+  await expect(page.locator('#integrations')).toHaveCount(1)
 })
-test('without JavaScript content stays visible and FAQ works', async ({ browser }) => {
-  const context = await browser.newContext({ javaScriptEnabled: false })
+
+test('server-rendered poster content stays readable with JavaScript disabled', async ({
+  browser,
+}) => {
+  const context = await browser.newContext({
+    javaScriptEnabled: false,
+    viewport: { width: 375, height: 900 },
+  })
   const page = await context.newPage()
   await page.goto(base)
-  await expect(page.locator('.studio-scene:visible')).toHaveCount(4)
-  expect(
-    await page
-      .locator('[data-reveal]')
-      .evaluateAll((els) => els.every((el) => getComputedStyle(el).opacity === '1')),
-  ).toBe(true)
-  const details = page.locator('.capabilities-list details').first()
-  await details.locator('summary').click()
-  await expect(details).toHaveAttribute('open', '')
+  await expect(page.locator('[data-poster]')).toHaveCount(4)
+  for (const body of await page.locator('[data-poster] [class*="_body"]').all())
+    await expect(body).toHaveCSS('opacity', '1')
   await context.close()
+})
+
+test('poster CTAs emit one existing safe event only after consent', async ({ page }) => {
+  await page.route(/googletagmanager\.com|google-analytics\.com/, (route) => route.abort())
+  await page.goto(base)
+  await page.getByRole('button', { name: 'Decline analytics', exact: true }).click()
+  await page.evaluate(() =>
+    document.addEventListener(
+      'click',
+      (event) => {
+        if ((event.target as Element).closest('[data-studio-cta]')) event.preventDefault()
+      },
+      { capture: true },
+    ),
+  )
+  const events = () =>
+    page.evaluate(() =>
+      (window.dataLayer || []).filter(
+        (e): e is Record<string, unknown> =>
+          !!e &&
+          typeof e === 'object' &&
+          'event' in e &&
+          ['cta_click', 'project_inquiry'].includes(String(e.event)),
+      ),
+    )
+  await page.locator('[data-studio-cta]').first().click()
+  expect(await events()).toHaveLength(0)
+  await page.getByRole('button', { name: 'Analytics preferences', exact: true }).click()
+  await page.getByRole('button', { name: 'Allow analytics', exact: true }).click()
+  for (let i = 0; i < 4; i++) {
+    await page.locator('[data-studio-cta]').nth(i).click()
+    await expect.poll(async () => (await events()).length).toBe(i + 1)
+  }
+  expect((await events()).map((e) => [e.event, e.cta_id, e.placement])).toEqual([
+    ['cta_click', 'services', 'content'],
+    ['cta_click', 'process', 'content'],
+    ['cta_click', 'services', 'content'],
+    ['project_inquiry', 'contact', 'content'],
+  ])
 })
