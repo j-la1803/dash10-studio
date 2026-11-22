@@ -7,6 +7,7 @@ export const publicRoutes = [
   '/about',
   '/contact',
   '/posts',
+  '/blog',
   '/privacy',
   '/terms',
 ]
@@ -19,6 +20,7 @@ const reserved = new Set([
   'privacy',
   'terms',
   'posts',
+  'blog',
   'services',
   'process',
   'about',
@@ -44,7 +46,10 @@ export function sitemapEntries(pages: Entry[], posts: Entry[]): MetadataRoute.Si
     .filter((d): d is string => Boolean(d) && Number.isFinite(Date.parse(d!)))
     .sort()
     .at(-1)
-  if (latest) add('/posts', latest)
+  if (latest) {
+    add('/posts', latest)
+    add('/blog', latest)
+  }
   for (let page = 2; page <= Math.ceil(posts.length / 12); page++)
     add(`/posts/page/${page}`, latest)
   return [...urls.values()]

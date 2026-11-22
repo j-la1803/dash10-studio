@@ -26,6 +26,7 @@ export function safePath(path: string) {
       '/about',
       '/contact',
       '/posts',
+      '/blog',
       '/search',
       '/privacy',
       '/terms',

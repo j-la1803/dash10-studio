@@ -6,7 +6,7 @@ import configPromise from '@payload-config'
 import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
-import { StudioHome } from '@/components/Studio/Home'
+import { ArticleShell, DesignPage } from '@/components/Replacement/Template'
 
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
@@ -45,7 +45,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = 'home' } = await paramsPromise
 
-  if (slug === 'home') return <StudioHome />
+  if (slug === 'home') return <DesignPage page="index" />
 
   const decodedSlug = decodeURIComponent(slug)
   const url = '/' + decodedSlug
@@ -61,16 +61,18 @@ export default async function Page({ params: paramsPromise }: Args) {
   const { hero, layout } = page
 
   return (
-    <main id="main-content" className="pt-16 pb-24">
-      <PageClient />
+    <ArticleShell>
+      <main id="main-content" className="wrap">
+        <PageClient />
 
-      <PayloadRedirects disableNotFound url={url} />
+        <PayloadRedirects disableNotFound url={url} />
 
-      {draft && <LivePreviewListener />}
+        {draft && <LivePreviewListener />}
 
-      <RenderHero {...hero} />
-      <RenderBlocks blocks={layout} />
-    </main>
+        <RenderHero {...hero} />
+        <RenderBlocks blocks={layout} />
+      </main>
+    </ArticleShell>
   )
 }
 

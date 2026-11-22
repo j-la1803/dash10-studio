@@ -1,12 +1,10 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 
 import React from 'react'
 
 import { AdminBar } from '@/components/AdminBar'
 import { Analytics } from '@/components/Integrations/Analytics'
 import { gtmContainer } from '@/utilities/integrations/config'
-import { StudioFooter } from '@/components/Studio/Footer'
-import { StudioHeader } from '@/components/Studio/Header'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { siteStructuredData } from '@/utilities/siteMetadata'
@@ -14,7 +12,7 @@ import { serializeStructuredData } from '@/utilities/editorial/postMetadata'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
 
-import './globals.css'
+import './replacement.css'
 import { getServerSideURL } from '@/utilities/getURL'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -24,13 +22,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="en" suppressHydrationWarning>
       <head>
         <InitTheme />
-        <link
-          rel="preload"
-          as="font"
-          href="/fonts/inter-semibold-latin.woff2"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
         {isEnabled && <meta name="robots" content="noindex, nofollow" />}
         <link href="/favicon-32.png" rel="icon" sizes="32x32" type="image/png" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
@@ -51,9 +42,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: serializeStructuredData(siteStructuredData) }}
           />
-          <StudioHeader />
           {children}
-          <StudioFooter />
           <Analytics containerId={gtmContainer(process.env)} />
         </Providers>
       </body>
@@ -67,4 +56,11 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
   },
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#000000',
 }

@@ -1,16 +1,14 @@
 import type { Metadata } from 'next'
 
-import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
+import { DesignArticle } from '@/components/Replacement/Article'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
-import RichText from '@/components/RichText'
 
 import type { Post } from '@/payload-types'
 
-import { PostHero } from '@/heros/PostHero'
 import {
   postMetadata,
   postStructuredData,
@@ -56,7 +54,7 @@ export default async function Post({ params: paramsPromise }: Args) {
   if (!post) return <PayloadRedirects url={url} />
 
   return (
-    <main id="main-content" className="studio-post">
+    <>
       <PageClient />
 
       {/* Allows redirects for valid pages too */}
@@ -68,20 +66,8 @@ export default async function Post({ params: paramsPromise }: Args) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeStructuredData(postStructuredData(post)) }}
       />
-      <PostHero post={post} />
-
-      <div className="flex flex-col items-center gap-4 pt-8">
-        <div className="container">
-          <RichText className="studio-post-reading" data={post.content} enableGutter={false} />
-          {post.relatedPosts && post.relatedPosts.length > 0 && (
-            <RelatedPosts
-              className="mt-12 max-w-[52rem] lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[2fr]"
-              docs={post.relatedPosts.filter((post) => typeof post === 'object')}
-            />
-          )}
-        </div>
-      </div>
-    </main>
+      <DesignArticle post={post} />
+    </>
   )
 }
 
