@@ -1,0 +1,25 @@
+/* Size/layout only. Font design and motion remain owned by PosterHeading. */
+.hero.hero {
+  font-size: clamp(40px, 12.4vw, 112px);
+  width: 100%;
+  max-width: 100%;
+}
+
+.capabilities.capabilities {
+  font-size: clamp(40px, 12.4vw, 112px);
+  max-width: 100%;
+}
+
+@media (min-width: 701px) and (max-width: 899px) {
+  /* The FAQ retains two columns here; keep complete words inside its column. */
+  .capabilities.capabilities {
+    font-size: clamp(40px, 5.4vw, 92px);
+  }
+}
+
+@media (min-width: 900px) {
+  .hero.hero,
+  .capabilities.capabilities {
+    font-size: clamp(50px, 5.4vw, 92px);
+  }
+}

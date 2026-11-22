@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { MotionDetails } from './MotionDetails'
+import { PosterHeading } from './PosterHeading'
+import sizing from './HomepageHeadingSizing.module.css'
 
 const questions = [
   [
@@ -30,10 +32,15 @@ export function Capabilities() {
       <section className="studio-capabilities" aria-labelledby="capabilities-heading">
         <div className="capabilities-intro">
           <p className="studio-label">CAPABILITIES</p>
-          <h2 id="capabilities-heading">
-            THE TECHNICAL
-            <br />
-            SIDE, HANDLED.
+          <h2 id="capabilities-heading" className={sizing.capabilities}>
+            <PosterHeading
+              as="span"
+              solid={'THE TECHNICAL\n'}
+              outline="SIDE, HANDLED."
+              trigger="viewport"
+              fontSize="inherit"
+              style={{ display: 'block', maxWidth: 'none' }}
+            />
           </h2>
           <p className="capabilities-description">
             From custom development to connected systems, we handle the technical work so you can

@@ -1,6 +1,8 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { PosterHeading } from '@/components/Studio/PosterHeading'
+import sizing from '@/components/Studio/HomepageHeadingSizing.module.css'
 import Link from 'next/link'
 
 type VideoHeroProps = {
@@ -96,12 +98,15 @@ export const VideoHero = ({ eyebrow, lines, video, playbackRate = 0.3 }: VideoHe
       <div className="dash-hero-content">
         <div className="dash-eyebrow">{eyebrow}</div>
 
-        <h1 className="dash-hero-heading">
-          {lines.map((line) => (
-            <React.Fragment key={line}>
-              {line} <br />
-            </React.Fragment>
-          ))}
+        <h1 className={`dash-hero-heading ${sizing.hero}`}>
+          <PosterHeading
+            as="span"
+            solid={lines.slice(0, -1).join('\n') + '\n'}
+            outline={lines.at(-1)!}
+            trigger="load"
+            fontSize="inherit"
+            style={{ display: 'block', maxWidth: 'none' }}
+          />
         </h1>
         <p className="hero-description">
           Custom websites, e-commerce platforms, and connected systems engineered to move your

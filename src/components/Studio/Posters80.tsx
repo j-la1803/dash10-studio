@@ -1,3 +1,4 @@
+import { PosterHeading } from './PosterHeading'
 import type { CSSProperties } from 'react'
 import Link from 'next/link'
 import { Posters80Motion } from './Posters80Motion'
@@ -93,17 +94,12 @@ export function Posters80() {
             <span></span>
             {'Services'}
           </div>
-          <h2
-            className={styles['glitch'] + ' ' + styles['headline']}
-            data-text="Built for\nthe real\nworld."
+          <PosterHeading
+            as="h2"
             id="poster-title-built-for"
-            aria-label="Built for the real world."
-          >
-            {'Built for\nthe real\n'}
-            <span className={styles['lt']} aria-hidden="true">
-              {'world.'}
-            </span>
-          </h2>
+            solid={'Built for\nthe real\n'}
+            outline={'world.'}
+          />
           <p className={styles['lede']}>
             {
               'We build websites and digital platforms around how your business actually works. No unnecessary complexity. Just reliable technology designed to do its job.'
@@ -200,17 +196,12 @@ export function Posters80() {
             <span></span>
             {'Development'}
           </div>
-          <h2
-            className={styles['glitch'] + ' ' + styles['headline']}
-            data-text="Web dev\nwithout the\nagency bloat."
+          <PosterHeading
+            as="h2"
             id="poster-title-web-dev"
-            aria-label="Web dev without the agency bloat."
-          >
-            {'Web dev\nwithout the\n'}
-            <span className={styles['lt']} aria-hidden="true">
-              {'agency bloat.'}
-            </span>
-          </h2>
+            solid={'Web dev\nwithout the\n'}
+            outline={'agency bloat.'}
+          />
           <p className={styles['lede']}>
             {
               'Custom builds, modern frameworks, and scalable architecture. From WordPress to Next.js, we focus on clean code, fast performance, and solutions that are built to last.'
@@ -339,17 +330,12 @@ export function Posters80() {
             <span></span>
             {'Integrations'}
           </div>
-          <h2
-            className={styles['glitch'] + ' ' + styles['headline']}
-            data-text="Your systems\nshould talk\nto each other."
+          <PosterHeading
+            as="h2"
             id="poster-title-your-systems"
-            aria-label="Your systems should talk to each other."
-          >
-            {'Your systems\nshould talk\n'}
-            <span className={styles['lt']} aria-hidden="true">
-              {'to each other.'}
-            </span>
-          </h2>
+            solid={'Your systems\nshould talk\n'}
+            outline={'to each other.'}
+          />
           <p className={styles['lede']}>
             {
               'API integrations, databases, analytics, and automation that connect the tools your business uses so information flows where it needs to.'
@@ -467,17 +453,12 @@ export function Posters80() {
             <span></span>
             {'Process'}
           </div>
-          <h2
-            className={styles['glitch'] + ' ' + styles['headline']}
-            data-text="We build.\nWe fix.\nWe connect."
+          <PosterHeading
+            as="h2"
             id="poster-title-we-build"
-            aria-label="We build. We fix. We connect."
-          >
-            {'We build.\nWe fix.\n'}
-            <span className={styles['lt']} aria-hidden="true">
-              {'We connect.'}
-            </span>
-          </h2>
+            solid={'We build.\nWe fix.\n'}
+            outline={'We connect.'}
+          />
           <p className={styles['lede']}>
             {
               "New projects. Existing platforms. Complicated problems. Whether you're starting from scratch or trying to make an existing system work better, we can help you move forward."
