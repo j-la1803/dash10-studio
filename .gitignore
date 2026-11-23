@@ -26,3 +26,7 @@ node_modules/
 
 # Unpublished editorial source stays local; repository is public.
 /content/drafts/
+
+# Real client invoice data and generated invoices stay local
+docs/design/invoice/invoice-data.json
+docs/design/invoice/*.pdf
