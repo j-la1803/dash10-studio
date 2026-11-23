@@ -23,6 +23,7 @@ const attributes = {
   colspan: 'colSpan',
   rowspan: 'rowSpan',
 }
+const span2 = (className, text) => ({ tag: 'span', props: className ? { className } : {}, children: [text] })
 function convert(node) {
   if (node.nodeType === 3) return node.textContent
   if (node.nodeType !== 1 || ['script', 'style', 'link', 'meta', 'title'].includes(node.localName))
@@ -30,6 +31,8 @@ function convert(node) {
   const tag = node.localName
   if (node.id === 'contactForm') return { slot: 'contact' }
   if (node.id === 'sent') return null
+  // Owner request: no homepage background video. The menu button now toggles the sheet itself.
+  if (node.classList.contains('hero-video') || node.id === 'menuClose') return null
   if (node.classList.contains('empty')) return { slot: 'posts' }
   if (['privacy', 'terms'].includes(current) && node.classList.contains('prose'))
     return { slot: 'legal' }
@@ -101,6 +104,22 @@ function convert(node) {
       tag: 'span',
       props: { id: 'web-development', style: { position: 'absolute', top: 0 } },
       children: [],
+    })
+  if (node.id === 'menuBtn') {
+    const bar = { tag: 'span', props: {}, children: [] }
+    children.splice(
+      0,
+      children.length,
+      { tag: 'span', props: { className: 'menu-icon', 'aria-hidden': 'true' }, children: [bar, bar, bar] },
+      { tag: 'span', props: { className: 'menu-label' }, children: [span2('', 'Menu'), span2('', 'Close')] },
+    )
+    props['aria-label'] = 'Open menu'
+  }
+  if (node.id === 'sheet')
+    children.push({
+      tag: 'div',
+      props: { className: 'sheet-foot mono', 'aria-hidden': 'true' },
+      children: [span2('live', 'Milwaukee, WI'), span2('', '43.0389° N / 87.9065° W')],
     })
   if (tag === 'nav' && node.closest('.legal'))
     children.push({ tag: 'span', props: { id: 'footer-analytics-preferences' }, children: [] })

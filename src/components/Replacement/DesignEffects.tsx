@@ -24,23 +24,34 @@ export function DesignEffects() {
       cleanups.push(() => el.removeEventListener(event, fn, options))
     }
     const sheet = $('#sheet'),
-      menu = $('#menuBtn'),
-      close = $('#menuClose')
+      menu = $('#menuBtn')
     const toggle = (open: boolean) => {
-      sheet?.classList.toggle('open', open)
-      menu?.setAttribute('aria-expanded', String(open))
-      if (open) close?.focus()
-      else menu?.focus()
+      if (!sheet || !menu) return
+      sheet.classList.toggle('open', open)
+      root.classList.toggle('menu-open', open)
+      document.documentElement.style.overflow = open ? 'hidden' : ''
+      menu.setAttribute('aria-expanded', String(open))
+      menu.setAttribute('aria-label', open ? 'Close menu' : 'Open menu')
     }
-    if (sheet && menu && close) {
-      listen(menu, 'click', () => toggle(true))
-      listen(close, 'click', () => toggle(false))
-      sheet.querySelectorAll('a').forEach((a) => listen(a, 'click', () => toggle(false)))
+    if (sheet && menu) {
+      sheet.querySelectorAll('a').forEach((a) => {
+        const href = a.getAttribute('href') || ''
+        if (href === path || (href !== '/' && path.startsWith(href + '/')))
+          a.setAttribute('aria-current', 'page')
+        listen(a, 'click', () => toggle(false))
+      })
+      listen(menu, 'click', () => toggle(!sheet.classList.contains('open')))
+      const desktop = matchMedia('(min-width: 900px)')
+      listen(desktop, 'change', () => desktop.matches && toggle(false))
+      cleanups.push(() => toggle(false))
       listen(window, 'keydown', ((e: KeyboardEvent) => {
         if (!sheet.classList.contains('open')) return
-        if (e.key === 'Escape') toggle(false)
+        if (e.key === 'Escape') {
+          toggle(false)
+          menu.focus()
+        }
         if (e.key === 'Tab') {
-          const controls = Array.from(sheet.querySelectorAll<HTMLElement>('a,button'))
+          const controls = [menu, ...Array.from(sheet.querySelectorAll<HTMLElement>('a'))]
           const first = controls[0],
             last = controls.at(-1)
           if (e.shiftKey && document.activeElement === first) {
@@ -76,31 +87,13 @@ export function DesignEffects() {
       { threshold: 0.4 },
     )
     $$('.glitch').forEach((el) => observer.observe(el))
-    const pause = $('#pauseBtn'),
-      video = $<HTMLVideoElement>('.hero-video video')
+    const pause = $('#pauseBtn')
     if (pause)
       listen(pause, 'click', () => {
         const still = document.documentElement.classList.toggle('still')
         pause.textContent = still ? 'Resume motion' : 'Pause motion'
         pause.setAttribute('aria-pressed', String(still))
-        if (video) {
-          if (still) video.pause()
-          else void video.play().catch(() => {})
-        }
       })
-    if (video)
-      listen(
-        video,
-        'error',
-        () => {
-          if (video.parentElement) video.parentElement.style.display = 'none'
-        },
-        { capture: true },
-      )
-    if (video && reduce) {
-      video.removeAttribute('autoplay')
-      video.pause()
-    }
     let frameId = 0
     const frame = () => {
       frameId = 0

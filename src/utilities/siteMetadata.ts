@@ -38,7 +38,6 @@ export const siteStructuredData = {
       name: 'Dash 10 Studio',
       url: productionOrigin,
       logo: `${productionOrigin}/brand/logo/dash10-wordmark-white.svg`,
-      email: 'justin@dash10.studio',
     },
     {
       '@type': 'WebSite',

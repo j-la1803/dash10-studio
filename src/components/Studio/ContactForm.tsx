@@ -36,7 +36,7 @@ export function ContactForm() {
         return {
           status: 'error',
           message:
-            'We couldn’t confirm your inquiry was saved. Please try again, or email justin@dash10.studio.',
+            'We couldn’t confirm your inquiry was saved. Please try again in a moment.',
         }
       }
     },
