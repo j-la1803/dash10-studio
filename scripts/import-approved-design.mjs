@@ -44,6 +44,19 @@ function convert(node) {
           node.style.getPropertyValue(k),
         ]),
       )
+      // JSDOM's style parser silently drops properties it does not know (e.g. paint-order),
+      // so restore any declaration from the raw attribute that it omitted.
+      for (const decl of value.split(';')) {
+        const i = decl.indexOf(':')
+        if (i < 0) continue
+        const k = decl.slice(0, i).trim().toLowerCase()
+        const v = decl.slice(i + 1).trim()
+        if (!k || !v || node.style.getPropertyValue(k)) continue
+        const key = k.startsWith('--')
+          ? k
+          : k.replace(/-([a-z])/g, (_, c) => c.toUpperCase()).replace(/^webkit/, 'Webkit')
+        if (!(key in props.style)) props.style[key] = v
+      }
     } else {
       const key =
         attributes[name] ||
